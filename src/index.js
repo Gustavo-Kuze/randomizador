@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootswatch/dist/materia/bootstrap.min.css'
 import './index.css';
 import App from './main/components/App.jsx';
 import * as serviceWorker from './serviceWorker';

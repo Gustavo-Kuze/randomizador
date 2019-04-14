@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import chance from 'chance'
+import Template from './Template/'
 
 class App extends Component {
   render() {
     return (
-      <div className="App" style={{backgroundColor: `${chance.Chance().color()}`}}>
-        <header className="App-header">
-          <h1>Randomizador</h1>
-        </header>
+      <div className="App">
+        <Template>
+          <div className="section">
+            <div className="container">
+              <div className="row">
+                <div className="col">
+                  <h1>teste</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Template>
       </div>
     );
   }
