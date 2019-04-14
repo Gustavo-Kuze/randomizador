@@ -1,4 +1,6 @@
+import '../css/Header.css'
 import React from 'react'
+
 import {
     Modal,
     ModalHeader,
@@ -18,16 +20,25 @@ class Header extends React.Component {
 
         return (
             <>
-                <nav className="navbar navbar-expand-sm fixed-top navbar-dark bg-warning px-5">
-                    <a className="navbar-brand" href="#">
-                        <img src="/favicon.ico" alt="Brand" />
-                    </a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
-                    <button
-                        onClick={this.toggle}
-                        className="btn btn-link btn-warning float-right">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+                {/*   */}
+                <nav className="navbar fixed-top navbar-dark bg-warning ">
+
+                    <div className="mx-auto flex-grow-1">
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-6 col-sm-10 offset-sm-1 text-center">
+                                    <h1 className="brand-title">Randomizador</h1>
+                                </div>
+                                <div className="col-6 col-sm-1">
+                                    <button
+                                        onClick={this.toggle}
+                                        className="btn btn-link btn-warning float-right">
+                                        <span className="navbar-toggler-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} centered size="sm">
                     <ModalHeader className="bg-warning text-center text-light">Menu</ModalHeader>
