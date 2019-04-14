@@ -1,12 +1,12 @@
 import '../css/Header.css'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import {
     Modal,
     ModalHeader,
     ModalBody,
     ListGroup,
-    ListGroupItem
 } from 'reactstrap'
 
 class Header extends React.Component {
@@ -44,11 +44,8 @@ class Header extends React.Component {
                     <ModalHeader className="bg-warning text-center text-light">Menu</ModalHeader>
                     <ModalBody className="">
                         <ListGroup className="text-center">
-                            <ListGroupItem tag="button" action>Cras justo odio</ListGroupItem>
-                            <ListGroupItem tag="button" action>Dapibus ac facilisis in</ListGroupItem>
-                            <ListGroupItem tag="button" action>Morbi leo risus</ListGroupItem>
-                            <ListGroupItem tag="button" action>Porta ac consectetur ac</ListGroupItem>
-                            <ListGroupItem tag="button" action>Vestibulum at eros</ListGroupItem>
+                            <Link to="/" className="list-group-item list-group-item-action">Home</Link>
+                            <Link to="/about" className="list-group-item list-group-item-action" >About</Link>
                         </ListGroup>
                     </ModalBody>
                 </Modal>
