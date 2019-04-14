@@ -1,2 +1,0 @@
-# randomizador
-Site de sorteios
