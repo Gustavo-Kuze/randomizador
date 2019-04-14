@@ -20,7 +20,6 @@ class Header extends React.Component {
 
         return (
             <>
-                {/*   */}
                 <nav className="navbar fixed-top navbar-dark bg-warning ">
 
                     <div className="mx-auto flex-grow-1">

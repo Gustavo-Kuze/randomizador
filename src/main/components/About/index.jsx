@@ -4,7 +4,7 @@ import Template from '../Template/'
 const About = () => {
     return (
         <Template>
-            <div className="section mt-5 pt-5">
+            <div className="section">
                 <div className="container">
                     <div className="row">
                         <div className="col">
