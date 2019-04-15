@@ -9,20 +9,24 @@ import {
     ListGroup,
 } from 'reactstrap'
 
+/**
+ * @param {Object} props 
+ */
 const Header = props => {
     const [openMenu, toggleMenu] = useState(false)
-    
+
     const callToggleMenu = () => toggleMenu(!openMenu)
-    
+
     return (
         <>
             <nav className="navbar fixed-top navbar-dark bg-warning ">
-
                 <div className="mx-auto flex-grow-1">
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-6 col-sm-10 offset-sm-1 text-center">
-                                <h1 className="brand-title">Randomizador</h1>
+                                <Link to="/" className="text-decoration-none">
+                                    <h1 className="brand-title">Randomizador</h1>
+                                </Link>
                             </div>
                             <div className="col-6 col-sm-1">
                                 <button
@@ -38,9 +42,11 @@ const Header = props => {
             <Modal isOpen={openMenu} toggle={callToggleMenu} centered size="sm">
                 <ModalHeader className="bg-warning text-center text-light">Menu</ModalHeader>
                 <ModalBody className="">
+                    <p className="lead">{props.userName || 'Bem-vindo, convidado'}</p>
                     <ListGroup className="text-center">
-                        <Link to="/" className="list-group-item list-group-item-action">Home</Link>
-                        <Link to="/about" className="list-group-item list-group-item-action" >About</Link>
+                        <Link to="/" className="list-group-item list-group-item-action">Início</Link>
+                        <Link to="/about" className="list-group-item list-group-item-action" >Sobre</Link>
+                        <Link to="/login" className="list-group-item list-group-item-action" >Login</Link>
                     </ListGroup>
                 </ModalBody>
             </Modal>
