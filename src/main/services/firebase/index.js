@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/database'
+import 'firebase/firebase-firestore'
 
 var config = {
     apiKey: "AIzaSyDB0PSBo2CR2mhRRvDFMkUCSLUTuL16WP0",
@@ -12,5 +12,7 @@ var config = {
 }
 
 firebase.initializeApp(config)
+
+firebase.auth().languageCode = 'pt'
 
 export default firebase
