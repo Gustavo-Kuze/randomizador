@@ -1,8 +1,7 @@
 import '../css/Numbers.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import If from '../utils/If'
-import Chance from 'chance'
-let chance = new Chance()
+import { Input } from 'reactstrap'
 
 const Numbers = () => {
 
@@ -10,20 +9,36 @@ const Numbers = () => {
     const [randMin, setRandMin] = useState()
     const [randMax, setRandMax] = useState()
     const [randNums, setRandNums] = useState([])
+    const [isQuantityInputValid, setQuantityInputAsValid] = useState()
+    const [isRandMinInputValid, setRandMinInputAsValid] = useState()
+    const [isRandMaxInputValid, setRandMaxInputAsValid] = useState()
+    const [areInputsTouched, setAreInputsTouched] = useState()
 
-    // const createNumArray = (min, max) => {
-    //     let arr = new Array(max)
-    //     for (let i = min; i < max + 1; i++) {
-    //         arr[i] = i
-    //     }
-    //     return arr
-    // }
+    useEffect(() => {
+        if (quantity > 0 && quantity <= 9999999) {
+            setQuantityInputAsValid(true)
+        } else {
+            setQuantityInputAsValid(false)
+        }
+
+        if (randMax > 0 && randMax <= 9999999) {
+            setRandMaxInputAsValid(true)
+        } else {
+            setRandMaxInputAsValid(false)
+        }
+
+        if (randMin > 0 && randMin <= 9999999) {
+            setRandMinInputAsValid(true)
+        } else {
+            setRandMinInputAsValid(false)
+        }
+    })
 
     const pickExclusiveOne = (min, max, picked) => {
-        let temp = chance.integer({ min, max })
-        if(!picked.includes(temp)){
+        let temp = Math.floor(Math.random() * max) + min
+        if (!picked.includes(temp)) {
             return temp
-        }else{
+        } else {
             return pickExclusiveOne(min, max, picked)
         }
     }
@@ -31,7 +46,7 @@ const Numbers = () => {
     const draw = (min, max, count) => {
         let returnArr = []
         for (let index = 0; index < count; index++) {
-            let num = pickExclusiveOne(min, max, returnArr)            
+            let num = pickExclusiveOne(min, max, returnArr)
             returnArr = [...returnArr, num]
         }
         return returnArr
@@ -39,9 +54,11 @@ const Numbers = () => {
 
     const drawNow = () => {
         if (quantity && randMin && randMax) {
-            // setRandNum(Math.floor(Math.random() * randMax) + randMin)
-
-            setRandNums(draw(randMin, randMax, quantity))
+            if (quantity > 0 && quantity <= 9999999 && randMin > 0 && randMin <= 9999999 && randMax > 0 && randMax <= 9999999) {
+                setRandNums(draw(randMin, randMax, quantity))
+            } else {
+                alert('Os valores definidos não podem ser negativos ou maiores que 9999999')
+            }
 
         } else {
             alert('Você precisa preencher os campos para efetuar um sorteio!')
@@ -59,21 +76,21 @@ const Numbers = () => {
                     </div>
                     <div className="row">
                         <div className="col-md-2 col-12 text-center">
-                            <input className="form-control text-center bg-light" type="number" min="1" max="1000" placeholder="esta quantidade" onChange={e => setQuantity(parseInt(e.target.value))} />
+                            <Input className="text-center bg-light" type="number" placeholder="esta quantidade" invalid={areInputsTouched && !isQuantityInputValid} valid={areInputsTouched && isQuantityInputValid} onChange={e => setQuantity(parseInt(e.target.value))} onKeyUp={setAreInputsTouched} />
                         </div>
                         <div className="col-md-4 col-12 text-center">
-                            <input className="form-control text-center bg-light" type="number" min="0" max={randMax ? `${randMax - 1}` : "9999998"} placeholder="entre este valor" onChange={e => setRandMin(parseInt(e.target.value))} />
+                            <Input className="text-center bg-light" type="number" placeholder="entre este valor" invalid={areInputsTouched && !isRandMinInputValid} valid={areInputsTouched && isRandMinInputValid} onChange={e => setRandMin(parseInt(e.target.value))}  onKeyUp={setAreInputsTouched}/>
                         </div>
                         <div className="col-md-2 col-12 text-center">
                             <p className="h3 text-muted mt-3">e</p>
                         </div>
                         <div className="col-md-4 col-12 text-center">
-                            <input className="form-control text-center bg-light" type="number" placeholder="este outro valor" min="1" max="9999999" onChange={e => setRandMax(parseInt(e.target.value))} />
+                            <Input className="text-center bg-light" type="number" placeholder="este outro valor" invalid={areInputsTouched && !isRandMaxInputValid} valid={areInputsTouched && isRandMaxInputValid} onChange={e => setRandMax(parseInt(e.target.value))}  onKeyUp={setAreInputsTouched}/>
                         </div>
                     </div>
                     <div className="row mt-3">
                         <div className="col-md-4 col-12 offset-md-3 ">
-                            <button onClick={drawNow} className="btn btn-warning btn-block btn-lg mt-5">Sortear</button>
+                            <button onClick={drawNow} type="submit" className="btn btn-warning btn-block btn-lg mt-5">Sortear</button>
                         </div>
                     </div>
 
