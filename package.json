@@ -10,6 +10,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.2",
+    "react-redux-toastr": "^7.4.8",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-social-login": "^3.4.4",

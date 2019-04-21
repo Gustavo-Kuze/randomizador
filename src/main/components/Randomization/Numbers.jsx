@@ -2,6 +2,8 @@ import '../css/Numbers.css'
 import React, { useState, useEffect } from 'react'
 import If from '../utils/If'
 import { Input } from 'reactstrap'
+import { toastr } from 'react-redux-toastr'
+import {drawIntegers as draw} from '../../services/drawEngine/'
 
 const Numbers = () => {
 
@@ -15,53 +17,20 @@ const Numbers = () => {
     const [areInputsTouched, setAreInputsTouched] = useState()
 
     useEffect(() => {
-        if (quantity > 0 && quantity <= 9999999) {
-            setQuantityInputAsValid(true)
-        } else {
-            setQuantityInputAsValid(false)
-        }
-
-        if (randMax > 0 && randMax <= 9999999) {
-            setRandMaxInputAsValid(true)
-        } else {
-            setRandMaxInputAsValid(false)
-        }
-
-        if (randMin > 0 && randMin <= 9999999) {
-            setRandMinInputAsValid(true)
-        } else {
-            setRandMinInputAsValid(false)
-        }
+        setQuantityInputAsValid(quantity > 0 && quantity <= 1000)
+        setRandMaxInputAsValid(randMax > 0 && randMax <= 9999999)
+        setRandMinInputAsValid(randMin > 0 && randMin <= 9999999)
     })
-
-    const pickExclusiveOne = (min, max, picked) => {
-        let temp = Math.floor(Math.random() * max) + min
-        if (!picked.includes(temp)) {
-            return temp
-        } else {
-            return pickExclusiveOne(min, max, picked)
-        }
-    }
-
-    const draw = (min, max, count) => {
-        let returnArr = []
-        for (let index = 0; index < count; index++) {
-            let num = pickExclusiveOne(min, max, returnArr)
-            returnArr = [...returnArr, num]
-        }
-        return returnArr
-    }
 
     const drawNow = () => {
         if (quantity && randMin && randMax) {
-            if (quantity > 0 && quantity <= 9999999 && randMin > 0 && randMin <= 9999999 && randMax > 0 && randMax <= 9999999) {
+            if (quantity > 0 && quantity <= 1000 && randMin > 0 && randMin <= 9999999 && randMax > 0 && randMax <= 9999999) {
                 setRandNums(draw(randMin, randMax, quantity))
             } else {
-                alert('Os valores definidos não podem ser negativos ou maiores que 9999999')
+                toastr.warning('Atenção!', 'Os valores definidos não podem ser negativos ou maiores que 9999999')
             }
-
         } else {
-            alert('Você precisa preencher os campos para efetuar um sorteio!')
+            toastr.warning('Atenção!', 'Você precisa preencher os campos para efetuar um sorteio!')
         }
     }
 
@@ -79,13 +48,13 @@ const Numbers = () => {
                             <Input className="text-center bg-light" type="number" placeholder="esta quantidade" invalid={areInputsTouched && !isQuantityInputValid} valid={areInputsTouched && isQuantityInputValid} onChange={e => setQuantity(parseInt(e.target.value))} onKeyUp={setAreInputsTouched} />
                         </div>
                         <div className="col-md-4 col-12 text-center">
-                            <Input className="text-center bg-light" type="number" placeholder="entre este valor" invalid={areInputsTouched && !isRandMinInputValid} valid={areInputsTouched && isRandMinInputValid} onChange={e => setRandMin(parseInt(e.target.value))}  onKeyUp={setAreInputsTouched}/>
+                            <Input className="text-center bg-light" type="number" placeholder="entre este valor" invalid={areInputsTouched && !isRandMinInputValid} valid={areInputsTouched && isRandMinInputValid} onChange={e => setRandMin(parseInt(e.target.value))} onKeyUp={setAreInputsTouched} />
                         </div>
                         <div className="col-md-2 col-12 text-center">
                             <p className="h3 text-muted mt-3">e</p>
                         </div>
                         <div className="col-md-4 col-12 text-center">
-                            <Input className="text-center bg-light" type="number" placeholder="este outro valor" invalid={areInputsTouched && !isRandMaxInputValid} valid={areInputsTouched && isRandMaxInputValid} onChange={e => setRandMax(parseInt(e.target.value))}  onKeyUp={setAreInputsTouched}/>
+                            <Input className="text-center bg-light" type="number" placeholder="este outro valor" invalid={areInputsTouched && !isRandMaxInputValid} valid={areInputsTouched && isRandMaxInputValid} onChange={e => setRandMax(parseInt(e.target.value))} onKeyUp={setAreInputsTouched} />
                         </div>
                     </div>
                     <div className="row mt-3">
