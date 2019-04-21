@@ -1,9 +1,9 @@
-import '../css/Numbers.css'
+import '../../css/Numbers.css'
 import React, { useState, useEffect } from 'react'
-import If from '../utils/If'
+import If from '../../utils/If'
 import { Input } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
-import {drawIntegers as draw} from '../../services/drawEngine/'
+import { drawIntegers as draw } from '../../../drawEngine'
 
 const Numbers = () => {
 
@@ -22,16 +22,31 @@ const Numbers = () => {
         setRandMinInputAsValid(randMin > 0 && randMin <= 9999999)
     })
 
-    const drawNow = () => {
-        if (quantity && randMin && randMax) {
-            if (quantity > 0 && quantity <= 1000 && randMin > 0 && randMin <= 9999999 && randMax > 0 && randMax <= 9999999) {
-                setRandNums(draw(randMin, randMax, quantity))
-            } else {
-                toastr.warning('Atenção!', 'Os valores definidos não podem ser negativos ou maiores que 9999999')
-            }
-        } else {
+    const isDrawAllowedIfNotWarnUser = () => {
+        let isDrawAllowed = true
+        if (!quantity || !randMin || !randMax) {
             toastr.warning('Atenção!', 'Você precisa preencher os campos para efetuar um sorteio!')
+            isDrawAllowed = false
         }
+
+        if (quantity <= 0 || quantity > 1000 ||
+            randMin <= 0 || randMin > 9999999 ||
+            randMax <= 0 || randMax > 9999999) {
+            toastr.warning('Atenção!', 'Os valores definidos não podem ser negativos ou maiores que 9999999')
+            isDrawAllowed = false
+        }
+
+        if (quantity > randMax) {
+            toastr.warning('Atenção!', 'A quantidade de números sorteados não pode ser maior que o valor máximo!')
+            isDrawAllowed = false
+        }
+
+        return isDrawAllowed
+    }
+
+    const drawNow = () => {
+        if (isDrawAllowedIfNotWarnUser())
+            setRandNums(draw(randMin, randMax, quantity))
     }
 
     return (

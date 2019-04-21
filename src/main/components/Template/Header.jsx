@@ -45,6 +45,7 @@ const Header = props => {
                     <p className="lead">{props.userName || 'Bem-vindo, convidado'}</p>
                     <ListGroup className="text-center">
                         <Link to="/" className="list-group-item list-group-item-action">Início</Link>
+                        <Link to="/numbers" className="list-group-item list-group-item-action" >Sorteio de números</Link>
                         <Link to="/about" className="list-group-item list-group-item-action" >Sobre</Link>
                         <Link to="/login" className="list-group-item list-group-item-action" >Login</Link>
                     </ListGroup>

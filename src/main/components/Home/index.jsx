@@ -2,13 +2,13 @@ import '../css/Home.css'
 import React from 'react'
 import Template from '../Template/'
 import { Link } from 'react-router-dom'
-import Numbers from '../Randomization/Numbers'
+import ToolsSection from './ToolsSection';
 
 const Home = () => {
     return (
         <Template>
             <div className="section">
-                <div className="jumbotron mt-3">
+                <div className="jumbotron">
                     <div className="row">
                         <div className="col-md-8 offset-md-2 text-center">
                             <h1>Bem-vindo ao <span className="home-title">Randomizador</span> !</h1>
@@ -22,9 +22,9 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <hr className="my-4"/>
+            <hr className="my-4" />
             <div className="section">
-                <Numbers />
+                <ToolsSection />
             </div>
         </Template>
     )
