@@ -40,6 +40,11 @@ const Numbers = () => {
             toastr.warning('Atenção!', 'A quantidade de números sorteados não pode ser maior que o valor máximo!')
             isDrawAllowed = false
         }
+        
+        if (randMin >= randMax) {
+            toastr.warning('Atenção!', 'O valor mínimo não pode ser maior ou igual ao valor máximo!')
+            isDrawAllowed = false
+        }
 
         return isDrawAllowed
     }
@@ -52,7 +57,7 @@ const Numbers = () => {
     return (
         <div className="jumbotron">
             <div className="row">
-                <div className="col-lg-10 col-12 offset-lg-2">
+                <div className="col-lg-10 col-12 offset-lg-1">
                     <div className="row mb-3">
                         <div className="col-12 col-lg-10 text-center">
                             <p className="h3 text-muted">Sortear números</p>
@@ -73,7 +78,7 @@ const Numbers = () => {
                         </div>
                     </div>
                     <div className="row mt-3">
-                        <div className="col-md-4 col-12 offset-md-3 ">
+                        <div className="col-md-4 col-12 offset-md-4 ">
                             <button onClick={drawNow} type="submit" className="btn btn-warning btn-block btn-lg mt-5">Sortear</button>
                         </div>
                     </div>

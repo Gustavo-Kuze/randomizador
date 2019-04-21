@@ -1,6 +1,7 @@
 import '../css/Header.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import firebase from '../../services/firebase/'
 
 import {
     Modal,
@@ -9,13 +10,19 @@ import {
     ListGroup,
 } from 'reactstrap'
 
-/**
- * @param {Object} props 
- */
 const Header = props => {
     const [openMenu, toggleMenu] = useState(false)
+    const [userName, setUserName] = useState('Convidado')
 
     const callToggleMenu = () => toggleMenu(!openMenu)
+
+    useEffect(() => {
+        if (firebase.auth().currentUser) {
+            if (firebase.auth().currentUser.displayName) {
+                setUserName(firebase.auth().currentUser.displayName)
+            }
+        }
+    })
 
     return (
         <>
@@ -42,12 +49,15 @@ const Header = props => {
             <Modal isOpen={openMenu} toggle={callToggleMenu} centered size="sm">
                 <ModalHeader className="bg-warning text-center text-light">Menu</ModalHeader>
                 <ModalBody className="">
-                    <p className="lead">{props.userName || 'Bem-vindo, convidado'}</p>
+                    <p className="lead">{`Bem-vindo, ${userName}`}</p>
                     <ListGroup className="text-center">
-                        <Link to="/" className="list-group-item list-group-item-action">Início</Link>
+                        <Link to="/lists" className="list-group-item list-group-item-action" >Minhas listas</Link>
                         <Link to="/numbers" className="list-group-item list-group-item-action" >Sorteio de números</Link>
-                        <Link to="/about" className="list-group-item list-group-item-action" >Sobre</Link>
-                        <Link to="/login" className="list-group-item list-group-item-action" >Login</Link>
+                        <Link to="/sort" className="list-group-item list-group-item-action" >Embaralhador de frases</Link>
+                        <Link to="/headortails" className="list-group-item list-group-item-action" >Cara ou Coroa</Link>
+                        <hr />
+                        <Link to="/login" className="list-group-item list-group-item-action bg-primary text-light" >Login</Link>
+                        <Link to="/logout" className="list-group-item list-group-item-action bg-danger text-light" >Sair</Link>
                     </ListGroup>
                 </ModalBody>
             </Modal>
