@@ -32,7 +32,7 @@ const Header = props => {
                         <div className="row">
                             <div className="col-6 col-sm-10 offset-sm-1 text-center">
                                 <Link to="/" className="text-decoration-none">
-                                    <h1 className="brand-title">Randomizador</h1>
+                                    <h1 className="brand-title sofia">Randomizador</h1>
                                 </Link>
                             </div>
                             <div className="col-6 col-sm-1">

@@ -11,7 +11,7 @@ const Home = () => {
                 <div className="jumbotron">
                     <div className="row">
                         <div className="col-md-8 offset-md-2 text-center">
-                            <h1>Bem-vindo ao <span className="home-title">Randomizador</span> !</h1>
+                            <h1>Bem-vindo ao <span className="sofia">Randomizador</span> !</h1>
                             <h2 className="text-muted my-4 h3">Faça login para salvar suas listas de sorteio, além de ter acesso as ferramentas integradas com as redes sociais</h2>
                         </div>
                     </div>

@@ -89,7 +89,7 @@ const Numbers = () => {
             <If c={randNums.length > 0}>
                 <div className="row mt-5">
                     <div className="col-12">
-                        <h1 className="draw-result text-center">Os números sorteados foram:</h1>
+                        <h1 className="text-center lobster">Os números sorteados foram:</h1>
                         <table className="table table-striped table-bordered h3 text-center">
                             <thead>
                                 <tr>

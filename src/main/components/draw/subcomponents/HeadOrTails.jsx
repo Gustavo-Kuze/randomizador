@@ -18,14 +18,23 @@ const HeadOrTails = () => {
                 moeda.classList.add('tails')
                 console.log('it is tails');
             }
-        }, 100);
+        }, 15);
     }
 
     return (
         <>
+            <div className="section">
+                <div className="container">
+                    <div className="row">
+                        <div className="col">
+                        <h1 class=""></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="moeda" onClick={flip}>
                 <div class="cara">
-                    <img src="/img/cara.jpg" alt="Cara"/>
+                    <img src="/img/cara.jpg" alt="Cara" />
                 </div>
                 <div class="coroa">
                     <img src="/img/coroa.jpg" alt="Coroa" />

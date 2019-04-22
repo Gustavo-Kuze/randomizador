@@ -9,3 +9,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.lobster {
+  font-family: 'Lobster', cursive;
+}
+
+.sofia {
+  font-family: 'Sofia', cursive;
+}
