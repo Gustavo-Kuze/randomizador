@@ -6,6 +6,7 @@ import Template from '../../components/Template/'
 import If from '../utils/If'
 import { Redirect } from 'react-router-dom'
 import { Spinner, Row, Col } from 'reactstrap'
+import InstaButton from './InstagramButton'
 
 const Login = () => {
 
@@ -55,6 +56,7 @@ const Login = () => {
                     </If>
                 </Template>
             </If>
+            <InstaButton />
         </>
     )
 
