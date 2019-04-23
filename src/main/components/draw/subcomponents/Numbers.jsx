@@ -40,7 +40,7 @@ const Numbers = () => {
             toastr.warning('Atenção!', 'A quantidade de números sorteados não pode ser maior que o valor máximo!')
             isDrawAllowed = false
         }
-        
+
         if (randMin >= randMax) {
             toastr.warning('Atenção!', 'O valor mínimo não pode ser maior ou igual ao valor máximo!')
             isDrawAllowed = false
@@ -89,7 +89,7 @@ const Numbers = () => {
             <If c={randNums.length > 0}>
                 <div className="row mt-5">
                     <div className="col-12">
-                        <h1 className="text-center lobster">Os números sorteados foram:</h1>
+                        <h1 className="text-center lobster mb-3">Os números sorteados foram:</h1>
                         <table className="table table-striped table-bordered h3 text-center">
                             <thead>
                                 <tr>
@@ -107,6 +107,12 @@ const Numbers = () => {
                             </tbody>
                         </table>
 
+                    </div>
+                </div>
+
+                <div className="row mt-5">
+                    <div className="col-12">
+                        <h4 className="text-center sofia">Sorteio realizado em: {new Date().toLocaleString()}</h4>
                     </div>
                 </div>
             </If>

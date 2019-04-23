@@ -2,7 +2,15 @@ import React from 'react'
 import InstagramLogin from 'react-instagram-login'
 
 const InstagramButton = () => {
-    const responseInstagram = (response) => {
+    const successCallback = (response) => {
+        
+        fetch(`https://api.instagram.com/v1/users/self/media/recent?access_token=${response}`).then(resp => {
+            console.log(resp.json())
+        })
+        console.log(response);
+    }
+   
+    const errorCallback = (response) => {
         console.log(response);
     }
 
@@ -10,8 +18,8 @@ const InstagramButton = () => {
         <InstagramLogin
             clientId="77aa5bbae1ea4fefb7c16dd17d594aec"
             buttonText="Entrar com Instagram"
-            onSuccess={responseInstagram}
-            onFailure={responseInstagram}
+            onSuccess={successCallback}
+            onFailure={errorCallback}
         />
     )
 }

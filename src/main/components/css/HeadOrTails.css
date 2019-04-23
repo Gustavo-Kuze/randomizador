@@ -47,21 +47,21 @@
   -webkit-transform: rotateY(-180deg);
 }
 
-#moeda.heads {
-  -webkit-animation: flipHeads 3s ease-out forwards;
-  -moz-animation: flipHeads 3s ease-out forwards;
-  -o-animation: flipHeads 3s ease-out forwards;
-  animation: flipHeads 3s ease-out forwards;
+#moeda.gira-cara {
+  -webkit-animation: giraCara 3s ease-out forwards;
+  -moz-animation: giraCara 3s ease-out forwards;
+  -o-animation: giraCara 3s ease-out forwards;
+  animation: giraCara 3s ease-out forwards;
 }
 
-#moeda.tails {
-  -webkit-animation: flipTails 3s ease-out forwards;
-  -moz-animation: flipTails 3s ease-out forwards;
-  -o-animation: flipTails 3s ease-out forwards;
-  animation: flipTails 3s ease-out forwards;
+#moeda.gira-coroa {
+  -webkit-animation: giraCoroa 3s ease-out forwards;
+  -moz-animation: giraCoroa 3s ease-out forwards;
+  -o-animation: giraCoroa 3s ease-out forwards;
+  animation: giraCoroa 3s ease-out forwards;
 }
 
-@-webkit-keyframes flipHeads {
+@-webkit-keyframes giraCara {
   from {
     -webkit-transform: rotateY(0);
     -moz-transform: rotateY(0);
@@ -74,7 +74,7 @@
   }
 }
 
-@-webkit-keyframes flipTails {
+@-webkit-keyframes giraCoroa {
   from {
     -webkit-transform: rotateY(0);
     -moz-transform: rotateY(0);

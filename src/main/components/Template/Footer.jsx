@@ -10,7 +10,7 @@ const Footer = () => {
         <footer className="footer bg-light text-dark fixed-bottom py-3">
             <div className="container">
                 <div className="row">
-                    <div className="col-6 offset-5">
+                    <div className="col-6 offset-3 text-center">
                         <span className="h5 text-muted">Desenvolvido por </span> <a className="text-decoration-none h5" href="https://www.gustavokuze.com">Gustavo Kuze</a>
                     </div>
                 </div>
