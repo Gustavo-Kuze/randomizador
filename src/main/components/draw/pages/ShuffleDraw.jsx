@@ -1,13 +1,13 @@
 import React from 'react'
-import Sort from '../subcomponents/Sort'
+import Shuffle from '../subcomponents/Shuffle'
 import Template from '../../Template'
 
-const SortDraw = () => {
+const ShuffleDraw = () => {
     return (
         <Template>
-            <Sort />
+            <Shuffle />
         </Template>
     )
 }
 
-export default SortDraw
+export default ShuffleDraw

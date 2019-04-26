@@ -27,7 +27,7 @@ const ToolsSection = () => {
                 <div className="col">
                     <div className="card-deck">
                         <Card link="numbers" src="/img/draw_numbers.png" alt="Sorteio de números" description="Sorteio de números" />
-                        <Card link="sort" src="/img/draw_mix.png" alt="Embaralhador de frases" description="Embaralhador de frases" />
+                        <Card link="shuffle" src="/img/draw_mix.png" alt="Embaralhador de frases" description="Embaralhador de frases" />
                         <Card link="headortails" src="/img/draw_coin.png" alt="Cara ou coroa" description="Cara ou coroa" />
                     </div>
                 </div>

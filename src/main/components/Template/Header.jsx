@@ -53,7 +53,7 @@ const Header = props => {
                     <ListGroup className="text-center">
                         <Link to="/lists" className="list-group-item list-group-item-action" >Minhas listas</Link>
                         <Link to="/numbers" className="list-group-item list-group-item-action" >Sorteio de números</Link>
-                        <Link to="/sort" className="list-group-item list-group-item-action" >Embaralhador de frases</Link>
+                        <Link to="/shuffle" className="list-group-item list-group-item-action" >Embaralhador de frases</Link>
                         <Link to="/headortails" className="list-group-item list-group-item-action" >Cara ou Coroa</Link>
                         <hr />
                         <Link to="/login" className="list-group-item list-group-item-action bg-primary text-light" >Login</Link>
