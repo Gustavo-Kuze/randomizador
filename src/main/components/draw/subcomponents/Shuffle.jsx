@@ -1,6 +1,7 @@
 import '../../css/Sort.css'
 import React, { useState } from 'react'
 import { Input } from 'reactstrap'
+import FilePicker from '../../utils/FilePicker'
 import Chance from 'chance'
 let chance = new Chance()
 
@@ -16,6 +17,12 @@ const Shuffle = () => {
         document.getElementById('input-resultado').scrollIntoView(true)
     }
 
+    const onFilePicked = (fileContent) => {
+        try {
+            setPhrases(fileContent)
+        } catch (err) {}
+    }
+
     return (
         <div className="section">
             <div className="jumbotron">
@@ -25,8 +32,14 @@ const Shuffle = () => {
                     </div>
                 </div>
                 <div className="row">
+                    <div className="col text-center">
+                        <p className="lead">ou clique para escolher um arquivo de texto</p>
+                        <FilePicker onPicked={onFilePicked}/>
+                    </div>
+                </div>
+                <div className="row">
                     <div className="col-10 offset-1 col-md-8 offset-md-2">
-                        <Input type="textarea" className="sort-textarea bg-light" rows="10" onChange={e => setPhrases(e.target.value)} />
+                        <Input type="textarea" className="sort-textarea bg-light" rows="10" value={phrases} onChange={e => setPhrases(e.target.value)} />
                     </div>
                 </div>
                 <div className="row">
