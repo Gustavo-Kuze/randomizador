@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Template from '../../Template'
 import List from '../subcomponents/Lists/'
 
 const MyLists = () => {
+    const [lists, setLists] = useState([])
+
     return (
         <Template>
             <div className="container">
@@ -17,9 +19,6 @@ const MyLists = () => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-6">
-                        <List />
-                    </div>
                     <div className="col-md-6">
                         <List />
                     </div>
