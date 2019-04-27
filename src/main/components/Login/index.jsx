@@ -1,5 +1,8 @@
 import 'firebaseui/dist/firebaseui.css'
 import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { login } from '../../redux/core/actions/userActions'
 import firebase from '../../services/firebase/'
 import * as firebaseui from 'firebaseui'
 import Template from '../../components/Template/'
@@ -7,7 +10,7 @@ import If from '../utils/If'
 import { Redirect } from 'react-router-dom'
 import { Spinner, Row, Col } from 'reactstrap'
 
-const Login = () => {
+const Login = (props) => {
 
     const [isLoadingUi, setIsLoadingUi] = useState(true)
     const [isSigningInDone, setSigningAsDone] = useState(false)
@@ -17,6 +20,8 @@ const Login = () => {
     }, [])
 
     const signInSuccessful = (authResult, resirectUrl) => {
+        const { displayName, email, uid, photoURL, emailVerified } = authResult.user
+        props.login({ displayName, email, uid, photoURL, emailVerified })
         setSigningAsDone(true)
     }
 
@@ -41,7 +46,7 @@ const Login = () => {
     return (
         <>
             <If c={isSigningInDone}>
-                <Redirect to="/" />
+                <Redirect to={props.redirectURL || '/'} />
             </If>
             <If c={!isSigningInDone}>
                 <Template>
@@ -60,4 +65,9 @@ const Login = () => {
 
 }
 
-export default Login
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    login
+}, dispatch)
+
+export default connect(null, mapDispatchToProps)(Login)
