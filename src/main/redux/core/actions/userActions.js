@@ -6,5 +6,5 @@ export const login = (user) => {
 }
 
 export const logout = () => {
-    return { type: 'USER_LOGIN' }
+    return { type: 'USER_LOGOUT' }
 }

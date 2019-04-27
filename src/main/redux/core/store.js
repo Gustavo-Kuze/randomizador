@@ -5,8 +5,8 @@ import createSaga from 'redux-saga'
 
 const sagaMiddleware = createSaga()
 
-// const dev = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const dev = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-export default createStore(combinedReducers, compose(applyMiddleware(sagaMiddleware)))
+export default createStore(combinedReducers, compose(applyMiddleware(sagaMiddleware), dev))
 
 sagaMiddleware.run(sagas)

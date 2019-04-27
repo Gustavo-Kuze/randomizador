@@ -1,14 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-// import { connect } from 'react-redux'
-import firebase from '../services/firebase/'
+import { connect } from 'react-redux'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={props => {
-        if (true) {
+        if (rest.email !== '') {
           return <Component {...props} />;
         } else {
           return (
@@ -25,11 +24,8 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-// const mapStateToRest = state => ({
-//    email: state.user.email
-// })
+const mapStateToRest = state => ({
+  email: state.user.email
+})
 
-// export default connect(
-//   mapStateToRest
-// )(ProtectedRoute)
-export default ProtectedRoute
+export default connect(mapStateToRest)(ProtectedRoute)

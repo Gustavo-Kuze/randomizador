@@ -1,8 +1,5 @@
 import 'firebaseui/dist/firebaseui.css'
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { login } from '../../redux/core/actions/userActions'
 import firebase from '../../services/firebase/'
 import * as firebaseui from 'firebaseui'
 import Template from '../../components/Template/'
@@ -20,8 +17,6 @@ const Login = (props) => {
     }, [])
 
     const signInSuccessful = (authResult, resirectUrl) => {
-        const { displayName, email, uid, photoURL, emailVerified } = authResult.user
-        props.login({ displayName, email, uid, photoURL, emailVerified })
         setSigningAsDone(true)
     }
 
@@ -65,9 +60,4 @@ const Login = (props) => {
 
 }
 
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-    login
-}, dispatch)
-
-export default connect(null, mapDispatchToProps)(Login)
+export default Login
