@@ -12,7 +12,7 @@ const Home = () => {
                     <div className="row">
                         <div className="col-md-8 offset-md-2 text-center">
                             <h1>Bem-vindo ao <span className="sofia font-weight-bold">Randomizador</span> !</h1>
-                            <h2 className="text-muted my-4 h3">Faça login para salvar suas listas de sorteio, além de ter acesso as ferramentas integradas com as redes sociais</h2>
+                            <h2 className="text-muted my-4 h3">Faça login para salvar suas listas de sorteio, sorteios privados e muito mais!</h2>
                         </div>
                     </div>
                     <div className="row">

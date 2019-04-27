@@ -9,12 +9,12 @@ const DrawResults = props => {
                 </div>
             </div>
             <div className="row">
-                <div className="col">
+                <div className={props.colClasses || 'col-12'}>
                     {props.children}
                 </div>
             </div>
             <div className="row mt-5">
-                <div className="col-12">
+                <div className={props.colClasses || 'col-12'}>
                     <h4 className="text-center sofia">Sorteio realizado em: {props.date || new Date().toLocaleString()}</h4>
                 </div>
             </div>

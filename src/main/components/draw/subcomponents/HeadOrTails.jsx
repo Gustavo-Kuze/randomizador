@@ -53,7 +53,7 @@ const HeadOrTails = () => {
                 <div className="container">
                     <If c={showResult}>
                         <DrawResults title="O resultado foi:">
-                            <h3 className="text-center mb-5 lobster h2 text-weight-bold">{headOrTails}</h3>
+                            <h3 className="display-4 text-center my-5 lobster h2 text-weight-bold">{headOrTails}</h3>
                         </DrawResults>
                     </If>
                 </div>

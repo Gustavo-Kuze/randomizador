@@ -2,6 +2,8 @@ import '../../css/Sort.css'
 import React, { useState } from 'react'
 import { Input } from 'reactstrap'
 import FilePicker from '../../utils/FilePicker'
+import If from '../../utils/If'
+import DrawResults from '../subcomponents/DrawResults'
 import Chance from 'chance'
 let chance = new Chance()
 
@@ -20,7 +22,7 @@ const Shuffle = () => {
     const onFilePicked = (fileContent) => {
         try {
             setPhrases(fileContent)
-        } catch (err) {}
+        } catch (err) { }
     }
 
     return (
@@ -34,7 +36,7 @@ const Shuffle = () => {
                 <div className="row">
                     <div className="col text-center">
                         <p className="lead">ou clique para escolher um arquivo de texto</p>
-                        <FilePicker onPicked={onFilePicked}/>
+                        <FilePicker onPicked={onFilePicked} />
                     </div>
                 </div>
                 <div className="row">
@@ -47,12 +49,13 @@ const Shuffle = () => {
                         <button className="btn btn-warning btn-block mt-5" onClick={shufflePhrases}>Sortear</button>
                     </div>
                 </div>
-                <div className={`row mt-5 ${shuffledPhrases.length > 0 ? '' : 'invisible'}`}>
-                    <div className="col-10 offset-1 col-md-8 offset-md-2">
-                        <h1 className="h3">Resultado:</h1>
-                        <Input id="input-resultado" type="textarea" className="sort-textarea bg-light" value={shuffledPhrases} rows="10" readOnly="readonly" />
+                <If c={shuffledPhrases.length > 0} cssHide={true}>
+                    <div>
+                        <DrawResults title="Resultado:" colClasses="col-10 offset-1 col-md-8 offset-md-2">
+                            <Input id="input-resultado" type="textarea" className="sort-textarea bg-light" value={shuffledPhrases} rows="10" readOnly="readonly" />
+                        </DrawResults>
                     </div>
-                </div>
+                </If>
             </div >
         </div>
     )
