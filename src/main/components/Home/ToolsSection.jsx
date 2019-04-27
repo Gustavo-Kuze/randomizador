@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Card = cardProps => {
     return (
-        <div className="card">
+        <div className="card tools-section-card">
             <Link className="text-decoration-none" to={`/${cardProps.link}`}>
                 <div className="card-body d-flex justify-content-center align-items-center flex-column">
                     <img src={cardProps.src} alt={cardProps.alt} />

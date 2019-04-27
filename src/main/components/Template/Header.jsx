@@ -51,7 +51,7 @@ const Header = props => {
                 <ModalBody className="">
                     <p className="lead">{`Bem-vindo, ${userName}`}</p>
                     <ListGroup className="text-center">
-                        <Link to="/lists" className="list-group-item list-group-item-action" >Minhas listas</Link>
+                        <Link to="/user/lists" className="list-group-item list-group-item-action" >Minhas listas</Link>
                         <Link to="/numbers" className="list-group-item list-group-item-action" >Sorteio de números</Link>
                         <Link to="/shuffle" className="list-group-item list-group-item-action" >Embaralhador de frases</Link>
                         <Link to="/headortails" className="list-group-item list-group-item-action" >Cara ou Coroa</Link>
