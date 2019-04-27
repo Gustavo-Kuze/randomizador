@@ -37,7 +37,7 @@ const List = () => {
             <div className="card-body">
                 <ul className="list-group">
                     {items.map((item, i) => (
-                        <Item key={`${item.text}--${i}`} item={item} onEdited={editItem} onDelete={deleteItem} />
+                        <Item key={`${item.text}--${i}`} item={item} onEdited={editItem} onDelete={deleteItem} canAddNewItem={canAddItem} />
                     ))}
                     <li className="list-group-item d-flex justify-content-between align-items-center">
                         <button className="btn btn-outline-success btn-block" onClick={addItem}>
