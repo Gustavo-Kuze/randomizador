@@ -1,6 +1,7 @@
 import '../../css/HeadOrTails.css'
 import React, { useState } from 'react'
 import If from '../../utils/If'
+import DrawResults from '../subcomponents/DrawResults'
 
 const HeadOrTails = () => {
 
@@ -51,17 +52,9 @@ const HeadOrTails = () => {
             <div className="section mt-5">
                 <div className="container">
                     <If c={showResult}>
-                        <div className="row">
-                            <div className="col">
-                                <h1 className="text-center mb-5 sofia h3">O resultado foi:</h1>
-                                <h3 className="text-center mb-5 lobster h2 text-weight-bold">{headOrTails}</h3>
-                            </div>
-                        </div>
-                        <div className="row mt-5">
-                            <div className="col">
-                                <h4 className="text-center sofia">Sorteio realizado em: {new Date().toLocaleString()}</h4>
-                            </div>
-                        </div>
+                        <DrawResults title="O resultado foi:">
+                            <h3 className="text-center mb-5 lobster h2 text-weight-bold">{headOrTails}</h3>
+                        </DrawResults>
                     </If>
                 </div>
             </div>

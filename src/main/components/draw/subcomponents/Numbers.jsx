@@ -4,6 +4,7 @@ import If from '../../utils/If'
 import { Input } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
 import { drawIntegers as draw } from '../../../drawEngine'
+import DrawResults from '../subcomponents/DrawResults'
 
 const Numbers = () => {
 
@@ -82,39 +83,27 @@ const Numbers = () => {
                             <button onClick={drawNow} type="submit" className="btn btn-warning btn-block btn-lg mt-5">Sortear</button>
                         </div>
                     </div>
-
                 </div>
-
             </div>
             <If c={randNums.length > 0}>
-                <div className="row mt-5">
-                    <div className="col-12">
-                        <h1 className="text-center lobster mb-3">Os números sorteados foram:</h1>
-                        <table className="table table-striped table-bordered h3 text-center">
-                            <thead>
-                                <tr>
-                                    <th>Posição</th>
-                                    <th>Número sorteado</th>
+                <DrawResults title="Os números sorteados foram:">
+                    <table className="table table-striped table-bordered h3 text-center">
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Número sorteado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {randNums.map((n, i) => (
+                                <tr key={`${n}--${i}_${n}`}>
+                                    <td>{++i}º</td>
+                                    <td>{n}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {randNums.map((n, i) => (
-                                    <tr key={`${n}--${i}_${n}`}>
-                                        <td>{++i}º</td>
-                                        <td>{n}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-
-                <div className="row mt-5">
-                    <div className="col-12">
-                        <h4 className="text-center sofia">Sorteio realizado em: {new Date().toLocaleString()}</h4>
-                    </div>
-                </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </DrawResults>
             </If>
         </div>
     )
