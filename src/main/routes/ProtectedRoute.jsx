@@ -14,7 +14,9 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
             <Redirect
               to={{
                 pathname: '/login',
-                state: { from: props.location }
+                state: {
+                  from: props.location
+                }
               }}
             />
           );
@@ -28,4 +30,6 @@ const mapStateToRest = state => ({
   email: state.user.email
 })
 
-export default connect(mapStateToRest)(ProtectedRoute)
+export default connect(
+  mapStateToRest
+)(ProtectedRoute)

@@ -10,7 +10,6 @@ import ShuffleDraw from '../components/draw/pages/ShuffleDraw'
 import Login from '../components/Login/'
 import Logout from '../components/Login/Logout'
 
-
 export default () =>
     <BrowserRouter>
         <Switch>
