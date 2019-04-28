@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Template from '../../Template'
 import List from '../subcomponents/Lists/'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { addList } from '../../../redux/core/actions/listsActions'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const MyLists = (props) => {
-   
+
+    let [colsSize, setColsSize] = useState(6)
+    let [isDropdownOpen, toggleDropDown] = useState(false)
+
     return (
         <Template>
             <div className="container">
@@ -16,14 +20,27 @@ const MyLists = (props) => {
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <div className="col-6">
+                    <div className="col-2">
                         <button className="btn btn-outline-primary" onClick={props.addList}>Nova lista</button>
+                    </div>
+                    <div className="col-1">
+                        <Dropdown isOpen={isDropdownOpen} toggle={() => toggleDropDown(!isDropdownOpen)}>
+                            <DropdownToggle caret>
+                                Visualizar
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem header>Número de colunas</DropdownItem>
+                                <DropdownItem onClick={() => setColsSize(4)}>3</DropdownItem>
+                                <DropdownItem onClick={() => setColsSize(6)}>2</DropdownItem>
+                                <DropdownItem onClick={() => setColsSize(12)}>1</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
                     </div>
                 </div>
                 <div className="row">
                     {
                         props.lists.map((l, i) => (
-                            <div key={`list-div-${l.id}--${i}`} className="col-md-6">
+                            <div key={`list-div-${l.id}--${i}`} className={`col-md-${colsSize}`}>
                                 <List list={l} items={l.items} />
                             </div>
                         ))
