@@ -34,9 +34,9 @@ export const removeItem = (item, listId) => {
     }
 }
 
-export const editItemName = (item, listId) => {
+export const editItemText = (item, listId) => {
     return {
-        type: types.EDIT_ITEM_NAME,
+        type: types.EDIT_ITEM_TEXT,
         payload: { item, listId }
     }
 }

@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import If from '../../../utils/If'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { editListName, removeList } from "../../../../redux/core/actions/listsActions"
 
 const ListHeader = (props) => {
 
@@ -10,7 +13,7 @@ const ListHeader = (props) => {
     let name = e.target.value
     clearTimeout(time)
     time = setTimeout(() => {
-      props.onListEdited({ ...props.list, name })
+      props.editListName({ ...props.list, name })
       setEditMode(false)
     }, 500);
   }
@@ -36,4 +39,8 @@ const ListHeader = (props) => {
   </>
 }
 
-export default ListHeader
+const mapDispatchToProps = dispatch => bindActionCreators({
+  editListName, removeList
+}, dispatch)
+
+export default connect(null, mapDispatchToProps)(ListHeader)

@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import If from '../../../utils/If'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { editItemText, removeItem, setItemEnabledState } from '../../../../redux/core/actions/listsActions'
 
 const Item = (props) => {
 
-    let [enabled, setEnabled] = useState(true)
+    let [enabled, setEnabled] = useState(props.item.enabled)
     let [editMode, setEditMode] = useState(!props.item.text)
 
     const setEditModeAndPrepareInput = (fillText, forceEdit) => {
-        if (props.canAddNewItem || forceEdit) {
+        // if (props.canAddNewItem || forceEdit) {
             setEditMode(true)
             setTimeout(() => {
                 const inputEditItem = document.getElementById(`input-edit-item-${props.item.id}`)
@@ -17,7 +20,7 @@ const Item = (props) => {
                     inputEditItem.focus()
                 }
             }, 20);
-        }
+        // }
     }
 
     const setEditModeIfNoText = () => {
@@ -30,13 +33,14 @@ const Item = (props) => {
         let text = e.target.value
         clearTimeout(time)
         time = setTimeout(() => {
-            props.onEdited(props.item, { ...props.item, text })
+            props.editItemText({ ...props.item, text }, props.listId)
         }, 500);
     }
 
     const setEnabledState = () => {
-        setEnabled(!enabled)
-        props.setEnabledState(props.item, enabled)
+        let toggledEnabled = !enabled
+        setEnabled(toggledEnabled)
+        props.setItemEnabledState({...props.item, enabled: toggledEnabled}, props.listId)
     }
 
     return (
@@ -58,7 +62,7 @@ const Item = (props) => {
                         </button>
                     </div>
                     <div className="col-1">
-                        <button className="btn btn-link text-decoration-none float-right" onClick={() => props.onDelete(props.item)}>
+                        <button className="btn btn-link text-decoration-none float-right" onClick={() => props.removeItem(props.item, props.listId)}>
                             <i className="fa fa-trash text-danger"></i>
                         </button>
                     </div>
@@ -68,4 +72,8 @@ const Item = (props) => {
     )
 }
 
-export default Item
+const mapDispatchToProps = dispatch => bindActionCreators({
+    editItemText, removeItem, setItemEnabledState
+}, dispatch)
+
+export default connect(null, mapDispatchToProps)(Item)

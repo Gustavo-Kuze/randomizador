@@ -1,31 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Template from '../../Template'
 import List from '../subcomponents/Lists/'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { addList } from '../../../redux/core/actions/listsActions'
 
-const MyLists = () => {
-    let [idCounter, setIdCounter] = useState(0)
-    const [lists, setLists] = useState([])
-
-    const addList = () => {
-        let id = idCounter += 1
-        let list = { id, name: 'Lista sem nome' }
-        setIdCounter(id)
-        setLists([...lists, list])
-    }
-
-    const removeList = (list) => {
-        setLists(lists.filter(l => l.id !== list.id))
-    }
-
-    const editName = (editedList) => {
-        let newLists = lists.map(i => {
-            if (i.id === editedList.id)
-                return editedList
-            return i
-        })
-        setLists(newLists)
-    }
-
+const MyLists = (props) => {
+   
     return (
         <Template>
             <div className="container">
@@ -36,14 +17,14 @@ const MyLists = () => {
                 </div>
                 <div className="row mt-3">
                     <div className="col-6">
-                        <button className="btn btn-outline-primary" onClick={addList}>Nova lista</button>
+                        <button className="btn btn-outline-primary" onClick={props.addList}>Nova lista</button>
                     </div>
                 </div>
                 <div className="row">
                     {
-                        lists.map((l, i) => (
+                        props.lists.map((l, i) => (
                             <div key={`list-div-${l.id}--${i}`} className="col-md-6">
-                                <List list={l} removeList={removeList} onNameEdited={editName} />
+                                <List list={l} items={l.items} />
                             </div>
                         ))
                     }
@@ -53,4 +34,12 @@ const MyLists = () => {
     )
 }
 
-export default MyLists
+const mapStateToProps = state => ({
+    lists: state.lists
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    addList
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyLists)
