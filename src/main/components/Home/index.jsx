@@ -17,7 +17,7 @@ const Home = () => {
                     </div>
                     <div className="row">
                         <div className="col-6 offset-3">
-                            <Link to="/login" className="btn btn-primary btn-block">Entrar</Link>
+                            <Link to="/user/lists" className="btn btn-primary btn-block">Entrar</Link>
                         </div>
                     </div>
                 </div>

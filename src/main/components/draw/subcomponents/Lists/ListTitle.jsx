@@ -16,10 +16,23 @@ const ListHeader = (props) => {
   }
 
   return <>
-    <If c={editMode}>
-      <input autoFocus={true} id={`input-edit-list-${props.list.id}`} className="form-control" type="text" onKeyUp={editWhenFinishedTyping} />
-    </If>
-    <p onDoubleClick={() => setEditMode(true)} className="h4 mt-2">{props.list.name}</p>
+    <div className="card-header" onDoubleClick={() => setEditMode(true)} >
+      <div className="container">
+        <div className="row">
+          <div className="col-11">
+            <If c={editMode}>
+              <input autoFocus={true} id={`input-edit-list-${props.list.id}`} className="form-control" type="text" onKeyUp={editWhenFinishedTyping} />
+            </If>
+            <p className="h4 mt-2">{props.list.name}</p>
+          </div>
+          <div className="col-1">
+            <button className="btn btn-link text-decoration-none" onClick={() => props.removeList(props.list)}>
+              <i className="fa fa-times fa-lg text-danger"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </>
 }
 

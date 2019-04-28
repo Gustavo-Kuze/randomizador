@@ -1,3 +1,5 @@
+import types from '../actions/types/userTypes'
+
 const STATE = {
     displayName: '',
     email: '',
@@ -8,9 +10,9 @@ const STATE = {
 
 export default (state = STATE, action) => {
     switch (action.type) {
-        case 'USER_LOGIN':
+        case types.USER_LOGIN:
             return action.payload
-        case 'USER_LOGOUT':
+        case types.USER_LOGOUT:
             return STATE
         default:
             return state

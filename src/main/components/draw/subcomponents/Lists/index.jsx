@@ -2,6 +2,9 @@ import '../../../css/List.css'
 import React, { useState } from 'react'
 import Item from './Item'
 import ListTitle from './ListTitle'
+import { connect } from 'react-redux'
+import { bindActionCretors } from 'redux'
+import {} from ''
 
 const List = (props) => {
     let [idCounter, setIdCounter] = useState(1)
@@ -43,20 +46,7 @@ const List = (props) => {
 
     return (
         <div className="card mt-5">
-            <div className="card-header">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-11">
-                            <ListTitle list={props.list} onListEdited={props.onNameEdited} />
-                        </div>
-                        <div className="col-1">
-                            <button className="btn btn-link text-decoration-none" onClick={() => props.removeList(props.list)}>
-                                <i className="fa fa-times fa-lg text-danger"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ListTitle list={props.list} onListEdited={props.onNameEdited} removeList={props.removeList} />
             <div className="card-body">
                 <ul className="list-group">
                     {items.map((item, i) => (

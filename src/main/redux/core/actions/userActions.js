@@ -1,10 +1,12 @@
+import types from './types/userTypes'
+
 export const login = (user) => {
     return {
-        type: 'USER_LOGIN',
+        type: types.USER_LOGIN,
         payload: user
     }
 }
 
 export const logout = () => {
-    return { type: 'USER_LOGOUT' }
+    return { type: types.USER_LOGOUT }
 }
