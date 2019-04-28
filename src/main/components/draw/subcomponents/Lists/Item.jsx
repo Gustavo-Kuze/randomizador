@@ -3,7 +3,7 @@ import If from '../../../utils/If'
 
 const Item = (props) => {
 
-    let [editMode, setEditMode] = useState(false)
+    let [editMode, setEditMode] = useState(!props.item.text)
 
     const setEditModeAndPrepareInput = (fillText, forceEdit) => {
         if (props.canAddNewItem || forceEdit) {
@@ -39,7 +39,7 @@ const Item = (props) => {
                 <div className="row">
                     <div className="col-10">
                         <If c={editMode}>
-                            <input id={`input-edit-item-${props.item.id}`} className="form-control" type="text" onKeyUp={editWhenFinishedTyping} />
+                            <input autoFocus={true} id={`input-edit-item-${props.item.id}`} className="form-control" type="text" onKeyUp={editWhenFinishedTyping} />
                         </If>
                         {props.item.text}
                     </div>

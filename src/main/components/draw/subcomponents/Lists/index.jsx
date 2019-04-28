@@ -1,8 +1,9 @@
 import '../../../css/List.css'
 import React, { useState } from 'react'
 import Item from './Item'
+import ListTitle from './ListTitle'
 
-const List = () => {
+const List = (props) => {
     let [idCounter, setIdCounter] = useState(1)
     let [canAddItem, setCanAddItem] = useState(true)
     let [items, setItems] = useState([
@@ -34,10 +35,24 @@ const List = () => {
 
     return (
         <div className="card mt-5">
+            <div className="card-header">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-11">
+                            <ListTitle list={props.list} onListEdited={props.onNameEdited}/>
+                        </div>
+                        <div className="col-1">
+                            <button className="btn btn-link text-decoration-none" onClick={() => props.removeList(props.list)}>
+                                <i className="fa fa-times fa-lg text-danger"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="card-body">
                 <ul className="list-group">
                     {items.map((item, i) => (
-                        <Item key={`${item.text}--${i}`} item={item} onEdited={editItem} onDelete={deleteItem} canAddNewItem={canAddItem} />
+                        <Item key={`${item.text}--${props.list.id}--${i}`} item={item} onEdited={editItem} onDelete={deleteItem} canAddNewItem={canAddItem} />
                     ))}
                     <li className="list-group-item d-flex justify-content-between align-items-center">
                         <button className="btn btn-outline-success btn-block" onClick={addItem}>
