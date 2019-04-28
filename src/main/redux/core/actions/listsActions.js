@@ -27,23 +27,23 @@ export const addItem = (listId) => {
     }
 }
 
-export const removeItem = (item) => {
+export const removeItem = (item, listId) => {
     return {
         type: types.REMOVE_ITEM,
-        payload: item
+        payload: { item, listId }
     }
 }
 
-export const editItemName = (item) => {
+export const editItemName = (item, listId) => {
     return {
         type: types.EDIT_ITEM_NAME,
-        payload: item
+        payload: { item, listId }
     }
 }
 
-export const setItemEnabledState = (item) => {
+export const setItemEnabledState = (item, listId) => {
     return {
         type: types.SET_ITEM_ENABLED_STATE,
-        payload: item
+        payload: { item, listId }
     }
 }
