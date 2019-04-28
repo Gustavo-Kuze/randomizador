@@ -3,6 +3,7 @@ import If from '../../../utils/If'
 
 const Item = (props) => {
 
+    let [enabled, setEnabled] = useState(true)
     let [editMode, setEditMode] = useState(!props.item.text)
 
     const setEditModeAndPrepareInput = (fillText, forceEdit) => {
@@ -33,6 +34,11 @@ const Item = (props) => {
         }, 500);
     }
 
+    const setEnabledState = () => {
+        setEnabled(!enabled)
+        props.setEnabledState(props.item, enabled)
+    }
+
     return (
         <li draggable={true} className="list-group-item d-flex align-items-center" onClick={setEditModeIfNoText} onDoubleClick={() => setEditModeAndPrepareInput(props.item.text)}>
             <div className="container">
@@ -41,9 +47,17 @@ const Item = (props) => {
                         <If c={editMode}>
                             <input autoFocus={true} id={`input-edit-item-${props.item.id}`} className="form-control" type="text" onKeyUp={editWhenFinishedTyping} />
                         </If>
-                        {props.item.text}
+                        <p>
+                            <If c={enabled}>{props.item.text}</If>
+                            <If c={!enabled}><del>{props.item.text}</del></If>
+                        </p>
                     </div>
-                    <div className="col-2">
+                    <div className="col-1">
+                        <button className="btn btn-link text-decoration-none float-right" onClick={setEnabledState}>
+                            <i className={`fas fa-${enabled ? "ban text-warning" : "check text-success"}`}></i>
+                        </button>
+                    </div>
+                    <div className="col-1">
                         <button className="btn btn-link text-decoration-none float-right" onClick={() => props.onDelete(props.item)}>
                             <i className="fa fa-trash text-danger"></i>
                         </button>

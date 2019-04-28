@@ -33,13 +33,21 @@ const List = (props) => {
             setCanAddItem(true)
     }
 
+    const setItemEnabledState = (item, enabled) => {
+        let newItems = items.map(i => {
+            if (i.id === item.id) { i.enabled = enabled }
+            return i
+        })
+        setItems(newItems)
+    }
+
     return (
         <div className="card mt-5">
             <div className="card-header">
                 <div className="container">
                     <div className="row">
                         <div className="col-11">
-                            <ListTitle list={props.list} onListEdited={props.onNameEdited}/>
+                            <ListTitle list={props.list} onListEdited={props.onNameEdited} />
                         </div>
                         <div className="col-1">
                             <button className="btn btn-link text-decoration-none" onClick={() => props.removeList(props.list)}>
@@ -52,7 +60,9 @@ const List = (props) => {
             <div className="card-body">
                 <ul className="list-group">
                     {items.map((item, i) => (
-                        <Item key={`${item.text}--${props.list.id}--${i}`} item={item} onEdited={editItem} onDelete={deleteItem} canAddNewItem={canAddItem} />
+                        <Item key={`${item.text}--${props.list.id}--${i}`}
+                            item={item} onEdited={editItem} onDelete={deleteItem}
+                            canAddNewItem={canAddItem} setEnabledState={setItemEnabledState} />
                     ))}
                     <li className="list-group-item d-flex justify-content-between align-items-center">
                         <button className="btn btn-outline-success btn-block" onClick={addItem}>

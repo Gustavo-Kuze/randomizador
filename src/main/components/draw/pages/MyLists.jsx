@@ -18,8 +18,11 @@ const MyLists = () => {
     }
 
     const editName = (editedList) => {
-        let newLists = lists.filter(i => i.id !== editedList.id)
-        newLists = [editedList, ...newLists]
+        let newLists = lists.map(i => {
+            if (i.id === editedList.id)
+                return editedList
+            return i
+        })
         setLists(newLists)
     }
 
