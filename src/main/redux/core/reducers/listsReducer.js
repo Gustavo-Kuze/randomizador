@@ -43,6 +43,13 @@ export default (state = STATE, action) => {
             let listItemsCloneWithChangedState = listToSetEnabledState.items.map(i => i.id === action.payload.item.id ?
                 { ...i, enabled: action.payload.item.enabled } : i)
             return state.map(l => l.id === action.payload.listId ? { ...l, items: listItemsCloneWithChangedState } : l)
+        case types.SET_ALL_ITEMS_ENABLED_STATE:
+            let listToSetAllEnabled = state.find(l => l.id === action.payload.listId)
+            if(listToSetAllEnabled.items){
+                let listEnabledOrNotItemsClone = listToSetAllEnabled.items.map(i => ({ ...i, enabled: action.payload.enabled }))
+                return state.map(l => l.id === action.payload.listId ? { ...l, items: listEnabledOrNotItemsClone } : l)
+            }
+            return state
         default:
             return state
     }

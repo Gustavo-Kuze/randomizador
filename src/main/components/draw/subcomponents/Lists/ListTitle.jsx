@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import If from '../../../utils/If'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { editListName, removeList } from "../../../../redux/core/actions/listsActions"
+import { editListName, removeList, setAllItemsEnabledState } from "../../../../redux/core/actions/listsActions"
 import keycodes from '../../../utils/keycodes'
 
 const ListHeader = (props) => {
 
   let [editMode, setEditMode] = useState(false)
+  let [allEnabled, setAllEnabled] = useState(true)
 
   const editNameOnEnter = (e) => {
     let code = e.keyCode || e.which
@@ -18,7 +19,7 @@ const ListHeader = (props) => {
   }
 
   const cancelOnBlur = () => {
-      setEditMode(false)
+    setEditMode(false)
   }
 
   return <>
@@ -35,6 +36,12 @@ const ListHeader = (props) => {
             <button className="btn btn-link text-decoration-none pop-hover" onClick={() => props.removeList(props.list)}>
               <i className="fa fa-times fa-lg text-danger"></i>
             </button>
+            <button className="btn btn-link text-decoration-none pop-hover" onClick={() => {
+              props.setAllItemsEnabledState(!allEnabled, props.list.id)
+              setAllEnabled(!allEnabled)
+            }} >
+              <i className={`fas fa-${!allEnabled ? "ban text-warning" : "check text-success"}`}></i>
+            </button>
           </div>
         </div>
       </div>
@@ -43,7 +50,7 @@ const ListHeader = (props) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  editListName, removeList
+  editListName, removeList, setAllItemsEnabledState
 }, dispatch)
 
 export default connect(null, mapDispatchToProps)(ListHeader)

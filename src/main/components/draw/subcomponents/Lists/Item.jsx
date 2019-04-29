@@ -54,13 +54,13 @@ const Item = (props) => {
                             <input autoFocus={true} id={`input-edit-item-${props.item.id}`} className="form-control" type="text" onKeyUp={editItemTextOnEnter} />
                         </If>
                         <p>
-                            <If c={enabled}>{props.item.text}</If>
-                            <If c={!enabled}><del>{props.item.text}</del></If>
+                            <If c={props.item.enabled}>{props.item.text}</If>
+                            <If c={!props.item.enabled}><del>{props.item.text}</del></If>
                         </p>
                     </div>
                     <div className="col-2">
                         <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={setEnabledState}>
-                            <i className={`fas fa-${!enabled ? "ban text-warning" : "check text-success"}`}></i>
+                            <i className={`fas fa-${!props.item.enabled ? "ban text-warning" : "check text-success"}`}></i>
                         </button>
                         <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={() => props.removeItem(props.item, props.listId)}>
                             <i className="fa fa-trash text-danger"></i>

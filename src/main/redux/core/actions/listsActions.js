@@ -47,3 +47,10 @@ export const setItemEnabledState = (item, listId) => {
         payload: { item, listId }
     }
 }
+
+export const setAllItemsEnabledState = (enabled, listId) => {
+    return {
+        type: types.SET_ALL_ITEMS_ENABLED_STATE,
+        payload: { enabled, listId }
+    }
+}
