@@ -17,18 +17,22 @@ const ListHeader = (props) => {
     }
   }
 
+  const cancelOnBlur = () => {
+      setEditMode(false)
+  }
+
   return <>
     <div className="card-header" onDoubleClick={() => setEditMode(true)} >
       <div className="container">
         <div className="row">
           <div className="col-10">
             <If c={editMode}>
-              <input autoFocus={true} id={`input-edit-list-${props.list.id}`} className="form-control" type="text" onKeyUp={editNameOnEnter} />
+              <input autoFocus={true} id={`input-edit-list-${props.list.id}`} className="form-control" type="text" onBlur={cancelOnBlur} onKeyUp={editNameOnEnter} />
             </If>
-            <p className="h4 mt-2">{props.list.name}</p>
+            <p className="h4 mt-2">{props.list.name || 'Clique 2 vezes para nomear'}</p>
           </div>
           <div className="col-2">
-            <button className="btn btn-link text-decoration-none" onClick={() => props.removeList(props.list)}>
+            <button className="btn btn-link text-decoration-none pop-hover" onClick={() => props.removeList(props.list)}>
               <i className="fa fa-times fa-lg text-danger"></i>
             </button>
           </div>

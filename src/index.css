@@ -17,3 +17,11 @@ code {
 .sofia {
   font-family: 'Sofia', cursive;
 }
+
+.pop-hover {
+  transition: transform 50ms ease;
+}
+
+.pop-hover:hover {
+  transform: scale(1.1)
+}

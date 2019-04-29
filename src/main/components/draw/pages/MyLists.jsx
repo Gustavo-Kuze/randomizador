@@ -20,13 +20,13 @@ const MyLists = (props) => {
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <div className="col-2">
+                    <div className="col-12 col-lg-2">
                         <button className="btn btn-outline-primary" onClick={props.addList}>Nova lista</button>
                     </div>
-                    <div className="col-1">
+                    <div className="col-1 d-none d-lg-block">
                         <Dropdown isOpen={isDropdownOpen} toggle={() => toggleDropDown(!isDropdownOpen)}>
                             <DropdownToggle caret>
-                                Visualizar
+                                Visualizar ({12 / colsSize})
                             </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem header>Número de colunas</DropdownItem>

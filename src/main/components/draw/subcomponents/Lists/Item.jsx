@@ -41,8 +41,12 @@ const Item = (props) => {
         props.setItemEnabledState({ ...props.item, enabled: toggledEnabled }, props.listId)
     }
 
+    const cancelOnBlur = () => {
+        setEditMode(false)
+    }
+
     return (
-        <li draggable={true} className="list-group-item d-flex align-items-center" onClick={setEditModeIfNoText} onDoubleClick={() => setEditModeAndPrepareInput(props.item.text)}>
+        <li draggable={true} className="list-group-item d-flex align-items-center" onClick={setEditModeIfNoText} onBlur={cancelOnBlur} onDoubleClick={() => setEditModeAndPrepareInput(props.item.text)}>
             <div className="container">
                 <div className="row">
                     <div className="col-10">
@@ -55,10 +59,10 @@ const Item = (props) => {
                         </p>
                     </div>
                     <div className="col-2">
-                        <button className="btn btn-link text-decoration-none float-right" onClick={setEnabledState}>
-                            <i className={`fas fa-${enabled ? "ban text-warning" : "check text-success"}`}></i>
+                        <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={setEnabledState}>
+                            <i className={`fas fa-${!enabled ? "ban text-warning" : "check text-success"}`}></i>
                         </button>
-                        <button className="btn btn-link text-decoration-none float-right" onClick={() => props.removeItem(props.item, props.listId)}>
+                        <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={() => props.removeItem(props.item, props.listId)}>
                             <i className="fa fa-trash text-danger"></i>
                         </button>
                     </div>
