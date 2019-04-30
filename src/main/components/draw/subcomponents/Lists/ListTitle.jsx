@@ -15,10 +15,13 @@ const ListHeader = (props) => {
     if (code === keycodes.ENTER) {
       props.editListName({ ...props.list, name: e.target.value })
       setEditMode(false)
+    } else if (code === keycodes.ESCAPE) {
+      setEditMode(false)
     }
   }
 
-  const cancelOnBlur = () => {
+  const saveOnBlur = (e) => {
+    props.editListName({ ...props.list, name: e.target.value })
     setEditMode(false)
   }
 
@@ -28,7 +31,7 @@ const ListHeader = (props) => {
         <div className="row">
           <div className="col-10">
             <If c={editMode}>
-              <input autoFocus={true} id={`input-edit-list-${props.list.id}`} className="form-control" type="text" onBlur={cancelOnBlur} onKeyUp={editNameOnEnter} />
+              <input autoFocus={true} id={`input-edit-list-${props.list.id}`} className="form-control" type="text" onBlur={saveOnBlur} onKeyUp={editNameOnEnter} />
             </If>
             <p className="h4 mt-2">{props.list.name || 'Clique 2 vezes para nomear'}</p>
           </div>

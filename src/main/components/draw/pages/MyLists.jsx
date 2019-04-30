@@ -27,22 +27,35 @@ const MyLists = (props) => {
     useEffect(() => { setIsQuantityInputValid(quantity > 0) })
 
     const draw = () => {
-        if (props.lists.length > 0) {
-            let allItems = []
-            props.lists.forEach((l) => {
-                try {
-                    if (l.items) {
-                        let listItem = []
-                        listItem = l.items.flatMap((item, index) => [item, listItem[index]])
-                        allItems = [...allItems, ...(listItem.filter(item => item).map(item => item.text).filter(text => text))]
-                    }
-                } catch (error) { }
-            })
-            if (allItems) {
-                setDrawnItems(chance.pickset(chance.shuffle(allItems), quantity))
+        if (quantity > 0) {
+            if (props.lists.length > 0) {
+                let allItems = []
+                props.lists.forEach((l) => {
+                    try {
+                        if (l.items) {
+                            let listItem = []
+                            listItem = l.items.flatMap((item, index) => [item, listItem[index]])
+                            allItems = [...allItems, ...(listItem.filter(item => {
+                                if (item)
+                                    if (item.enabled)
+                                        return item
+                                return false
+                            }
+                            ).map(item => item.text).filter(text => text))]
+                        }
+                    } catch (error) { }
+                })
+                if (allItems.length > 0) {
+                    setDrawnItems(chance.pickset(chance.shuffle(allItems), quantity))
+                } else {
+                    toastr.warning('Atenção', 'Você não tem nenhum item para sortear')
+                }
+            } else {
+                toastr.warning('Atenção', 'Você não tem nenhuma lista de itens para sortear')
             }
         } else {
-            toastr.warning('Atenção', 'Você não tem nenhum item para sortear')
+            setDrawnItems([])
+            toastr.warning('Atenção', 'Você precisa informar quantos itens deseja sortear')
         }
     }
 
