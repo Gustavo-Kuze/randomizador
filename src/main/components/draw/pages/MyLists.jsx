@@ -9,6 +9,9 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { Input } from 'reactstrap'
 import If from '../../utils/If'
 import MyListsControlsSub from '../subcomponents/Lists/MyListsControlsSub';
+import Chance from 'chance'
+import { toastr } from 'react-redux-toastr'
+let chance = new Chance()
 
 const MyLists = (props) => {
 
@@ -22,6 +25,26 @@ const MyLists = (props) => {
     let [drawnItems, setDrawnItems] = useState([])
 
     useEffect(() => { setIsQuantityInputValid(quantity > 0) })
+
+    const draw = () => {
+        if (props.lists.length > 0) {
+            let allItems = []
+            props.lists.forEach((l) => {
+                try {
+                    if (l.items) {
+                        let listItem = []
+                        listItem = l.items.flatMap((item, index) => [item, listItem[index]])
+                        allItems = [...allItems, ...(listItem.filter(item => item).map(item => item.text).filter(text => text))]
+                    }
+                } catch (error) { }
+            })
+            if (allItems) {
+                setDrawnItems(chance.pickset(chance.shuffle(allItems), quantity))
+            }
+        } else {
+            toastr.warning('Atenção', 'Você não tem nenhum item para sortear')
+        }
+    }
 
     return (
         <Template>
@@ -47,7 +70,7 @@ const MyLists = (props) => {
                                             />
                                         </div>
                                         <div className="col-sm-6">
-                                            <button className="btn btn-warning btn-block">Sortear</button>
+                                            <button className="btn btn-warning btn-block" onClick={() => draw()}>Sortear</button>
                                         </div>
                                     </div>
                                     <div className="row mt-3">
@@ -62,22 +85,14 @@ const MyLists = (props) => {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td><span>Excluir um item</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td><span>Adicionar um novo item</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td><span>Este item não será sorteado</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td><span>Este item será sorteado</span></td>
-                                                            </tr>
+                                                            {
+                                                                drawnItems.map((di, i) => (
+                                                                    <tr key={`${di}--${i}`}>
+                                                                        <td>{i + 1}</td>
+                                                                        <td>{di}</td>
+                                                                    </tr>
+                                                                ))
+                                                            }
                                                         </tbody>
                                                     </table>
                                                 </div>
