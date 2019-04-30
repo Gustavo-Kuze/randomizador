@@ -6,48 +6,52 @@ let listIdCounter = 0
 let itemIdCounter = 0
 
 export default (state = STATE, action) => {
+    let id = 0
+    let items = []
+    let lists = []
+    let list = {}
+
     switch (action.type) {
         case types.ADD_LIST:
-            let idList = listIdCounter = (listIdCounter += 1)
-            return [...state, { id: idList, name: '' }]
+            id = listIdCounter = (listIdCounter += 1)
+            return [...state, { id, name: '' }]
         case types.REMOVE_LIST:
             return state.filter(l => l.id !== action.payload.id)
         case types.EDIT_LIST_NAME:
-            let newState = state.map(s => s.id === action.payload.id ? action.payload : s)
-            return newState
+            lists = state.map(s => s.id === action.payload.id ? action.payload : s)
+            return lists
         case types.ADD_ITEM:
-            let idItem = itemIdCounter = (itemIdCounter += 1)
-            let stateWithItem = state.map(l => {
+            id = itemIdCounter = (itemIdCounter += 1)
+            lists = state.map(l => {
                 if (l.id === action.payload) {
                     if (l.items) {
-                        l.items = [...l.items, { id: idItem, text: '', enabled: true }]
+                        l.items = [...l.items, { id, text: '', enabled: true }]
                     } else {
-                        l.items = [{ id: idItem, text: '', enabled: true }]
+                        l.items = [{ id, text: '', enabled: true }]
                     }
                 }
                 return l
             })
-
-            return stateWithItem
+            return lists
         case types.REMOVE_ITEM:
-            let listToRemoveItem = state.find(l => l.id === action.payload.listId)
-            let listCloneWithoutItem = listToRemoveItem.items.filter(i => i.id !== action.payload.item.id)
-            return state.map(l => l.id === action.payload.listId ? { ...l, items: listCloneWithoutItem } : l)
+            list = state.find(l => l.id === action.payload.listId)
+            items = list.items.filter(i => i.id !== action.payload.item.id)
+            return state.map(l => l.id === action.payload.listId ? { ...l, items: items } : l)
         case types.EDIT_ITEM_TEXT:
-            let listToEditItem = state.find(l => l.id === action.payload.listId)
-            let listItemsCloneWithEditedItem = listToEditItem.items.map(i => i.id === action.payload.item.id
+            list = state.find(l => l.id === action.payload.listId)
+            items = list.items.map(i => i.id === action.payload.item.id
                 ? { ...i, text: action.payload.item.text } : i)
-            return state.map(l => l.id === action.payload.listId ? { ...l, items: listItemsCloneWithEditedItem } : l)
+            return state.map(l => l.id === action.payload.listId ? { ...l, items: items } : l)
         case types.SET_ITEM_ENABLED_STATE:
-            let listToSetEnabledState = state.find(l => l.id === action.payload.listId)
-            let listItemsCloneWithChangedState = listToSetEnabledState.items.map(i => i.id === action.payload.item.id ?
+            list = state.find(l => l.id === action.payload.listId)
+            items = list.items.map(i => i.id === action.payload.item.id ?
                 { ...i, enabled: action.payload.item.enabled } : i)
-            return state.map(l => l.id === action.payload.listId ? { ...l, items: listItemsCloneWithChangedState } : l)
+            return state.map(l => l.id === action.payload.listId ? { ...l, items: items } : l)
         case types.SET_ALL_ITEMS_ENABLED_STATE:
-            let listToSetAllEnabled = state.find(l => l.id === action.payload.listId)
-            if(listToSetAllEnabled.items){
-                let listEnabledOrNotItemsClone = listToSetAllEnabled.items.map(i => ({ ...i, enabled: action.payload.enabled }))
-                return state.map(l => l.id === action.payload.listId ? { ...l, items: listEnabledOrNotItemsClone } : l)
+            list = state.find(l => l.id === action.payload.listId)
+            if(list.items){
+                items = list.items.map(i => ({ ...i, enabled: action.payload.enabled }))
+                return state.map(l => l.id === action.payload.listId ? { ...l, items } : l)
             }
             return state
         default:

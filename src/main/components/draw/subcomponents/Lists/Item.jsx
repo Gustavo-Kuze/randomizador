@@ -7,7 +7,6 @@ import { editItemText, removeItem, setItemEnabledState } from '../../../../redux
 
 const Item = (props) => {
 
-    let [enabled, setEnabled] = useState(props.item.enabled)
     let [editMode, setEditMode] = useState(!props.item.text)
 
     const setEditModeAndPrepareInput = (fillText) => {
@@ -36,8 +35,7 @@ const Item = (props) => {
     }
 
     const setEnabledState = () => {
-        let toggledEnabled = !enabled
-        setEnabled(toggledEnabled)
+        let toggledEnabled = !props.item.enabled
         props.setItemEnabledState({ ...props.item, enabled: toggledEnabled }, props.listId)
     }
 
