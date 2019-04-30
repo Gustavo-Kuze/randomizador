@@ -1,10 +1,14 @@
 import React from 'react'
 
-const logAndReturnChildren = (children, condition) => {
-    let elem = React.Children.only(children) > 1 ? React.Children.only(children[0]) : React.Children.only(children)
-    let elemProps = { ...elem.props, className: `${elem.props.className} ${condition ? '' : 'invisible'}` }
+const setVisibilityOnC = (children, condition, hideElementClassName = false) => {
+    let elem = React.Children.count(children) > 1 ? React.Children.only(children[0]) : React.Children.only(children)
+    let elemProps = {
+        ...elem.props,
+        className: `${hideElementClassName && !condition ? '' : elem.props.className} ${condition ? '' : 'invisible'}`,
+        style: condition ? elem.props.style : { height: '0px', width: '0px' }
+    }
     let elemClone = React.cloneElement(elem, elemProps)
     return elemClone
 }
 
-export default props => props.cssHide ? logAndReturnChildren(props.children, props.c) : props.c ? props.children : ''
+export default props => props.cssHide ? setVisibilityOnC(props.children, props.c, props.hideClassName) : props.c ? props.children : ''
