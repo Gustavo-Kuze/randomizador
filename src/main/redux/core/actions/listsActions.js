@@ -2,7 +2,7 @@ import types from './types/listsTypes'
 
 export const addList = () => {
     return {
-        type: types.ADD_LIST
+        type: types.ADD_LIST_SAGA
     }
 }
 

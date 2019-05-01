@@ -49,7 +49,7 @@ export default (state = STATE, action) => {
             return state.map(l => l.id === action.payload.listId ? { ...l, items: items } : l)
         case types.SET_ALL_ITEMS_ENABLED_STATE:
             list = state.find(l => l.id === action.payload.listId)
-            if(list.items){
+            if (list.items) {
                 items = list.items.map(i => ({ ...i, enabled: action.payload.enabled }))
                 return state.map(l => l.id === action.payload.listId ? { ...l, items } : l)
             }
