@@ -7,7 +7,7 @@ import {
 } from '../../services/firebase/lists'
 
 function* addListSaga() {
-    yield call(addList, { name: '', item: [] })
+    yield call(addList, { name: '', items: [] })
 }
 
 function* removeListSaga(action) {

@@ -9,7 +9,7 @@ const sagaMiddleware = createSaga()
 const dev = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 export default createStore(combinedReducers, loadState(), compose(applyMiddleware(sagaMiddleware)
-, dev
+// , dev
 ))
 
 sagaMiddleware.run(sagas)

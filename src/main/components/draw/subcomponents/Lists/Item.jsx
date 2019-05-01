@@ -42,17 +42,17 @@ const Item = (props) => {
     }
 
     const saveOnBlur = (e) => {
-        // props.editItemText({ ...props.item, text: e.target.value }, props.list)
-        // setEditMode(false)
+        props.editItemText({ ...props.item, text: e.target.value }, props.list)
+        setEditMode(false)
     }
 
     return (
-        <li className="list-group-item d-flex align-items-center" onClick={setEditModeIfNoText} onBlur={saveOnBlur} onDoubleClick={() => setEditModeAndPrepareInput(props.item.text)}>
+        <li className="list-group-item d-flex align-items-center" onClick={setEditModeIfNoText} onDoubleClick={() => setEditModeAndPrepareInput(props.item.text)}>
             <div className="container">
                 <div className="row">
                     <div className="col-8">
                         <If c={editMode}>
-                            <input autoFocus={true} id={`input-edit-item-${props.item.id}`} className="form-control" type="text" onKeyUp={saveOnEnterCancelOnEsc} />
+                            <input autoFocus={true} id={`input-edit-item-${props.item.id}`} onBlur={saveOnBlur} className="form-control" type="text" onKeyUp={saveOnEnterCancelOnEsc} />
                         </If>
                         <p>
                             <If c={props.item.enabled}>{props.item.text}</If>

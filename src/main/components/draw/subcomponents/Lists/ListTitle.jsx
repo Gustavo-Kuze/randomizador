@@ -13,7 +13,7 @@ const ListHeader = (props) => {
   const editNameOnEnter = (e) => {
     let code = e.keyCode || e.which
     if (code === keycodes.ENTER) {
-      props.editListName({ ...props.list, name: e.target.value }, e.target.value)
+      props.editListName({ ...props.list, name: e.target.value || '' }, e.target.value || '')
       setEditMode(false)
     } else if (code === keycodes.ESCAPE) {
       setEditMode(false)
@@ -21,7 +21,7 @@ const ListHeader = (props) => {
   }
 
   const saveOnBlur = (e) => {
-    props.editListName({ ...props.list, name: e.target.value })
+    props.editListName({ ...props.list, name: e.target.value || '' }, e.target.value || '')
     setEditMode(false)
   }
 

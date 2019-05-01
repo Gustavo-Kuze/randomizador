@@ -1,9 +1,8 @@
 import types from './types/listsTypes'
 
-export const addList = (list) => {
+export const addList = () => {
     return {
-        type: types.ADD_LIST_SAGA,
-        payload: list
+        type: types.ADD_LIST_SAGA
     }
 }
 
