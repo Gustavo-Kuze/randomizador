@@ -29,7 +29,7 @@ const Item = (props) => {
     const saveOnEnterCancelOnEsc = (e) => {
         let code = e.keyCode || e.which
         if (code === keycodes.ENTER) {
-            props.editItemText({ ...props.item, text: e.target.value }, props.listId)
+            props.editItemText({ ...props.item, text: e.target.value }, props.list)
             setEditMode(false)
         }else if(code === keycodes.ESCAPE){
             setEditMode(false)
@@ -38,12 +38,12 @@ const Item = (props) => {
 
     const setEnabledState = () => {
         let toggledEnabled = !props.item.enabled
-        props.setItemEnabledState({ ...props.item, enabled: toggledEnabled }, props.listId)
+        props.setItemEnabledState({ ...props.item, enabled: toggledEnabled }, props.list)
     }
 
     const saveOnBlur = (e) => {
-        props.editItemText({ ...props.item, text: e.target.value }, props.listId)
-        setEditMode(false)
+        // props.editItemText({ ...props.item, text: e.target.value }, props.list)
+        // setEditMode(false)
     }
 
     return (
@@ -63,7 +63,7 @@ const Item = (props) => {
                         <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={setEnabledState}>
                             <i className={`fas fa-${!props.item.enabled ? "ban text-warning" : "check text-success"}`}></i>
                         </button>
-                        <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={() => props.removeItem(props.item, props.listId)}>
+                        <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={() => props.removeItem(props.item, props.list)}>
                             <i className="fa fa-trash text-danger"></i>
                         </button>
                     </div>

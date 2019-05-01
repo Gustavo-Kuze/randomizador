@@ -40,7 +40,7 @@ const ListHeader = (props) => {
               <i className="fa fa-times fa-lg text-danger"></i>
             </button>
             <button className="btn btn-link text-decoration-none pop-hover" onClick={() => {
-              props.setAllItemsEnabledState(!allEnabled, props.list.id)
+              props.setAllItemsEnabledState(!allEnabled, props.list)
               setAllEnabled(!allEnabled)
             }} >
               <i className={`fas fa-${!allEnabled ? "ban text-warning" : "check text-success"}`}></i>

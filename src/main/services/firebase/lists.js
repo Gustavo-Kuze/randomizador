@@ -47,6 +47,55 @@ const addItem = async (list) => {
     return null
 }
 
+const deleteItem = async (item, list) => {
+    if (listsRef) {
+        return await listsRef.doc(list.id).update({
+            name: list.name,
+            items: list.items ? list.items.filter(i => i.id !== item.id) : []
+        })
+    }
+    return null
+}
+
+const editItemText = async (item, list) => {
+    if (listsRef) {
+        return await listsRef.doc(list.id).update({
+            name: list.name,
+            items: list.items ? list.items.map(i => {
+                if (i.id === item.id)
+                    return { ...i, text: item.text }
+                return i
+            }) : []
+        })
+    }
+    return null
+}
+
+const setItemEnabledState = async (item, list) => {
+    if (listsRef) {
+        return await listsRef.doc(list.id).update({
+            name: list.name,
+            items: list.items ? list.items.map(i => {
+                if (i.id === item.id){
+                    return item
+                }
+                return i
+            }) : []
+        })
+    }
+    return null
+}
+
+const setAllItemsEnabledState = async (enabled, list) => {
+    if (listsRef) {
+        return await listsRef.doc(list.id).update({
+            name: list.name,
+            items: list.items ? list.items.map(i => ({ ...i, enabled })) : []
+        })
+    }
+    return null
+}
+
 // inutilizada
 const getAllLists = async () => {
     let lists = []
@@ -73,5 +122,7 @@ const realtimeUpdateLists = (callback) => {
 
 export {
     addList, deleteList, getAllLists,
-    realtimeUpdateLists, editListName, addItem
+    realtimeUpdateLists, editListName, addItem,
+    deleteItem, editItemText, setItemEnabledState,
+    setAllItemsEnabledState
 }

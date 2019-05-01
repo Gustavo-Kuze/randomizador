@@ -35,30 +35,30 @@ export const addItem = (list) => {
     }
 }
 
-export const removeItem = (item, listId) => {
+export const removeItem = (item, list) => {
     return {
-        type: types.REMOVE_ITEM,
-        payload: { item, listId }
+        type: types.REMOVE_ITEM_SAGA,
+        payload: { item, list }
     }
 }
 
-export const editItemText = (item, listId) => {
+export const editItemText = (item, list) => {
     return {
-        type: types.EDIT_ITEM_TEXT,
-        payload: { item, listId }
+        type: types.EDIT_ITEM_TEXT_SAGA,
+        payload: { item, list }
     }
 }
 
-export const setItemEnabledState = (item, listId) => {
+export const setItemEnabledState = (item, list) => {
     return {
-        type: types.SET_ITEM_ENABLED_STATE,
-        payload: { item, listId }
+        type: types.SET_ITEM_ENABLED_STATE_SAGA,
+        payload: { item, list }
     }
 }
 
-export const setAllItemsEnabledState = (enabled, listId) => {
+export const setAllItemsEnabledState = (enabled, list) => {
     return {
-        type: types.SET_ALL_ITEMS_ENABLED_STATE,
-        payload: { enabled, listId }
+        type: types.SET_ALL_ITEMS_ENABLED_STATE_SAGA,
+        payload: { enabled, list }
     }
 }

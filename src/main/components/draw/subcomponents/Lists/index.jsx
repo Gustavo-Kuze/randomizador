@@ -14,7 +14,7 @@ const List = (props) => {
                 <ul className="list-group">
                     {props.items ? props.items.map((item, i) => (
                         <Item key={`${item.text}--${props.list.id}--${i}`}
-                            item={item} listId={props.list.id} />
+                            item={item} list={props.list} listId={props.list.id} />
                     )) : ''}
                     <li className="list-group-item d-flex justify-content-between align-items-center">
                         <button className="btn btn-outline-success btn-block" onClick={() => props.addItem(props.list)}>
