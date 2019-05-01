@@ -17,7 +17,7 @@ const List = (props) => {
                             item={item} listId={props.list.id} />
                     )) : ''}
                     <li className="list-group-item d-flex justify-content-between align-items-center">
-                        <button className="btn btn-outline-success btn-block" onClick={() => props.addItem(props.list.id)}>
+                        <button className="btn btn-outline-success btn-block" onClick={() => props.addItem(props.list)}>
                             <i className="fa fa-plus fa-lg"></i>
                         </button>
                     </li>

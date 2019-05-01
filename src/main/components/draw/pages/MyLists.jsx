@@ -1,10 +1,11 @@
 import '../../css/MyLists.css'
 import React, { useState, useEffect } from 'react'
+import {realtimeUpdateLists} from '../../../services/firebase/lists'
 import Template from '../../Template'
 import List from '../subcomponents/Lists/'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { addList } from '../../../redux/core/actions/listsActions'
+import { addList, setLists } from '../../../redux/core/actions/listsActions'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Input } from 'reactstrap'
 import If from '../../utils/If'
@@ -24,7 +25,16 @@ const MyLists = (props) => {
 
     let [drawnItems, setDrawnItems] = useState([])
 
-    useEffect(() => { setIsQuantityInputValid(quantity > 0) })
+    useEffect(() => startListsObserver(), [])
+    useEffect(() => {
+        setIsQuantityInputValid(quantity > 0)
+    })
+
+    const startListsObserver = () => {
+        realtimeUpdateLists((lists) => {
+            props.setLists(lists)
+        })
+    }
 
     const draw = () => {
         if (quantity > 0) {
@@ -159,7 +169,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    addList
+    addList, setLists
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyLists)

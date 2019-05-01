@@ -13,7 +13,7 @@ const ListHeader = (props) => {
   const editNameOnEnter = (e) => {
     let code = e.keyCode || e.which
     if (code === keycodes.ENTER) {
-      props.editListName({ ...props.list, name: e.target.value })
+      props.editListName({ ...props.list, name: e.target.value }, e.target.value)
       setEditMode(false)
     } else if (code === keycodes.ESCAPE) {
       setEditMode(false)
@@ -36,7 +36,7 @@ const ListHeader = (props) => {
             <p className="h4 mt-2">{props.list.name || 'Clique 2 vezes para nomear'}</p>
           </div>
           <div className="col-2">
-            <button className="btn btn-link text-decoration-none pop-hover" onClick={() => props.removeList(props.list)}>
+            <button className="btn btn-link text-decoration-none pop-hover" onClick={() => props.removeList(props.list.id)}>
               <i className="fa fa-times fa-lg text-danger"></i>
             </button>
             <button className="btn btn-link text-decoration-none pop-hover" onClick={() => {

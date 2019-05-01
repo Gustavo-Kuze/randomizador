@@ -12,11 +12,13 @@ export default (state = STATE, action) => {
     let list = {}
 
     switch (action.type) {
-        case types.ADD_LIST:
-            id = listIdCounter = (listIdCounter += 1)
-            return [...state, { id, name: '' }]
-        case types.REMOVE_LIST:
-            return state.filter(l => l.id !== action.payload.id)
+        // case types.ADD_LIST:
+        //     id = listIdCounter = (listIdCounter += 1)
+        //     return [...state, { id, name: '' }]
+        case types.SET_LISTS:
+            return [...action.payload] 
+        // case types.REMOVE_LIST:
+        //     return state.filter(l => l.id !== action.payload.id)
         case types.EDIT_LIST_NAME:
             lists = state.map(s => s.id === action.payload.id ? action.payload : s)
             return lists
