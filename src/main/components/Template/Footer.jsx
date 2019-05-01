@@ -7,7 +7,7 @@ const Footer = () => {
     }, [])
 
     return (
-        <footer className="footer bg-light text-dark fixed-bottom py-3">
+        <footer className="footer bg-light text-dark fixed-bottom py-3 border border-secondary">
             <div className="container">
                 <div className="row">
                     <div className="col-6 offset-3 text-center">

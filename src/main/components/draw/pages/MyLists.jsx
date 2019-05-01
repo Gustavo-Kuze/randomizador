@@ -1,6 +1,6 @@
 import '../../css/MyLists.css'
 import React, { useState, useEffect } from 'react'
-import { realtimeUpdateLists, stopListsRealtimeListener } from '../../../services/firebase/lists'
+import { realtimeUpdateLists, stopListsRealtimeListener, createItemFromText } from '../../../services/firebase/lists'
 import Template from '../../Template'
 import List from '../subcomponents/Lists/'
 import { connect } from 'react-redux'
@@ -12,6 +12,8 @@ import If from '../../utils/If'
 import MyListsControlsSub from '../subcomponents/Lists/MyListsControlsSub';
 import Chance from 'chance'
 import { toastr } from 'react-redux-toastr'
+import FilePicker from '../../utils/FilePicker'
+
 let chance = new Chance()
 
 const MyLists = (props) => {
@@ -70,6 +72,13 @@ const MyLists = (props) => {
         } else {
             setDrawnItems([])
             toastr.warning('Atenção', 'Você precisa informar quantos itens deseja sortear')
+        }
+    }
+
+    const loadListFromFile = (content) => {
+        let lines = content.split('\n').filter(p => p !== '')
+        if (lines.length > 0) {
+            props.addList({ name: '', items: lines.map(i => createItemFromText(i)) })
         }
     }
 
@@ -138,7 +147,10 @@ const MyLists = (props) => {
                 </div>
                 <div className="row mt-3">
                     <div className="col-12 col-lg-2">
-                        <button className="btn btn-outline-primary" onClick={props.addList}>Nova lista</button>
+                        <button className="btn btn-outline-primary" onClick={() => props.addList()}>Nova lista</button>
+                    </div>
+                    <div className="col-12 col-lg-4 mt-3 mt-lg-0">
+                        <FilePicker onPicked={loadListFromFile} text="Criar lista a partir de um arquivo" />
                     </div>
                     <div className="col-1 d-none d-lg-block">
                         <Dropdown isOpen={isDropdownOpen} toggle={() => toggleDropDown(!isDropdownOpen)}>

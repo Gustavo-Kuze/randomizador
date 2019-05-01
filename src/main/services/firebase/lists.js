@@ -49,6 +49,10 @@ const addItem = async (list) => {
     return null
 }
 
+const createItemFromText = text => {
+    return ({ id: chance.android_id(), text, enabled: true })
+}
+
 const deleteItem = async (item, list) => {
     if (listsRef) {
         return await listsRef.doc(list.id).update({
@@ -136,5 +140,5 @@ export {
     addList, deleteList, getAllLists,
     realtimeUpdateLists, stopListsRealtimeListener, editListName,
     addItem, deleteItem, editItemText, setItemEnabledState,
-    setAllItemsEnabledState
+    setAllItemsEnabledState, createItemFromText
 }

@@ -6,8 +6,12 @@ import {
     setItemEnabledState, setAllItemsEnabledState
 } from '../../services/firebase/lists'
 
-function* addListSaga() {
-    yield call(addList, { name: '', items: [] })
+function* addListSaga(action) {
+    if (action.payload) {
+        yield call(addList, action.payload)
+    } else {
+        yield call(addList, { name: '', items: [] })
+    }
 }
 
 function* removeListSaga(action) {
