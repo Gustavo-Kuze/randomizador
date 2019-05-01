@@ -1,9 +1,18 @@
 import firebase from './index'
 
-const listsCollectionRef = firebase.firestore().collection('lists')
+let listsCollectionRef = null;
+
+firebase.auth().onAuthStateChanged(user => {
+    if (user) listsCollectionRef = firebase.firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .collection('lists')
+})
 
 const addList = async (list) => {
-    return await listsCollectionRef.add(list)
+    if (listsCollectionRef)
+        return await listsCollectionRef.add(list)
+    return null
 }
 
 export { addList }
