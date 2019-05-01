@@ -54,7 +54,7 @@ const Item = (props) => {
                         <If c={editMode}>
                             <input autoFocus={true} id={`input-edit-item-${props.item.id}`} onBlur={saveOnBlur} className="form-control" type="text" onKeyUp={saveOnEnterCancelOnEsc} />
                         </If>
-                        <p>
+                        <p className="lead">
                             <If c={props.item.enabled}>{props.item.text}</If>
                             <If c={!props.item.enabled}><del>{props.item.text}</del></If>
                         </p>

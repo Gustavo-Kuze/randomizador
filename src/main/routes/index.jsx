@@ -18,7 +18,7 @@ export default () =>
             <Route exact path='/numbers' component={NumberDraw} />
             <Route exact path='/headortails' component={HeadOrTailsDraw} />
             <Route exact path='/shuffle' component={ShuffleDraw} />
-            <ProtectedRoute exact path='/about' component={About} />
+            <Route exact path='/about' component={About} />
             <ProtectedRoute exact path='/user/lists' component={MyLists} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/logout' component={Logout} />

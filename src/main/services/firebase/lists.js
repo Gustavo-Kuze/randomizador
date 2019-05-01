@@ -5,10 +5,12 @@ let chance = new Chance()
 let listsRef = null;
 
 firebase.auth().onAuthStateChanged(user => {
-    if (user) listsRef = firebase.firestore()
-        .collection('users')
-        .doc(firebase.auth().currentUser.uid)
-        .collection('lists')
+    if (user) {
+        listsRef = firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .collection('lists')
+    }
 })
 
 const addList = async (list) => {
@@ -76,7 +78,7 @@ const setItemEnabledState = async (item, list) => {
         return await listsRef.doc(list.id).update({
             name: list.name,
             items: list.items ? list.items.map(i => {
-                if (i.id === item.id){
+                if (i.id === item.id) {
                     return item
                 }
                 return i
@@ -108,21 +110,31 @@ const getAllLists = async () => {
     return lists
 }
 
-const realtimeUpdateLists = (callback) => {
-    if (listsRef) {
-        listsRef.onSnapshot(snapshot => {
+const realtimeUpdateLists = (uid, callback) => {
+    firebase.firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('lists')
+        .onSnapshot(snapshot => {
             let lists = []
             snapshot.forEach(doc => {
                 lists = [...lists, { id: doc.id, ...doc.data() }]
             })
             callback(lists)
         })
-    }
+}
+
+const stopListsRealtimeListener = (uid) => {
+    firebase.firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('lists')
+        .onSnapshot(() => { })
 }
 
 export {
     addList, deleteList, getAllLists,
-    realtimeUpdateLists, editListName, addItem,
-    deleteItem, editItemText, setItemEnabledState,
+    realtimeUpdateLists, stopListsRealtimeListener, editListName,
+    addItem, deleteItem, editItemText, setItemEnabledState,
     setAllItemsEnabledState
 }

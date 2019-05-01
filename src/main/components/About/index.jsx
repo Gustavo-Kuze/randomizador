@@ -9,7 +9,7 @@ const About = () => {
                     <div className="row">
                         <div className="col">
                             <h1>Sobre o randomizador</h1>
-                            <h3>Sim, ele é inspirado no sorteador 😆</h3>
+                            <h3>Sim, ele é inspirado no sorteador <span role="img" aria-label="Rosto sorrindo">😆</span></h3>
                         </div>
                     </div>
                     <div className="row">
@@ -26,14 +26,14 @@ const About = () => {
                                 <div className="row">
                                     <div className="col">
                                         <p className="text-dark lead">
-                                        Se essa ferramenta tem sido útil para você, fico muito feliz! Não deixe de conferir minhas outras aplicações no meu <span> <a className="text-decoration-none" href="https://www.gustavokuze.com" target="_blank" rel="noopener noreferer">site</a></span>.
+                                        Se essa ferramenta tem sido útil para você, fico muito feliz! Não deixe de conferir minhas outras aplicações no meu <span> <a className="text-decoration-none" href="https://www.gustavokuze.com" target="_blank" rel="noopener noreferrer">site</a></span>.
                                         </p>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col">
                                         <p className="text-dark lead">
-                                            Se você é desenvolvedor e gostaria de dar uma espiadinha no código fonte, siga-me no <span><a className="text-decoration-none" href="https://github.com/Gustavo-Kuze" target="_blank" rel="noopener noreferer">Github</a></span>! O pensamento open source moldará um futuro melhor.
+                                            Se você é desenvolvedor e gostaria de dar uma espiadinha no código fonte, siga-me no <span><a className="text-decoration-none" href="https://github.com/Gustavo-Kuze" target="_blank" rel="noopener noreferrer">Github</a></span>! O pensamento open source moldará um futuro melhor.
                                         </p>
                                     </div>
                                 </div>

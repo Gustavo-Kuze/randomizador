@@ -1,6 +1,6 @@
 import '../../css/MyLists.css'
 import React, { useState, useEffect } from 'react'
-import {realtimeUpdateLists} from '../../../services/firebase/lists'
+import { realtimeUpdateLists, stopListsRealtimeListener } from '../../../services/firebase/lists'
 import Template from '../../Template'
 import List from '../subcomponents/Lists/'
 import { connect } from 'react-redux'
@@ -25,13 +25,17 @@ const MyLists = (props) => {
 
     let [drawnItems, setDrawnItems] = useState([])
 
-    useEffect(() => startListsObserver(), [])
+    useEffect(() => {
+        startListsObserver()
+
+        return () => stopListsRealtimeListener(props.uid)
+    }, [])
     useEffect(() => {
         setIsQuantityInputValid(quantity > 0)
     })
 
     const startListsObserver = () => {
-        realtimeUpdateLists((lists) => {
+        realtimeUpdateLists(props.uid, (lists) => {
             props.setLists(lists)
         })
     }
@@ -165,7 +169,8 @@ const MyLists = (props) => {
 }
 
 const mapStateToProps = state => ({
-    lists: state.lists
+    lists: state.lists,
+    uid: state.user.uid
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

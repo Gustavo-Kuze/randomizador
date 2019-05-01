@@ -1,5 +1,5 @@
 import types from '../../redux/core/actions/types/listsTypes'
-import { takeLatest, put, call, all, select } from 'redux-saga/effects'
+import { takeLatest, put, call, all } from 'redux-saga/effects'
 import {
     addList, deleteList, editListName,
     addItem, deleteItem, editItemText,

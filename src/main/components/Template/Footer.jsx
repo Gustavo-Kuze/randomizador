@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-6 offset-3 text-center">
-                        <span className="h5 text-muted">Desenvolvido por </span> <a className="text-decoration-none h5" href="https://www.gustavokuze.com">Gustavo Kuze</a>
+                        <span className="h5 text-muted">Desenvolvido por </span> <a className="text-decoration-none h5" href="https://www.gustavokuze.com" target="_blank" rel="noopener noreferrer">Gustavo Kuze</a>
                     </div>
                 </div>
             </div>
