@@ -8,7 +8,7 @@ const MyListsControlsSub = () => {
     return (
         <div>
             <button className="btn btn-outline-info btn-sm mb-3"
-                onClick={() => toggleCollapse(!isCollapseOpen)} >Legenda</button>
+                onClick={() => toggleCollapse(!isCollapseOpen)} ><i className="far fa-question-circle fa-2x"></i></button>
             <Collapse isOpen={isCollapseOpen}>
                 <Card>
                     <CardBody>

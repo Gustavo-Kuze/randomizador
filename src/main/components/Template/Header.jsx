@@ -56,6 +56,8 @@ const Header = props => {
                         <Link to="/shuffle" className="list-group-item list-group-item-action" >Embaralhador de frases</Link>
                         <Link to="/headortails" className="list-group-item list-group-item-action" >Cara ou Coroa</Link>
                         <hr />
+                        <Link to="/about" className="list-group-item list-group-item-action" >Sobre</Link>
+                        <hr />
                         <Link to="/login" className="list-group-item list-group-item-action bg-primary text-light" >Login</Link>
                         <Link to="/logout" className="list-group-item list-group-item-action bg-danger text-light" >Sair</Link>
                     </ListGroup>
