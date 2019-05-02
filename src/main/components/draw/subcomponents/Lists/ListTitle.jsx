@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { editListName, removeList, setAllItemsEnabledState } from "../../../../redux/core/actions/listsActions"
 import keycodes from '../../../utils/keycodes'
+import { toastr } from 'react-redux-toastr'
 
 const ListHeader = (props) => {
 
@@ -25,6 +26,18 @@ const ListHeader = (props) => {
     setEditMode(false)
   }
 
+  const confirmListDeletion = () => {
+    if (props.list.items.length > 0) {
+      const toastrConfirmOptions = {
+        onOk: () => props.removeList(props.list.id),
+        onCancel: () => { }
+      };
+      toastr.confirm('Tem certeza que deseja excluir essa lista?', toastrConfirmOptions);
+    } else {
+      props.removeList(props.list.id)
+    }
+  }
+
   return <>
     <div className="card-header" onDoubleClick={() => setEditMode(true)} >
       <div className="container">
@@ -36,7 +49,7 @@ const ListHeader = (props) => {
             <p className="h4 mt-2">{props.list.name || 'Clique 2 vezes para nomear'}</p>
           </div>
           <div className="col-2">
-            <button className="btn btn-link text-decoration-none pop-hover" onClick={() => props.removeList(props.list.id)}>
+            <button className="btn btn-link text-decoration-none pop-hover" onClick={() => confirmListDeletion()}>
               <i className="fa fa-times fa-lg text-danger"></i>
             </button>
             <button className="btn btn-link text-decoration-none pop-hover" onClick={() => {

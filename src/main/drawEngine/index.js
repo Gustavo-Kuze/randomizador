@@ -1,5 +1,9 @@
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min) ) + min;
+  }
+
 const _pickExclusiveOne = (min, max, picked) => {
-    let temp = Math.floor(Math.random() * max) + min
+    let temp = getRndInteger(min, max)
     if (!picked.includes(temp)) {
         return temp
     } else {
