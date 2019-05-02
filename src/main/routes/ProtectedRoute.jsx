@@ -8,7 +8,20 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         if (rest.email !== '') {
-          return <Component {...props} />;
+          if (!rest.emailVerified) {
+            return (
+              <Redirect
+                to={{
+                  pathname: '/verifyemail',
+                  state: {
+                    from: props.location
+                  }
+                }}
+              />
+            );
+          } else {
+            return <Component {...props} />;
+          }
         } else {
           return (
             <Redirect
@@ -27,7 +40,8 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 };
 
 const mapStateToRest = state => ({
-  email: state.user.email
+  email: state.user.email,
+  emailVerified: state.user.emailVerified
 })
 
 export default connect(

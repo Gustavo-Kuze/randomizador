@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 import Home from '../components/Home/'
 import About from '../components/About/'
+import VerifyEmail from '../components/VerifyEmail/'
 import MyLists from '../components/draw/pages/MyLists'
 import NumberDraw from '../components/draw/pages/NumberDraw'
 import HeadOrTailsDraw from '../components/draw/pages/HeadOrTailsDraw'
@@ -19,6 +20,7 @@ export default () =>
             <Route exact path='/headortails' component={HeadOrTailsDraw} />
             <Route exact path='/shuffle' component={ShuffleDraw} />
             <Route exact path='/about' component={About} />
+            <Route exact path='/verifyemail' component={VerifyEmail} />
             <ProtectedRoute exact path='/user/lists' component={MyLists} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/logout' component={Logout} />

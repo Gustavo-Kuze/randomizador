@@ -6,6 +6,7 @@ import Template from '../../components/Template/'
 import If from '../utils/If'
 import { Redirect } from 'react-router-dom'
 import { Spinner, Row, Col } from 'reactstrap'
+import { toastr } from 'react-redux-toastr'
 
 const Login = (props) => {
 
@@ -17,6 +18,11 @@ const Login = (props) => {
     }, [])
 
     const signInSuccessful = (authResult, resirectUrl) => {
+        if (!authResult.user.emailVerified) {
+            firebase.auth().currentUser.sendEmailVerification().then(() => {
+                toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
+            })
+        }
         setSigningAsDone(true)
     }
 
