@@ -14,7 +14,7 @@ const FilePicker = (props) => {
     }
 
     return <>
-        <label id={`${props.id || 'file-upload'}-label`} className="custom-file-label btn btn-outline-primary btn-block px-5" htmlFor={props.id || 'file-upload'}>
+        <label id={`${props.id || 'file-upload'}-label`} className={`custom-file-label btn btn-outline-primary px-5 ${props.labelClassName}`} htmlFor={props.id || 'file-upload'}>
             {props.text || 'Escolher arquivo'}
         </label>
         <Tooltip placement="bottom" isOpen={isTooltipOpen} target={`${props.id || 'file-upload'}-label`} toggle={() => toggleTooltip(!isTooltipOpen)}>
