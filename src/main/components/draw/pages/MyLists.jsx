@@ -147,10 +147,10 @@ const MyLists = (props) => {
                 </div>
                 <div className="row mt-3">
                     <div className="col-12 col-lg-2">
-                        <button className="btn btn-outline-primary" onClick={() => props.addList()}>Nova lista</button>
+                        <button className="btn btn-outline-primary btn-block btn-lg" onClick={() => props.addList()}>Nova lista</button>
                     </div>
                     <div className="col-12 col-lg-4 mt-3 mt-lg-0">
-                        <FilePicker onPicked={loadListFromFile} text="Criar lista a partir de um arquivo" />
+                        <FilePicker onPicked={loadListFromFile} text="Carregar arquivo" tooltip="Criar uma lista a partir de um arquivo. Os itens precisam estar separados por quebras de linha (enter)" />
                     </div>
                     <div className="col-1 d-none d-lg-block">
                         <Dropdown isOpen={isDropdownOpen} toggle={() => toggleDropDown(!isDropdownOpen)}>

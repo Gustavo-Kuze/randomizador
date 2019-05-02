@@ -4,6 +4,7 @@ import keycodes from '../../../utils/keycodes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { editItemText, removeItem, setItemEnabledState } from '../../../../redux/core/actions/listsActions'
+import { toastr } from 'react-redux-toastr'
 
 const Item = (props) => {
 
@@ -31,7 +32,7 @@ const Item = (props) => {
         if (code === keycodes.ENTER) {
             props.editItemText({ ...props.item, text: e.target.value }, props.list)
             setEditMode(false)
-        }else if(code === keycodes.ESCAPE){
+        } else if (code === keycodes.ESCAPE) {
             setEditMode(false)
         }
     }
@@ -44,6 +45,18 @@ const Item = (props) => {
     const saveOnBlur = (e) => {
         props.editItemText({ ...props.item, text: e.target.value }, props.list)
         setEditMode(false)
+    }
+
+    const confirmItemDeletion = () => {
+        if(props.item.text){
+            const toastrConfirmOptions = {
+                onOk: () => props.removeItem(props.item, props.list),
+                onCancel: () => { }
+            };
+            toastr.confirm('Tem certeza que deseja excluir esse item?', toastrConfirmOptions);
+        }else{
+            props.removeItem(props.item, props.list)
+        }
     }
 
     return (
@@ -63,11 +76,11 @@ const Item = (props) => {
                         <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={setEnabledState}>
                             <i className={`fas fa-${!props.item.enabled ? "ban text-warning" : "check text-success"}`}></i>
                         </button>
-                        <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={() => props.removeItem(props.item, props.list)}>
+                        <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={() => confirmItemDeletion()}>
                             <i className="fa fa-trash text-danger"></i>
                         </button>
                     </div>
-                    
+
                 </div>
             </div>
         </li>
