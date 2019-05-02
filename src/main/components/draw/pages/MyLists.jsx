@@ -62,7 +62,7 @@ const MyLists = (props) => {
                 if (allItems.length > 0) {
                     setDrawnItems(chance.pickset(chance.shuffle(allItems), quantity))
                 } else {
-                    toastr.warning('Atenção', 'Você não tem nenhum item para sortear')
+                    toastr.warning('Atenção', 'Você não tem nenhum item habilitado para sortear')
                 }
             } else {
                 toastr.warning('Atenção', 'Você não tem nenhuma lista de itens para sortear')
@@ -78,6 +78,18 @@ const MyLists = (props) => {
         if (lines.length > 0) {
             props.addList({ name: '', items: lines.map(i => createItemFromText(i)) })
         }
+    }
+
+    const addEmptyListIfNotExists = () => {
+        let canCreateList = true
+
+        props.lists.forEach(l => {
+            if (l.items.length <= 0)
+                canCreateList = false
+        })
+
+        if (canCreateList)
+            props.addList()
     }
 
     return (
@@ -145,12 +157,12 @@ const MyLists = (props) => {
                 </div>
                 <div className="row mt-3">
                     <div className="col-12 col-lg-2">
-                        <button className="btn btn-outline-primary btn-block btn-lg" onClick={() => props.addList()}>Nova lista</button>
+                        <button className="btn btn-outline-primary btn-block btn-lg" onClick={() => addEmptyListIfNotExists()}>Nova lista</button>
                     </div>
                     <div className="col-12 col-lg-4 mt-3 mt-lg-0">
                         <FilePicker onPicked={loadListFromFile} text="Carregar arquivo"
-                        tooltip="Criar uma lista a partir de um arquivo. Os itens precisam estar separados por quebras de linha (enter)"
-                        labelClassName="btn-block"/>
+                            tooltip="Criar uma lista a partir de um arquivo. Os itens precisam estar separados por quebras de linha (enter)"
+                            labelClassName="btn-block" />
                     </div>
                     <div className="col-1 d-none d-lg-block">
                         <Dropdown isOpen={isDropdownOpen} toggle={() => toggleDropDown(!isDropdownOpen)}>

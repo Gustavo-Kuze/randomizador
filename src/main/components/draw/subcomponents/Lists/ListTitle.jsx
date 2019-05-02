@@ -27,11 +27,15 @@ const ListHeader = (props) => {
   }
 
   const confirmListDeletion = () => {
-    const toastrConfirmOptions = {
-      onOk: () => props.removeList(props.list.id),
-      onCancel: () => {}
-    };
-    toastr.confirm('Tem certeza que deseja excluir essa lista?', toastrConfirmOptions);
+    if (props.list.items.length > 0) {
+      const toastrConfirmOptions = {
+        onOk: () => props.removeList(props.list.id),
+        onCancel: () => { }
+      };
+      toastr.confirm('Tem certeza que deseja excluir essa lista?', toastrConfirmOptions);
+    } else {
+      props.removeList(props.list.id)
+    }
   }
 
   return <>

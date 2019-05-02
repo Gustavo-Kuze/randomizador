@@ -80,7 +80,6 @@ const Item = (props) => {
                             <i className="fa fa-trash text-danger"></i>
                         </button>
                     </div>
-
                 </div>
             </div>
         </li>
