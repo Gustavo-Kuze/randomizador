@@ -3,6 +3,7 @@ import { Tooltip } from 'reactstrap'
 import { savePublicResult } from '../../../services/firebase/publicDraws'
 import If from '../../utils/If'
 import { Input } from 'reactstrap'
+import { toastr } from 'react-redux-toastr'
 
 const DrawResults = props => {
     const [isTooltipOpen, toggleTooltip] = useState()
@@ -15,7 +16,10 @@ const DrawResults = props => {
             date: props.date,
             result: props.result
         }).then(number => {
-            console.log(number)
+            const toastrConfirmOptions = {
+                disableCancel: true
+            }
+            toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions);
         })
     }
 

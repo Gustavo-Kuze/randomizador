@@ -34,6 +34,10 @@ const ViewSavedDraw = ({ match }) => {
                             {
                                 drawResult.drawType ? (
                                     <If c={drawResult.drawType}>
+                                        <If c={drawResult.description}>
+                                            <h3 className="sofia">Descrição: </h3>
+                                            <p>{drawResult.description}</p>
+                                        </If>
                                         <DrawResults title="O resultado do sorteio foi:" colClasses="col-lg-10 col-12 offset-lg-1"
                                             date={drawResult.date}
                                             drawType={drawResult.drawType}
