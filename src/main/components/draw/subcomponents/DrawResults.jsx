@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Tooltip } from 'reactstrap'
 import { savePublicResult } from '../../../services/firebase/publicDraws'
+import If from '../../utils/If'
 
 const DrawResults = props => {
     const [isTooltipOpen, toggleTooltip] = useState()
@@ -11,7 +12,7 @@ const DrawResults = props => {
             date: props.date,
             result: props.result
         }).then(number => {
-            // mostrar o número ao usuário
+            console.log(number)
         })
     }
 
@@ -32,21 +33,23 @@ const DrawResults = props => {
                     <h4 className="text-center sofia">Sorteio realizado em: {props.date || new Date().toLocaleString()}</h4>
                 </div>
             </div>
-            <div className="row mt-5">
-                <div className={props.colClasses || 'col-10 offset-1'}>
-                    <div className="row">
-                        <div className={'col-12 col-sm-6 my-1'}>
-                            <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>
-                                <p>O resultado ficará acessível para aquele que obtiver o número, para todo o sempre</p>
-                            </Tooltip>
-                            <button id="btn-save-publicly" className="btn btn-block btn-outline-warning">Salvar publicamente</button>
-                        </div>
-                        <div className={'col-12 col-sm-6 my-1'}>
-                            <button className="btn btn-block btn-outline-info">Salvar privado</button>
+            <If c={!props.viewMode}>
+                <div className="row mt-5">
+                    <div className={props.colClasses || 'col-10 offset-1'}>
+                        <div className="row">
+                            <div className={'col-12 col-sm-6 my-1'}>
+                                <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>
+                                    <p>O resultado ficará acessível para aquele que obtiver o número, para todo o sempre</p>
+                                </Tooltip>
+                                <button id="btn-save-publicly" className="btn btn-block btn-outline-warning" onClick={savePublicly}>Salvar publicamente</button>
+                            </div>
+                            <div className={'col-12 col-sm-6 my-1'}>
+                                <button className="btn btn-block btn-outline-info">Salvar privado</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </If>
         </>
     )
 }
