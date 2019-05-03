@@ -27,7 +27,7 @@ const DrawResults = props => {
         <>
             <div className="row mt-5">
                 <div className={props.colClasses || 'col-12'} >
-                    <h1 className={props.titleClasses || 'text-center lobster'}>{props.title || 'Confira os resultados'}</h1>
+                    <h1 className={props.titleClasses || 'text-center lobster my-3'}>{props.title || 'Confira os resultados'}</h1>
                 </div>
             </div>
             <div className="row">

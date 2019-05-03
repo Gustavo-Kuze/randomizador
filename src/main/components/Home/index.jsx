@@ -3,12 +3,13 @@ import React from 'react'
 import Template from '../Template/'
 import { Link } from 'react-router-dom'
 import ToolsSection from './ToolsSection';
+import CheckResultsSection from './CheckResultsSection';
 
 const Home = () => {
     return (
         <Template>
             <div className="section">
-                <div className="jumbotron">
+                <div className="container-fluid my-5">
                     <div className="row">
                         <div className="col-md-8 offset-md-2 text-center">
                             <h1>Bem-vindo ao <span className="sofia font-weight-bold">Randomizador</span> !</h1>
@@ -22,9 +23,13 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <hr className="my-4" />
+            <hr className="my-4 mt-3" />
             <div className="section">
                 <ToolsSection />
+            </div>
+            <hr className="my-4" />
+            <div className="section">
+                <CheckResultsSection />
             </div>
         </Template>
     )

@@ -66,7 +66,7 @@ const Numbers = () => {
     }
 
     return (
-        <div className="jumbotron">
+        <div className="container">
             <div className="row">
                 <div className="col-lg-10 col-12 offset-lg-1">
                     <div className="row mb-3">
@@ -78,7 +78,7 @@ const Numbers = () => {
                         <div className="col-md-2 col-12 text-center">
                             <Input className="text-center bg-light"
                                 type="number"
-                                placeholder="esta quantidade"
+                                placeholder="quantidade"
                                 invalid={areInputsTouched && !isQuantityInputValid}
                                 valid={areInputsTouched && isQuantityInputValid}
                                 onChange={e => setQuantity(parseInt(e.target.value))}
