@@ -4,6 +4,7 @@ import If from '../../utils/If'
 import { Input } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
 import { drawIntegers as draw } from '../../../drawEngine'
+import drawTypes from '../drawUtils/drawTypes'
 import DrawResults from '../subcomponents/DrawResults'
 import keycodes from '../../utils/keycodes'
 
@@ -58,7 +59,7 @@ const Numbers = () => {
 
     const setTouchedAndDrawOnEnter = (e) => {
         let code = e.keyCode || e.which
-        if(code === keycodes.ENTER){
+        if (code === keycodes.ENTER) {
             drawNow()
         }
         setAreInputsTouched(true)
@@ -113,7 +114,11 @@ const Numbers = () => {
                 </div>
             </div>
             <If c={randNums.length > 0}>
-                <DrawResults title="Os números sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1">
+                <DrawResults title="Os números sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
+                    date={`${new Date().toLocaleString()}`}
+                    drawType={drawTypes.NUMBERS}
+                    result={randNums}
+                >
                     <table className="table table-striped table-bordered h3 text-center">
                         <thead>
                             <tr>

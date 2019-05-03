@@ -4,6 +4,7 @@ import { Input } from 'reactstrap'
 import FilePicker from '../../utils/FilePicker'
 import If from '../../utils/If'
 import DrawResults from '../subcomponents/DrawResults'
+import drawTypes from '../drawUtils/drawTypes'
 import Chance from 'chance'
 let chance = new Chance()
 
@@ -40,7 +41,7 @@ const Shuffle = () => {
             <div className="jumbotron">
                 <div className="row">
                     <div className="col text-center mb-5">
-                        <h3>Digite as frases ou nomes para sortear, separadas por quebras de linha (Enter)</h3>
+                        <h3>Digite as frases ou nomes para sortear, separados por quebras de linha (Enter)</h3>
                     </div>
                 </div>
                 <div className="row">
@@ -61,7 +62,11 @@ const Shuffle = () => {
                 </div>
                 <If c={shuffledPhrases.length > 0} cssHide={true}>
                     <div>
-                        <DrawResults title="Resultado:" colClasses="col-10 offset-1 col-md-8 offset-md-2">
+                        <DrawResults title="Resultado:" colClasses="col-10 offset-1 col-md-8 offset-md-2"
+                            date={`${new Date().toLocaleString()}`}
+                            drawType={drawTypes.SHUFFLE}
+                            result={shuffledPhrases}
+                        >
                             <div className="d-flex justify-content-betweend align-items-center flex-column">
                                 <Input id="input-resultado" type="textarea" className="sort-textarea bg-light" value={shuffledPhrases} rows="10" readOnly="readonly" />
                                 <button className="btn btn-outline-success mt-3" onClick={copyResult}>

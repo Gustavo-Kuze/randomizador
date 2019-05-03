@@ -1,8 +1,19 @@
 import React, { useState } from 'react'
 import { Tooltip } from 'reactstrap'
+import { savePublicResult } from '../../../services/firebase/publicDraws'
 
 const DrawResults = props => {
     const [isTooltipOpen, toggleTooltip] = useState()
+
+    const savePublicly = () => {
+        savePublicResult({
+            drawType: props.drawType,
+            date: props.date,
+            result: props.result
+        }).then(number => {
+            // mostrar o número ao usuário
+        })
+    }
 
     return (
         <>
