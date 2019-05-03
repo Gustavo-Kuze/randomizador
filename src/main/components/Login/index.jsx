@@ -5,7 +5,7 @@ import * as firebaseui from 'firebaseui'
 import Template from '../../components/Template/'
 import If from '../utils/If'
 import { Redirect } from 'react-router-dom'
-import { Spinner, Row, Col } from 'reactstrap'
+import { Spinner } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
 
 const Login = (props) => {
@@ -53,11 +53,11 @@ const Login = (props) => {
                 <Template>
                     <div id="firebaseui-auth-container" className={isLoadingUi ? 'invisible' : ''}></div>
                     <If c={isLoadingUi}>
-                        <Row>
-                            <Col className="pl-0" xs={{ size: 6, offset: 6 }}>
+                        <div className="row">
+                            <div className="col-8 offset-2 d-flex justify-content-center align-items-center">
                                 <Spinner className="mx-0 px-0" color="warning" />
-                            </Col>
-                        </Row>
+                            </div>
+                        </div>
                     </If>
                 </Template>
             </If>
