@@ -11,8 +11,11 @@ const Shuffle = () => {
 
     const [phrases, setPhrases] = useState('')
     const [shuffledPhrases, setShuffledPhrases] = useState('')
+    const [resultCopied, setResultCopied] = useState(false)
+
 
     const shufflePhrases = () => {
+        setResultCopied(false)
         let phrasesArr = phrases.split('\n').filter(p => p !== '')
         phrasesArr = chance.shuffle(phrasesArr)
         setShuffledPhrases(phrasesArr.join('\n'))
@@ -23,6 +26,13 @@ const Shuffle = () => {
         try {
             setPhrases(fileContent)
         } catch (err) { }
+    }
+
+    const copyResult = () => {
+        let input = document.getElementById('input-resultado')
+        input.select()
+        document.execCommand('copy')
+        setResultCopied(true)
     }
 
     return (
@@ -46,16 +56,22 @@ const Shuffle = () => {
                 </div>
                 <div className="row">
                     <div className="col-8 offset-2 col-md-6 offset-md-3">
-                        <button className="btn btn-warning btn-block mt-5" onClick={shufflePhrases}>Sortear</button>
+                        <button className="btn btn-warning btn-block mt-5" onClick={shufflePhrases}>Embaralhar</button>
                     </div>
                 </div>
                 <If c={shuffledPhrases.length > 0} cssHide={true}>
                     <div>
                         <DrawResults title="Resultado:" colClasses="col-10 offset-1 col-md-8 offset-md-2">
-                            <Input id="input-resultado" type="textarea" className="sort-textarea bg-light" value={shuffledPhrases} rows="10" readOnly="readonly" />
+                            <div className="d-flex justify-content-betweend align-items-center flex-column">
+                                <Input id="input-resultado" type="textarea" className="sort-textarea bg-light" value={shuffledPhrases} rows="10" readOnly="readonly" />
+                                <button className="btn btn-outline-success mt-3" onClick={copyResult}>
+                                    {resultCopied ? 'Copiado' : 'Copiar'} <i className={`${resultCopied ? 'fas fa-clipboard-check' : 'far fa-clipboard'} fa-lg`}></i>
+                                </button>
+                            </div>
                         </DrawResults>
                     </div>
                 </If>
+                <textarea name="copyResult" id="txtarea-copy" cols="30" rows="10" className="d-none"></textarea>
             </div >
         </div>
     )
