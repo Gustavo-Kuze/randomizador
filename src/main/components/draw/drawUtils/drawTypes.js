@@ -1,6 +1,6 @@
 export default {
-    LISTS: 0,
-    NUMBERS: 1,
-    SHUFFLE: 2,
-    HEAD_OR_TAILS: 3,
+    LISTS: 1,
+    NUMBERS: 2,
+    SHUFFLE: 3,
+    HEAD_OR_TAILS: 4,
 }
