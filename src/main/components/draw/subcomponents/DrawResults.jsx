@@ -33,14 +33,18 @@ const DrawResults = props => {
                 </div>
             </div>
             <div className="row mt-5">
-                <div className={'col-12 col-sm-6 my-1'}>
-                    <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>
-                        <p>O resultado ficará acessível para aquele que obtiver o número, para todo o sempre</p>
-                    </Tooltip>
-                    <button id="btn-save-publicly" className="btn btn-block btn-outline-warning">Salvar publicamente</button>
-                </div>
-                <div className={'col-12 col-sm-6 my-1'}>
-                    <button className="btn btn-block btn-outline-info">Salvar privado</button>
+                <div className={props.colClasses || 'col-10 offset-1'}>
+                    <div className="row">
+                        <div className={'col-12 col-sm-6 my-1'}>
+                            <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>
+                                <p>O resultado ficará acessível para aquele que obtiver o número, para todo o sempre</p>
+                            </Tooltip>
+                            <button id="btn-save-publicly" className="btn btn-block btn-outline-warning">Salvar publicamente</button>
+                        </div>
+                        <div className={'col-12 col-sm-6 my-1'}>
+                            <button className="btn btn-block btn-outline-info">Salvar privado</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

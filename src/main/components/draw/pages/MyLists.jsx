@@ -13,6 +13,10 @@ import MyListsControlsSub from '../subcomponents/Lists/MyListsControlsSub';
 import Chance from 'chance'
 import { toastr } from 'react-redux-toastr'
 import FilePicker from '../../utils/FilePicker'
+import DrawResults from '../subcomponents/DrawResults'
+import drawTypes from '../drawUtils/drawTypes'
+import keyCodes from '../../utils/keycodes'
+import keycodes from '../../utils/keycodes';
 
 let chance = new Chance()
 
@@ -92,6 +96,14 @@ const MyLists = (props) => {
             props.addList()
     }
 
+    const setInputTouchedAndDrawOnEnter = (e) => {
+        let code = e.keyCode || e.which
+        if (code === keyCodes.ENTER) {
+            draw()
+        }
+        setIsQuantityInputTouched(true)
+    }
+
     return (
         <Template>
             <div className="container">
@@ -112,7 +124,7 @@ const MyLists = (props) => {
                                                 invalid={isQuantityInputTouched && !isQuantityInputValid}
                                                 valid={isQuantityInputTouched && isQuantityInputValid}
                                                 onChange={e => setQuantity(parseInt(e.target.value))}
-                                                onKeyUp={setIsQuantityInputTouched}
+                                                onKeyUp={setInputTouchedAndDrawOnEnter}
                                             />
                                         </div>
                                         <div className="col-sm-6">
@@ -123,24 +135,31 @@ const MyLists = (props) => {
                                         <div className="col">
                                             <If c={drawnItems.length > 0} cssHide hideClassName>
                                                 <div className="scrollable-y">
-                                                    <table className="table table-striped table-borderless">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Posição</th>
-                                                                <th>Item sorteado</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {
-                                                                drawnItems.map((di, i) => (
-                                                                    <tr key={`${di}--${i}`}>
-                                                                        <td>{i + 1}</td>
-                                                                        <td>{di}</td>
-                                                                    </tr>
-                                                                ))
-                                                            }
-                                                        </tbody>
-                                                    </table>
+                                                    <DrawResults
+                                                        title="Os itens sorteados foram:"
+                                                        date={`${new Date().toLocaleString()}`}
+                                                        drawType={drawTypes.LISTS}
+                                                        result={drawnItems}
+                                                    >
+                                                        <table className="table table-striped table-borderless">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Posição</th>
+                                                                    <th>Item sorteado</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {
+                                                                    drawnItems.map((di, i) => (
+                                                                        <tr key={`${di}--${i}`}>
+                                                                            <td>{i + 1}</td>
+                                                                            <td>{di}</td>
+                                                                        </tr>
+                                                                    ))
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </DrawResults>
                                                 </div>
                                             </If>
                                         </div>
