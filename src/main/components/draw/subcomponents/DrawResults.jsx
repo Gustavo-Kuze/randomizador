@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { Tooltip } from 'reactstrap'
 import { savePublicResult } from '../../../services/firebase/publicDraws'
 import If from '../../utils/If'
+import { Input } from 'reactstrap'
 
 const DrawResults = props => {
     const [isTooltipOpen, toggleTooltip] = useState()
+    let [drawDescription, setDrawDescription] = useState('')
 
     const savePublicly = () => {
         savePublicResult({
+            description: drawDescription,
             drawType: props.drawType,
             date: props.date,
             result: props.result
@@ -36,6 +39,14 @@ const DrawResults = props => {
             <If c={!props.viewMode}>
                 <div className="row mt-5">
                     <div className={props.colClasses || 'col-10 offset-1'}>
+                        <div className="row">
+                            <div className="col-12">
+                                <Input className="text-center bg-light"
+                                    type="text"
+                                    placeholder="Dê uma descrição para salvar o sorteio (opcional)"
+                                    onChange={e => setDrawDescription(e.target.value)} />
+                            </div>
+                        </div>
                         <div className="row">
                             <div className={'col-12 col-sm-6 my-1'}>
                                 <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>

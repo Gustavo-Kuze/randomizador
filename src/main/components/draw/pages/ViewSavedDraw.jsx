@@ -2,13 +2,27 @@ import React, { useState, useEffect } from 'react'
 import Template from '../../Template/'
 import DrawResults from '../subcomponents/DrawResults'
 import drawTypes from '../drawUtils/drawTypes'
+import { getPublicResult } from '../../../services/firebase/publicDraws'
+import { toastr } from 'react-redux-toastr'
 
-const ViewSavedDraw = ({match}) => {
+
+const ViewSavedDraw = ({ match }) => {
 
     let [drawId, setDrawId] = useState(0)
+    let [drawResult, setDrawResult] = useState()
 
     useEffect(() => {
         setDrawId(match.params.id || 0)
+        if (match.params.id > 0) {
+            getPublicResult(match.params.id).then(result => {
+                if (result.drawType) {
+                    setDrawResult(result)
+                    console.log(result)
+                } else {
+                    toastr.error('Erro', 'Não foi possível encontrar o sorteio')
+                }
+            })
+        }
     }, [])
 
     return (
