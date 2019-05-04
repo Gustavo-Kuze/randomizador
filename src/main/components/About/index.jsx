@@ -13,7 +13,7 @@ const About = () => {
                     </div>
                     <div className="row my-3">
                         <div className="col-6 offset-3 d-flex justify-content-center align-items-center">
-                            <img src="/img/randomizador_icon_1024.png" alt="Logo" className="img-fluid" style={{ height: '200px' }} />
+                            <img src="/img/randomizador_icon_1024.png" alt="Logo" className="img-fluid" style={{ maxHeight: '200px' }} />
                         </div>
                     </div>
                     <div className="row mt-5">
