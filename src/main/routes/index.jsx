@@ -24,7 +24,7 @@ export default () =>
             <Route exact path='/about' component={About} />
             <Route exact path='/verifyemail' component={VerifyEmail} />
             <Route exact path='/drawn/:id?' component={ViewSavedDraw} />
-            <Route exact path='/myresults' component={MyResults} />
+            <ProtectedRoute exact path='/myresults' component={MyResults} />
             <ProtectedRoute exact path='/user/lists' component={MyLists} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/logout' component={Logout} />

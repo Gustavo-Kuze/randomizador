@@ -35,6 +35,8 @@ const DrawResults = props => {
                 disableCancel: true
             }
             toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions);
+        }).catch(err => {
+            toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, tenha certeza de estar logado em sua conta!')
         })
     }
 
