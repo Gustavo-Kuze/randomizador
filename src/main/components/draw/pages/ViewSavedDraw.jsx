@@ -71,12 +71,12 @@ const ViewSavedDraw = (props) => {
                                                         <div id="moeda">
                                                             <If c={drawResult.result === 'Cara!'}>
                                                                 <div>
-                                                                    <img src="/img/cara.jpg" alt="Cara" />
+                                                                    <img src="/img/cara.png" alt="Cara" />
                                                                 </div>
                                                             </If>
                                                             <If c={drawResult.result === 'Coroa!'}>
                                                                 <div >
-                                                                    <img src="/img/coroa.jpg" alt="Coroa" />
+                                                                    <img src="/img/coroa.png" alt="Coroa" />
                                                                 </div>
                                                             </If>
                                                         </div>

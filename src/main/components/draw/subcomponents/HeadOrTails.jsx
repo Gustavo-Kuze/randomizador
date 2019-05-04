@@ -44,10 +44,10 @@ const HeadOrTails = () => {
             </div>
             <div id="moeda" onClick={flip}>
                 <div className="cara">
-                    <img src="/img/cara.jpg" alt="Cara" />
+                    <img src="/img/cara.png" alt="Cara" />
                 </div>
                 <div className="coroa">
-                    <img src="/img/coroa.jpg" alt="Coroa" />
+                    <img src="/img/coroa.png" alt="Coroa" />
                 </div>
             </div>
             <div className="section mt-5">
