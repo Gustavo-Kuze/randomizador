@@ -7,21 +7,23 @@ import { toastr } from 'react-redux-toastr'
 import If from '../../utils/If'
 import { Input } from 'reactstrap'
 
-const ViewSavedDraw = ({ match }) => {
+const ViewSavedDraw = (props) => {
 
     let [drawId, setDrawId] = useState(0)
     let [drawResult, setDrawResult] = useState({})
 
     useEffect(() => {
-        setDrawId(match.params.id || 0)
-        if (match.params.id > 0) {
-            getPublicResult(match.params.id).then(result => {
+        setDrawId(props.match.params.id || 0)
+        if (props.match.params.id > 0) {
+            getPublicResult(props.match.params.id).then(result => {
                 if (result.drawType !== undefined) {
                     setDrawResult(result)
                 } else {
                     toastr.error('Erro', 'Não foi possível encontrar o sorteio')
                 }
             })
+        }else{
+            //private
         }
     }, [])
 

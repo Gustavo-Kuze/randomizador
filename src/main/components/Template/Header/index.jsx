@@ -1,28 +1,18 @@
-import '../css/Header.css'
-import React, { useState, useEffect } from 'react'
+import '../../css/Header.css'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import firebase from '../../services/firebase/'
+import Menu from './Menu'
 
 import {
     Modal,
     ModalHeader,
     ModalBody,
-    ListGroup,
 } from 'reactstrap'
 
 const Header = props => {
     const [openMenu, toggleMenu] = useState(false)
-    const [userName, setUserName] = useState('Convidado')
 
     const callToggleMenu = () => toggleMenu(!openMenu)
-
-    useEffect(() => {
-        if (firebase.auth().currentUser) {
-            if (firebase.auth().currentUser.displayName) {
-                setUserName(firebase.auth().currentUser.displayName)
-            }
-        }
-    })
 
     return (
         <>
@@ -49,18 +39,7 @@ const Header = props => {
             <Modal isOpen={openMenu} toggle={callToggleMenu} centered size="sm">
                 <ModalHeader className="bg-warning text-center text-light">Menu</ModalHeader>
                 <ModalBody className="">
-                    <p className="lead">{`Bem-vindo, ${userName}`}</p>
-                    <ListGroup className="text-center">
-                        <Link to="/user/lists" className="list-group-item list-group-item-action" >Minhas listas</Link>
-                        <Link to="/numbers" className="list-group-item list-group-item-action" >Sorteio de números</Link>
-                        <Link to="/shuffle" className="list-group-item list-group-item-action" >Embaralhador de frases</Link>
-                        <Link to="/headortails" className="list-group-item list-group-item-action" >Cara ou Coroa</Link>
-                        <hr />
-                        <Link to="/about" className="list-group-item list-group-item-action" >Sobre</Link>
-                        <hr />
-                        <Link to="/login" className="list-group-item list-group-item-action bg-primary text-light" >Login</Link>
-                        <Link to="/logout" className="list-group-item list-group-item-action bg-danger text-light" >Sair</Link>
-                    </ListGroup>
+                   <Menu />
                 </ModalBody>
             </Modal>
         </>

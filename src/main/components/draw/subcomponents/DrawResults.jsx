@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Tooltip } from 'reactstrap'
 import { savePublicResult } from '../../../services/firebase/publicDraws'
+import { savePrivateResult } from '../../../services/firebase/privateDraws'
 import If from '../../utils/If'
 import { Input } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
@@ -20,6 +21,20 @@ const DrawResults = props => {
                 disableCancel: true
             }
             toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions);
+        })
+    }
+
+    const savePrivately = () => {
+        savePrivateResult({
+            description: drawDescription,
+            drawType: props.drawType,
+            date: props.date,
+            result: props.result
+        }).then(id => {
+            const toastrConfirmOptions = {
+                disableCancel: true
+            }
+            toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions);
         })
     }
 
@@ -59,7 +74,7 @@ const DrawResults = props => {
                                 <button id="btn-save-publicly" className="btn btn-block btn-outline-warning" onClick={savePublicly}>Salvar publicamente</button>
                             </div>
                             <div className={'col-12 col-sm-6 my-1'}>
-                                <button className="btn btn-block btn-outline-info">Salvar privado</button>
+                                <button className="btn btn-block btn-outline-info" onClick={savePrivately}>Salvar privado</button>
                             </div>
                         </div>
                     </div>
