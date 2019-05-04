@@ -16,14 +16,14 @@ const About = () => {
                             <img src="/img/randomizador_icon_1024.png" alt="Logo" className="img-fluid" style={{ height: '200px' }} />
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-6 offset-3 text-center">
-                            <h3 className="h4 mb-5">Sim, ele é inspirado no sorteador <span role="img" aria-label="Rosto sorrindo">😆</span></h3>
-                        </div>
-                    </div>
-                    <div className="row">
+                    <div className="row mt-5">
                         <div className="col">
-                            <div className="jumbotron">
+                            <div className="container p-5" style={{ backgroundColor: '#F5F5F5' }}>
+                                <div className="row">
+                                    <div className="col mb-3">
+                                        <h3>Motivação</h3>
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <div className="col">
                                         <p className="text-dark lead">
@@ -43,6 +43,18 @@ const About = () => {
                                     <div className="col">
                                         <p className="text-dark lead">
                                             Se você é desenvolvedor e gostaria de dar uma espiadinha no código fonte, siga-me no <span><a className="text-decoration-none" href="https://github.com/Gustavo-Kuze" target="_blank" rel="noopener noreferrer">Github</a></span>! O pensamento open source moldará um futuro melhor.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="row my-3">
+                                    <div className="col">
+                                        <h3>Origem do nome</h3>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <p className="text-dark lead">
+                                            O nome "Randomizador" é uma referência à palavra da língua Inglesa "Random", que significa <strong>aleatório</strong>. Muito criativo, eu sei! <span role="img" aria-label="Rosto sorridente">😆</span>
                                         </p>
                                     </div>
                                 </div>
