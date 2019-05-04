@@ -17,7 +17,7 @@ const CheckResultsSection = () => {
 
     return <>
         <If c={redirect}>
-            <Redirect to={`/drawn/${drawNumber || ''}`} />
+            <Redirect push to={`/drawn/${drawNumber || ''}`} />
         </If>
         <If c={!redirect}>
             <div className="container">
