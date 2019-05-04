@@ -4,7 +4,9 @@ import If from '../../utils/If'
 import { Input } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
 import { drawIntegers as draw } from '../../../drawEngine'
+import drawTypes from '../drawUtils/drawTypes'
 import DrawResults from '../subcomponents/DrawResults'
+import keycodes from '../../utils/keycodes'
 
 const Numbers = () => {
 
@@ -55,8 +57,16 @@ const Numbers = () => {
             setRandNums(draw(randMin, randMax, quantity))
     }
 
+    const setTouchedAndDrawOnEnter = (e) => {
+        let code = e.keyCode || e.which
+        if (code === keycodes.ENTER) {
+            drawNow()
+        }
+        setAreInputsTouched(true)
+    }
+
     return (
-        <div className="jumbotron">
+        <div className="container">
             <div className="row">
                 <div className="col-lg-10 col-12 offset-lg-1">
                     <div className="row mb-3">
@@ -66,16 +76,34 @@ const Numbers = () => {
                     </div>
                     <div className="row">
                         <div className="col-md-2 col-12 text-center">
-                            <Input className="text-center bg-light" type="number" placeholder="esta quantidade" invalid={areInputsTouched && !isQuantityInputValid} valid={areInputsTouched && isQuantityInputValid} onChange={e => setQuantity(parseInt(e.target.value))} onKeyUp={setAreInputsTouched} />
+                            <Input className="text-center bg-light"
+                                type="number"
+                                placeholder="quantidade"
+                                invalid={areInputsTouched && !isQuantityInputValid}
+                                valid={areInputsTouched && isQuantityInputValid}
+                                onChange={e => setQuantity(parseInt(e.target.value))}
+                                onKeyUp={setTouchedAndDrawOnEnter} />
                         </div>
                         <div className="col-md-4 col-12 text-center">
-                            <Input className="text-center bg-light" type="number" placeholder="entre este valor" invalid={areInputsTouched && !isRandMinInputValid} valid={areInputsTouched && isRandMinInputValid} onChange={e => setRandMin(parseInt(e.target.value))} onKeyUp={setAreInputsTouched} />
+                            <Input className="text-center bg-light"
+                                type="number"
+                                placeholder="entre este valor"
+                                invalid={areInputsTouched && !isRandMinInputValid}
+                                valid={areInputsTouched && isRandMinInputValid}
+                                onChange={e => setRandMin(parseInt(e.target.value))}
+                                onKeyUp={setTouchedAndDrawOnEnter} />
                         </div>
                         <div className="col-md-2 col-12 text-center">
                             <p className="h3 text-muted mt-3">e</p>
                         </div>
                         <div className="col-md-4 col-12 text-center">
-                            <Input className="text-center bg-light" type="number" placeholder="este outro valor" invalid={areInputsTouched && !isRandMaxInputValid} valid={areInputsTouched && isRandMaxInputValid} onChange={e => setRandMax(parseInt(e.target.value))} onKeyUp={setAreInputsTouched} />
+                            <Input className="text-center bg-light"
+                                type="number"
+                                placeholder="este outro valor"
+                                invalid={areInputsTouched && !isRandMaxInputValid}
+                                valid={areInputsTouched && isRandMaxInputValid}
+                                onChange={e => setRandMax(parseInt(e.target.value))}
+                                onKeyUp={setTouchedAndDrawOnEnter} />
                         </div>
                     </div>
                     <div className="row mt-3">
@@ -86,7 +114,11 @@ const Numbers = () => {
                 </div>
             </div>
             <If c={randNums.length > 0}>
-                <DrawResults title="Os números sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1">
+                <DrawResults title="Os números sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
+                    date={`${new Date().toLocaleString()}`}
+                    drawType={drawTypes.NUMBERS}
+                    result={randNums}
+                >
                     <table className="table table-striped table-bordered h3 text-center">
                         <thead>
                             <tr>

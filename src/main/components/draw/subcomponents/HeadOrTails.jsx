@@ -2,6 +2,7 @@ import '../../css/HeadOrTails.css'
 import React, { useState } from 'react'
 import If from '../../utils/If'
 import DrawResults from '../subcomponents/DrawResults'
+import drawTypes from '../drawUtils/drawTypes'
 
 const HeadOrTails = () => {
 
@@ -43,16 +44,20 @@ const HeadOrTails = () => {
             </div>
             <div id="moeda" onClick={flip}>
                 <div className="cara">
-                    <img src="/img/cara.jpg" alt="Cara" />
+                    <img src="/img/cara.png" alt="Cara" />
                 </div>
                 <div className="coroa">
-                    <img src="/img/coroa.jpg" alt="Coroa" />
+                    <img src="/img/coroa.png" alt="Coroa" />
                 </div>
             </div>
             <div className="section mt-5">
                 <div className="container">
                     <If c={showResult}>
-                        <DrawResults title="O resultado foi:">
+                        <DrawResults title="O resultado foi:"
+                            date={`${new Date().toLocaleString()}`}
+                            drawType={drawTypes.HEAD_OR_TAILS}
+                            result={headOrTails}
+                        >
                             <h3 className="display-4 text-center my-5 lobster h2 text-weight-bold">{headOrTails}</h3>
                         </DrawResults>
                     </If>

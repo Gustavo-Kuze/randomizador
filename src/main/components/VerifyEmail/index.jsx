@@ -15,7 +15,7 @@ const index = () => {
                     <div className="row mt-3">
                         <div className="col-10 col-lg-6 offset-1 offset-lg-3 text-center">
                             <div className="card w-auto" style={{ width: '18rem' }}>
-                                <img className="card-img-top" src="/img/verify_email.png" alt="Verifique seu e-mail" />
+                                <img className="card-img-top img-fluid" src="/img/verify_email.png" alt="Verifique seu e-mail" />
                                 <div className="card-body">
                                     <h3>Verifique sua caixa de entrada</h3>
                                     <p className="card-text lead">Por favor clique no link do e-mail de verificação que nós lhe enviamos.</p>

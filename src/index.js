@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bootswatch/dist/materia/bootstrap.min.css'
+import './main/components/css/bootstrap.min.css'
 import './index.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 import App from './main/components/App.jsx';
