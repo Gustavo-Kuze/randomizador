@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Template from '../../Template/'
 import { Redirect } from 'react-router-dom'
-import { getPrivateResults } from '../../../services/firebase/privateDraws'
+import { getPrivateResults, deletePrivateResult } from '../../../services/firebase/privateDraws'
 import drawTypes from '../drawUtils/drawTypes'
 import { setPrivateResultOnState } from '../../../redux/core/actions/privateResults'
 import { connect } from 'react-redux'
 import { bindActionCreators } from "redux"
 import firebase from '../../../services/firebase/'
 import If from '../../utils/If'
+import { toastr } from 'react-redux-toastr'
 
 const MyResults = (props) => {
 
@@ -52,6 +53,16 @@ const MyResults = (props) => {
         setShouldRedirect(true)
     }
 
+    const deleteResult = result => {
+        deletePrivateResult(result.id).then(sucess => {
+            toastr.success('Sucesso!', 'O resultado foi excluído.')
+            window.location.reload()
+        }).catch(err => {
+            toastr.error('Erro', 'Ocorreu um erro ao tentar excluir o resultado')
+            console.log(err)
+        })
+    }
+
     return <>
         <If c={shouldRedirect}>
             <Redirect push to="/drawn" />
@@ -62,27 +73,32 @@ const MyResults = (props) => {
                     <div className="row">
                         <div className="col-10 offset-1">
                             <div className="card">
-                                <div className="list-group">
-                                    {
-                                        results.map(result => (
-                                            <button key={result.id} className="list-group-item list-group-item-action" onClick={() => setResultOnStateAndRedirect(result)}>
-                                                <div className="container">
-                                                    <div className="row">
-                                                        <div className="col-10">
-                                                            <DrawType type={result.drawType} />
-                                                            <p>{result.date}</p>
-                                                        </div>
-                                                        <div className="col-2">
-                                                            <button className="btn btn-link text-decoration-none float-right pop-hover">
-                                                                <i className="fa fa-trash text-danger"></i>
-                                                            </button>
+                                <If c={results.length > 0}>
+                                    <div className="list-group">
+                                        {
+                                            results.map(result => (
+                                                <div key={result.id} className="list-group-item">
+                                                    <div className="container">
+                                                        <div className="row">
+                                                            <div className="col-10" onClick={() => setResultOnStateAndRedirect(result)} style={{ cursor: 'pointer' }}>
+                                                                <DrawType type={result.drawType} />
+                                                                <p>{result.date}</p>
+                                                            </div>
+                                                            <div className="col-2">
+                                                                <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={() => deleteResult(result)}>
+                                                                    <i className="fa fa-trash text-danger"></i>
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </button>
-                                        ))
-                                    }
-                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </If>
+                                <If c={results.length === 0}>
+                                    <h3 className="text-center p-5">Você não tem nenhum resultado de sorteio salvo...</h3>
+                                </If>
                             </div>
                         </div>
                     </div>
