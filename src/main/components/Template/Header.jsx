@@ -38,7 +38,7 @@ const Header = props => {
                             <div className="col-6 col-sm-1">
                                 <button
                                     onClick={callToggleMenu}
-                                    className="btn btn-link btn-warning float-right">
+                                    className="btn btn-link text-light bg-warning float-right">
                                     <span className="navbar-toggler-icon"></span>
                                 </button>
                             </div>
