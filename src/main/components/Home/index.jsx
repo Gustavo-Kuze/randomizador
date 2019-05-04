@@ -9,7 +9,12 @@ const Home = () => {
     return (
         <Template>
             <div className="section">
-                <div className="container-fluid my-5">
+                <div className="container-fluid mb-5">
+                    <div className="row my-3">
+                        <div className="col-6 offset-3 d-flex justify-content-center align-items-center">
+                            <img src="/img/randomizador_icon_1024.png" alt="Logo" className="img-fluid" style={{ maxHeight: '200px' }} />
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-8 offset-md-2 text-center">
                             <h1>Bem-vindo ao <span className="sofia font-weight-bold">Randomizador</span> !</h1>
