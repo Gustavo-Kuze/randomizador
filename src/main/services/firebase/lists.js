@@ -102,23 +102,12 @@ const setAllItemsEnabledState = async (enabled, list) => {
     return null
 }
 
-// inutilizada
-const getAllLists = async () => {
-    let lists = []
-    if (listsRef) {
-        let snapshot = await listsRef.orderBy('date').get()
-        snapshot.forEach(doc => {
-            lists = [...lists, { id: doc.id, ...doc.data() }]
-        })
-    }
-    return lists
-}
-
 const realtimeUpdateLists = (uid, callback) => {
     firebase.firestore()
         .collection('users')
         .doc(uid)
         .collection('lists')
+        .orderBy('date', 'desc')
         .onSnapshot(snapshot => {
             let lists = []
             snapshot.forEach(doc => {
@@ -137,7 +126,7 @@ const stopListsRealtimeListener = (uid) => {
 }
 
 export {
-    addList, deleteList, getAllLists,
+    addList, deleteList,
     realtimeUpdateLists, stopListsRealtimeListener, editListName,
     addItem, deleteItem, editItemText, setItemEnabledState,
     setAllItemsEnabledState, createItemFromText
