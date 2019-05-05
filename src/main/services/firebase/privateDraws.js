@@ -37,9 +37,9 @@ const deletePrivateResult = async (id) => {
 const deleteAllPrivateResults = async () => {
     if (drawsRef) {
         let results = await getPrivateResults()
-        return await results.forEach(async doc => {
+        return await Promise.all(results.docs.map(async doc => {
             return await doc.ref.delete()
-        })
+        }))
     }
     return null
 }
