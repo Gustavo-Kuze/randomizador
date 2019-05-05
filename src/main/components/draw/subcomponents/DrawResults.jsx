@@ -5,6 +5,7 @@ import { savePrivateResult } from '../../../services/firebase/privateDraws'
 import If from '../../utils/If'
 import { Input } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
+import { connect } from 'react-redux'
 
 const DrawResults = props => {
     const [isTooltipOpen, toggleTooltip] = useState()
@@ -26,21 +27,24 @@ const DrawResults = props => {
     }
 
     const savePrivately = () => {
-        // if email verified
-        savePrivateResult({
-            description: drawDescription,
-            drawType: props.drawType,
-            date: props.date,
-            result: props.result
-        }).then(id => {
-            const toastrConfirmOptions = {
-                disableCancel: true,
-                onOk: () => window.location.reload()
-            }
-            toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions)
-        }).catch(err => {
-            toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, tenha certeza de estar logado em sua conta!')
-        })
+        if (props.emailVerified) {
+            savePrivateResult({
+                description: drawDescription,
+                drawType: props.drawType,
+                date: props.date,
+                result: props.result
+            }).then(id => {
+                const toastrConfirmOptions = {
+                    disableCancel: true,
+                    onOk: () => window.location.reload()
+                }
+                toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions)
+            }).catch(err => {
+                toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, teste fazer login novamente.')
+            })
+        } else {
+            toastr.error('Erro!', 'Você precisa estar logado com um e-mail verificado para salvar resultados de sorteio!')
+        }
     }
 
     return (
@@ -89,4 +93,8 @@ const DrawResults = props => {
     )
 }
 
-export default DrawResults
+const mapStateToProps = state => ({
+    emailVerified: state.user.emailVerified
+})
+
+export default connect(mapStateToProps)(DrawResults)
