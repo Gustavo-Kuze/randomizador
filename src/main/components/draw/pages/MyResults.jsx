@@ -59,7 +59,6 @@ const MyResults = (props) => {
             window.location.reload()
         }).catch(err => {
             toastr.error('Erro', 'Ocorreu um erro ao tentar excluir o resultado')
-            console.log(err)
         })
     }
 

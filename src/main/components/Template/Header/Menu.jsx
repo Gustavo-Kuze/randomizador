@@ -27,12 +27,11 @@ const Menu = () => {
             <Link to="/headortails" className="list-group-item list-group-item-action" >Cara ou Coroa</Link>
             <p className="text-secondary mt-3">Resultados de sorteio</p>
             <Link to="/myresults" className="list-group-item list-group-item-action" >Meus sorteios</Link>
-            <Link to="/" className="list-group-item list-group-item-action" >Sorteio público</Link>
             <hr />
             <Link to="/about" className="list-group-item list-group-item-action" >Sobre</Link>
             <hr />
             <Link to="/login" className="list-group-item list-group-item-action bg-primary text-light" >Login</Link>
-            <Link to="/logout" className="list-group-item list-group-item-action bg-danger text-light" >Sair</Link>
+            <Link to="/logout" className="list-group-item list-group-item-action bg-danger text-light" >Sair da conta</Link>
         </ListGroup>
     </>
 }

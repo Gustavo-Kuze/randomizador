@@ -71,12 +71,12 @@ const DrawResults = props => {
                         <div className="row">
                             <div className={'col-12 col-sm-6 my-1'}>
                                 <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>
-                                    <p>O resultado ficará acessível para aquele que obtiver o número, para todo o sempre</p>
+                                    O resultado ficará acessível para quem possuir seu número. Isso não pode ser desfeito!
                                 </Tooltip>
                                 <button id="btn-save-publicly" className="btn btn-block btn-outline-warning" onClick={savePublicly}>Salvar publicamente</button>
                             </div>
                             <div className={'col-12 col-sm-6 my-1'}>
-                                <button className="btn btn-block btn-outline-info" onClick={savePrivately}>Salvar privado</button>
+                                <button className="btn btn-block btn-outline-info" onClick={savePrivately}>Salvar apenas para mim</button>
                             </div>
                         </div>
                     </div>

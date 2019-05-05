@@ -38,13 +38,7 @@ const Header = props => {
             </nav>
             <Modal isOpen={openMenu} toggle={callToggleMenu} centered size="sm" >
                 <ModalHeader className="bg-warning text-center text-light" toggle={() => toggleMenu(false)}>
-                Menu
-                    {/* <div className="d-flex justify-content-between align-items-center">
-                        <h5 className="h4">Menu</h5>
-                        <button type="button" className="close" aria-label="Close" onClick={() => toggleMenu(false)}>
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> */}
+                    Menu
                 </ModalHeader>
                 <ModalBody className="">
                     <Menu />
