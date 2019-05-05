@@ -46,7 +46,7 @@ const ListHeader = (props) => {
             <If c={editMode}>
               <input autoFocus={true} id={`input-edit-list-${props.list.id}`} className="form-control" type="text" onBlur={saveOnBlur} onKeyUp={editNameOnEnter} />
             </If>
-            <p className="h4 mt-2">{props.list.name || 'Clique 2 vezes para nomear'}</p>
+            <p className="h4 mt-2">{props.list.name || 'Clique 2 vezes para dar um nome'} <span className="text-secondary">{` (${props.list.items.length} ${props.list.items.length === 1 ? 'item' : 'itens'})`}</span></p>
           </div>
           <div className="col-2">
             <button className="btn btn-link text-decoration-none pop-hover" onClick={() => confirmListDeletion()}>

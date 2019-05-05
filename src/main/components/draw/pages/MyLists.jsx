@@ -10,13 +10,13 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 import { Input } from 'reactstrap'
 import If from '../../utils/If'
 import MyListsControlsSub from '../subcomponents/Lists/MyListsControlsSub';
+import ListItemsCounters from '../subcomponents/Lists/ListItemsCounters';
 import Chance from 'chance'
 import { toastr } from 'react-redux-toastr'
 import FilePicker from '../../utils/FilePicker'
 import DrawResults from '../subcomponents/DrawResults'
 import drawTypes from '../drawUtils/drawTypes'
 import keyCodes from '../../utils/keycodes'
-import keycodes from '../../utils/keycodes';
 
 let chance = new Chance()
 
@@ -92,8 +92,11 @@ const MyLists = (props) => {
                 canCreateList = false
         })
 
-        if (canCreateList)
+        if (canCreateList){
             props.addList()
+        }else{
+            toastr.warning('Atenção', 'Você já possui uma lista vazia')
+        }
     }
 
     const setInputTouchedAndDrawOnEnter = (e) => {
@@ -172,8 +175,11 @@ const MyLists = (props) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-6 col-12">
+                    <div className="col-md-2 col-12">
                         <MyListsControlsSub />
+                    </div>
+                    <div className="col-md-10 col-12">
+                        <ListItemsCounters lists={props.lists} />
                     </div>
                 </div>
                 <div className="row mt-3">

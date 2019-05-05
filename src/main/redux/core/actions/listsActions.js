@@ -3,7 +3,7 @@ import types from './types/listsTypes'
 export const addList = (list = null) => {
     return {
         type: types.ADD_LIST_SAGA,
-        payload: list
+        payload: list ? { ...list, date: (new Date().toLocaleString()) } : list
     }
 }
 
@@ -24,7 +24,7 @@ export const removeList = (id) => {
 export const editListName = (list, name) => {
     return {
         type: types.EDIT_LIST_NAME_SAGA,
-        payload: {list, name}
+        payload: { list, name }
     }
 }
 

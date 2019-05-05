@@ -106,7 +106,7 @@ const setAllItemsEnabledState = async (enabled, list) => {
 const getAllLists = async () => {
     let lists = []
     if (listsRef) {
-        let snapshot = await listsRef.get()
+        let snapshot = await listsRef.orderBy('date').get()
         snapshot.forEach(doc => {
             lists = [...lists, { id: doc.id, ...doc.data() }]
         })

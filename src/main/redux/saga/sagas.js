@@ -10,7 +10,7 @@ function* addListSaga(action) {
     if (action.payload) {
         yield call(addList, action.payload)
     } else {
-        yield call(addList, { name: '', items: [] })
+        yield call(addList, { name: '', items: [], date: (new Date().toLocaleString()) })
     }
 }
 
