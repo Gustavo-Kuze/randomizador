@@ -15,7 +15,7 @@ O nome "Randomizador" é uma referência à palavra da língua Inglesa "Random",
 
 ## Funcionalidades
 
-- [x] **Login Social** - Além do Login padrão pode e-mail, você também pode utilizar o Randomizador com sua conta do Google ou Facebook!
+- [x] **Login Social** - Além do Login padrão por e-mail, você também pode utilizar o Randomizador com sua conta do Google ou Facebook!
 - [x] **Sorteio de listas** - Crie quantas listas quiser, com quantos itens precisar sortear. As listas são salvas automaticamente!
 - [x] **Sorteio de números clássico** - Sorteie "n" números entre um valor mínimo e um valor máximo
 - [x] **Embaralhador de frases** - Digite as frases ou carregue um arquivo .txt com as mesmas separadas por enters para embaralhá-las
