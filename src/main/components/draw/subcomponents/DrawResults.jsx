@@ -18,13 +18,15 @@ const DrawResults = props => {
             result: props.result
         }).then(number => {
             const toastrConfirmOptions = {
-                disableCancel: true
+                disableCancel: true,
+                onOk: () => window.location.reload()
             }
-            toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions);
+            toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions)
         })
     }
 
     const savePrivately = () => {
+        // if email verified
         savePrivateResult({
             description: drawDescription,
             drawType: props.drawType,
@@ -32,9 +34,10 @@ const DrawResults = props => {
             result: props.result
         }).then(id => {
             const toastrConfirmOptions = {
-                disableCancel: true
+                disableCancel: true,
+                onOk: () => window.location.reload()
             }
-            toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions);
+            toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions)
         }).catch(err => {
             toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, tenha certeza de estar logado em sua conta!')
         })

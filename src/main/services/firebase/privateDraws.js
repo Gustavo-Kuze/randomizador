@@ -22,7 +22,7 @@ const savePrivateResult = async (drawResults) => {
 
 const getPrivateResults = async () => {
     if (drawsRef) {
-        return await drawsRef.get()
+        return await drawsRef.orderBy('date', 'desc').get()
     }
     return null
 }
@@ -34,6 +34,16 @@ const deletePrivateResult = async (id) => {
     return null
 }
 
+const deleteAllPrivateResults = async () => {
+    if (drawsRef) {
+        let results = await getPrivateResults()
+        return await results.forEach(async doc => {
+            return await doc.ref.delete()
+        })
+    }
+    return null
+}
+
 export {
-    savePrivateResult, getPrivateResults, deletePrivateResult
+    savePrivateResult, getPrivateResults, deletePrivateResult, deleteAllPrivateResults
 }

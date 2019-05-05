@@ -48,13 +48,13 @@ const Item = (props) => {
     }
 
     const confirmItemDeletion = () => {
-        if(props.item.text){
+        if (props.item.text) {
             const toastrConfirmOptions = {
                 onOk: () => props.removeItem(props.item, props.list),
                 onCancel: () => { }
-            };
-            toastr.confirm('Tem certeza que deseja excluir esse item?', toastrConfirmOptions);
-        }else{
+            }
+            toastr.confirm('Tem certeza que deseja excluir esse item?', toastrConfirmOptions)
+        } else {
             props.removeItem(props.item, props.list)
         }
     }

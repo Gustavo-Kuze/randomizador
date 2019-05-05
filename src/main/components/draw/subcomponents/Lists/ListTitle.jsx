@@ -31,8 +31,8 @@ const ListHeader = (props) => {
       const toastrConfirmOptions = {
         onOk: () => props.removeList(props.list.id),
         onCancel: () => { }
-      };
-      toastr.confirm('Tem certeza que deseja excluir essa lista?', toastrConfirmOptions);
+      }
+      toastr.confirm('Tem certeza que deseja excluir essa lista?', toastrConfirmOptions)
     } else {
       props.removeList(props.list.id)
     }

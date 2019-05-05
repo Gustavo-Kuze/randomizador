@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Template from '../../Template/'
 import { Redirect } from 'react-router-dom'
-import { getPrivateResults, deletePrivateResult } from '../../../services/firebase/privateDraws'
+import { getPrivateResults, deletePrivateResult, deleteAllPrivateResults } from '../../../services/firebase/privateDraws'
 import drawTypes from '../drawUtils/drawTypes'
 import { setPrivateResultOnState } from '../../../redux/core/actions/privateResults'
 import { connect } from 'react-redux'
@@ -62,6 +62,18 @@ const MyResults = (props) => {
         })
     }
 
+    const deleteAllResults = () => {
+        const toastrConfirmOptions = {
+            onCancel: () => { },
+            onOk: () => {
+                deleteAllPrivateResults().then(() => {
+                    window.location.reload()
+                })
+            }
+        }
+        toastr.confirm(`Tem certeza de que deseja excluir todos os resultados de sorteio salvos? Isso não pode ser desfeito!`, toastrConfirmOptions)
+    }
+
     return <>
         <If c={shouldRedirect}>
             <Redirect push to="/drawn" />
@@ -73,6 +85,7 @@ const MyResults = (props) => {
                         <div className="col-10 offset-1">
                             <div className="card">
                                 <If c={results.length > 0}>
+                                    <button className="btn btn-danger" onClick={deleteAllResults}>Excluir todos os resultados</button>
                                     <div className="list-group">
                                         {
                                             results.map(result => (
