@@ -1,7 +1,7 @@
 # Randomizador
 ![Logo](https://github.com/Gustavo-Kuze/randomizador/blob/dev/public/img/randomizador_icon_128.png "Logo")
 
-Listas de sorteio personalizáveis, Cara ou Coroa e varias ferramentas de sorteio. Acesse o [site](https://randomizador.netlify.com) agora mesmo e comece a testar!
+Listas de sorteio personalizáveis, Cara ou Coroa e varias ferramentas de sorteio. Acesse o [site](https://randomizador.com.br) agora mesmo e comece a testar!
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c81a36f1-0f50-45e7-9b5f-f91aa52fa51b/deploy-status)](https://app.netlify.com/sites/randomizador/deploys)
 
