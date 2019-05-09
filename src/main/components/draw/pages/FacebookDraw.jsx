@@ -3,49 +3,48 @@ import Template from '../../Template/'
 import If from '../../utils/If'
 import { toastr } from 'react-redux-toastr'
 
+let face = null
+
 const FacebookDraw = () => {
 
     let [loginStatus, setLoginStatus] = useState()
+    let [authResult, setAuthResult] = useState()
+    let [pageAccessToken, setPageAccessToken] = useState()
 
     useEffect(() => {
         if (window.Facebook) {
-            window.Facebook.getLoginStatus(function (resp) {
-                setLoginStatus(resp.status)
-
+            face = window.Facebook
+            face.getLoginStatus((loginStatusResponse) => {
+                setLoginStatus(loginStatusResponse.status)
+                setAuthResult(face.getAuthResponse())
             })
         } else {
-            toastr.error('Erro', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue a página.')
+            toastr.error('Erro interno', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue.')
         }
 
     }, [])
 
+    const apiAsync = (path, fields = { "fields": "access_token" }, params = { "access_token": pageAccessToken }) => {
+        return new Promise((res, rej) => {
+            if (pageAccessToken) {
+                face.api(
+                    path,
+                    fields,
+                    params,
+                    (resp) => res(resp)
+                );
+            } else {
+                rej('pageAccessToken vazio')
+            }
+        })
+    }
+
+    const getPagePosts = async (pageId) => await apiAsync(`/${pageId}/posts`)
+
+    const getPageAccessToken = async (pageId) => await apiAsync(`/${pageId}`, fields = { "fields": "access_token" }, null)
+
     const facebookLogin = () => {
-        window.Facebook.login(function (response) {
-            console.log(response)
-            window.Facebook.api(
-                "/GustavoKuzeTI",
-                {
-                    "fields": "access_token"
-                },
-                function (response) {
-                    if (response && !response.error) {
-                        window.Facebook.api(
-                            `/${response.id}/posts`,
-                            {
-                                "fields": "access_token"
-                            },
-                            {
-                                "access_token": response.access_token
-                            },
-                            function (response) {
-                                // if (response && !response.error) {
-                                console.log(response)
-                                // }
-                            }
-                        );
-                    }
-                }
-            );
+        face.login((loginResponse) => {
 
         }, { scope: 'public_profile,email,manage_pages', return_scopes: true });
     }
