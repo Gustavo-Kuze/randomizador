@@ -9,7 +9,15 @@ const ChoosePostSteps = (props) => {
   let [stepThreeOpen, setStepThreeOpen] = useState(false)
   let [stepFourOpen, setStepFourOpen] = useState(false)
 
-
+  const facebookLogin = () => {
+    props.face.login((loginResponse) => {
+      if (loginResponse.authResult) {
+        setAuthResult(loginResponse.authResult)
+      } else {
+        toastr.error('Erro', 'Aconteceu um problema ao recuperar a chave de acesso, por favor tente novamente mais tarde.')
+      }
+    }, { scope: 'public_profile,email,manage_pages', return_scopes: true });
+  }
 
   return <>
     <button className="btn btn-outline-primary btn-block text-left"

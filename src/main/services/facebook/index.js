@@ -1,34 +1,27 @@
-const apiAsync = (path, fields = { "fields": "access_token" }, params = { "access_token": pageAccessToken }) => {
+const apiAsync = (path, params, fields) => {
     return new Promise((res, rej) => {
-        face.api(
-            path,
-            fields,
-            params,
-            (resp) => res(resp)
-        );
+        try {
+            face.api(
+                path,
+                fields,
+                params,
+                (resp) => res(resp)
+            );
+        } catch (err) {
+            rej(err)
+        }
     })
 }
 
-const facebookLogin = () => {
-    props.face.login((loginResponse) => {
-        if (loginResponse.authResult) {
-            setAuthResult(loginResponse.authResult)
-        } else {
-            toastr.error('Erro', 'Aconteceu um problema ao recuperar a chave de acesso, por favor tente novamente mais tarde.')
-        }
-    }, { scope: 'public_profile,email,manage_pages', return_scopes: true });
-}
+const getPagePosts = async (pageId, pageAccessToken) =>
+    await apiAsync(`/${pageId}/posts`, { "access_token": pageAccessToken })
 
-const getPagePosts = async (pageId) => await apiAsync(`/${pageId}/posts`)
+const getPageAccessToken = async (pageId) =>
+    await apiAsync(`/${pageId}`, null, { "fields": "access_token" })
 
-const getPageAccessToken = async (pageId) => await apiAsync(`/${pageId}`, { "fields": "access_token" }, null)
-
-const getUserPages = async () => {
-    let response = await apiAsync(`/me/accounts`, null, { "access_token": authResult.accessToken })
-    console.log(response)
-}
-
+const getUserPages = async (accessToken) =>
+    await apiAsync(`/me/accounts`, null, { "access_token": accessToken })
 
 export {
-    apiAsync
+    apiAsync, getPageAccessToken, getPagePosts, getUserPages
 }
