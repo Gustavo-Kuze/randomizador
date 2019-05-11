@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { Collapse } from "reactstrap";
 import { toastr } from 'react-redux-toastr'
+import { bindActionCreators } from "redux";
+import { connect } from 'react-redux'
+import { setAuthResult } from '../../../../redux/core/actions/facebookLoginActions'
+import { facebookLogin } from "../../../../services/facebook";
 
 const ChoosePostSteps = (props) => {
 
@@ -9,14 +13,12 @@ const ChoosePostSteps = (props) => {
   let [stepThreeOpen, setStepThreeOpen] = useState(false)
   let [stepFourOpen, setStepFourOpen] = useState(false)
 
-  const facebookLogin = () => {
-    props.face.login((loginResponse) => {
-      if (loginResponse.authResult) {
-        setAuthResult(loginResponse.authResult)
-      } else {
-        toastr.error('Erro', 'Aconteceu um problema ao recuperar a chave de acesso, por favor tente novamente mais tarde.')
-      }
-    }, { scope: 'public_profile,email,manage_pages', return_scopes: true });
+  const callFacebookLogin = async () => {
+    facebookLogin().then((loginResponse) => {
+      props.setAuthResult(loginResponse.authResult)
+    }).catch(err => {
+      toastr.error('Erro', err)
+    })
   }
 
   return <>
@@ -25,7 +27,7 @@ const ChoosePostSteps = (props) => {
     <Collapse isOpen={stepOneOpen}>
       <div className="card p-5 my-3">
         <p className="lead">Clique no ícone para fazer login com sua conta do Facebook e permitir o acesso do Randomizador</p>
-        <button className="btn btn-link text-decoration-none" onClick={() => facebookLogin()}>
+        <button className="btn btn-link text-decoration-none" onClick={() => callFacebookLogin()}>
           <i className="fab fa-facebook-square fa-3x"></i>
         </button>
       </div>
@@ -51,4 +53,8 @@ const ChoosePostSteps = (props) => {
   </>
 }
 
-export default ChoosePostSteps
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setAuthResult
+}, dispatch)
+
+export default connect(null, mapDispatchToProps)(ChoosePostSteps)

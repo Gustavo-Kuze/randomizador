@@ -14,9 +14,9 @@ export const setAuthResult = authResult => {
     }
 }
 
-export const setAccessToken = accessToken => {
+export const setPageAccessToken = pageId => {
     return {
-        type: types.SET_ACCESS_TOKEN,
-        payload: accessToken
+        type: types.SET_ACCESS_TOKEN_SAGA,
+        payload: pageId
     }
 }

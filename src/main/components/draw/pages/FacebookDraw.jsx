@@ -1,33 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Template from '../../Template/'
-import If from '../../utils/If'
 import { toastr } from 'react-redux-toastr'
 import ChoosePostSteps from "../subcomponents/Facebook/ChoosePostSteps";
+import { bindActionCreators } from "redux";
+import { connect } from 'react-redux'
+import { setAuthResult, setStatus } from '../../../redux/core/actions/facebookLoginActions'
 
 let face = null
 
-const FacebookDraw = () => {
-
-    let [loginStatus, setLoginStatus] = useState()
-    let [authResult, setAuthResult] = useState()
-    let [pageAccessToken, setPageAccessToken] = useState()
+const FacebookDraw = (props) => {
 
     useEffect(() => {
         if (window.Facebook) {
             face = window.Facebook
             face.getLoginStatus((loginStatusResponse) => {
-                setLoginStatus(loginStatusResponse.status)
-                setAuthResult(face.getAuthResponse())
+                props.setStatus(loginStatusResponse.status)
+                props.setAuthResult(face.getAuthResponse())
             })
         } else {
-            toastr.error('Erro interno', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue.')
+            toastr.error('Erro interno', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue a página.')
         }
 
     }, [])
 
-    
-
-   
     return (
         <Template>
             <div className="container">
@@ -39,7 +34,7 @@ const FacebookDraw = () => {
                 </div>
                 <div className="row mt-5">
                     <div className="col-12 col-md-10 offset-md-2">
-                       <ChoosePostSteps face={face}/>
+                        <ChoosePostSteps />
                     </div>
                 </div>
             </div>
@@ -47,4 +42,8 @@ const FacebookDraw = () => {
     )
 }
 
-export default FacebookDraw
+const mapDispatchToProps = dispatch => bindActionCreators({
+    setAuthResult, setStatus
+}, dispatch)
+
+export default connect(null, mapDispatchToProps)(FacebookDraw)
