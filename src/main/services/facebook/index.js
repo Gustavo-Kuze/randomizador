@@ -1,9 +1,9 @@
-const apiAsync = (path, params, fields) => {
+const apiAsync = (path, params, method = 'get') => {
     return new Promise((res, rej) => {
         try {
-            window.Fabebook.api(
+            window.Facebook.api(
                 path,
-                fields,
+                method,
                 params,
                 (resp) => res(resp)
             );
@@ -16,8 +16,8 @@ const apiAsync = (path, params, fields) => {
 const facebookLogin = () => {
     return new Promise((res, rej) => {
         window.Facebook.login((loginResponse) => {
-            if (loginResponse.authResult) {
-                res(loginResponse.authResult)
+            if (loginResponse.authResponse) {
+                res(loginResponse.authResponse)
             } else {
                 rej('Aconteceu um problema ao recuperar a chave de acesso, por favor tente novamente mais tarde.')
             }
@@ -28,12 +28,9 @@ const facebookLogin = () => {
 const getPagePosts = async (pageId, pageAccessToken) =>
     await apiAsync(`/${pageId}/posts`, { "access_token": pageAccessToken })
 
-const getPageAccessToken = async (pageId) =>
-    await apiAsync(`/${pageId}`, null, { "fields": "access_token" })
-
-const getUserPages = async (accessToken) =>
-    await apiAsync(`/me/accounts`, null, { "access_token": accessToken })
+const getUserPages = async (userId, accessToken) =>
+    await apiAsync(`/${userId || 'me'}/accounts`, { "access_token": accessToken, "fields": "id,name,access_token" })
 
 export {
-    apiAsync, getPageAccessToken, getPagePosts, getUserPages, facebookLogin
+    apiAsync, getPagePosts, getUserPages, facebookLogin
 }

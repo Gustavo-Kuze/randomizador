@@ -7,16 +7,9 @@ export const setStatus = status => {
     }
 }
 
-export const setAuthResult = authResult => {
+export const setAuthResponse = authResponse => {
     return {
-        type: types.SET_AUTH_RESULT,
-        payload: authResult
-    }
-}
-
-export const setPageAccessToken = pageId => {
-    return {
-        type: types.SET_ACCESS_TOKEN_SAGA,
-        payload: pageId
+        type: types.SET_AUTH_RESPONSE,
+        payload: authResponse
     }
 }

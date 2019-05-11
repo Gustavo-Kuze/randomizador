@@ -4,7 +4,7 @@ import { toastr } from 'react-redux-toastr'
 import ChoosePostSteps from "../subcomponents/Facebook/ChoosePostSteps";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
-import { setAuthResult, setStatus } from '../../../redux/core/actions/facebookLoginActions'
+import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLoginActions'
 
 let face = null
 
@@ -15,7 +15,7 @@ const FacebookDraw = (props) => {
             face = window.Facebook
             face.getLoginStatus((loginStatusResponse) => {
                 props.setStatus(loginStatusResponse.status)
-                props.setAuthResult(face.getAuthResponse())
+                props.setAuthResponse(face.getAuthResponse())
             })
         } else {
             toastr.error('Erro interno', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue a página.')
@@ -43,7 +43,7 @@ const FacebookDraw = (props) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    setAuthResult, setStatus
+    setAuthResponse, setStatus
 }, dispatch)
 
 export default connect(null, mapDispatchToProps)(FacebookDraw)

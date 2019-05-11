@@ -1,8 +1,6 @@
 import listsTypes from '../core/actions/types/listsTypes'
-import faceTypes from '../core/actions/types/facebookLoginTypes'
 import { takeLatest, all } from 'redux-saga/effects'
 
-import { setPageAccessTokenSaga } from "./facebookLoginSagas";
 import {
     addItemSaga, addListSaga, editItemTextSaga,
     editListNameSaga, removeItemSaga, removeListSaga,
@@ -20,6 +18,5 @@ export default function* root() {
         takeLatest(listsTypes.EDIT_ITEM_TEXT_SAGA, editItemTextSaga),
         takeLatest(listsTypes.SET_ITEM_ENABLED_STATE_SAGA, setItemEnabledStateSaga),
         takeLatest(listsTypes.SET_ALL_ITEMS_ENABLED_STATE_SAGA, setAllItemsEnabledStateSaga),
-        takeLatest(faceTypes.SET_ACCESS_TOKEN_SAGA, setPageAccessTokenSaga),
     ])
 }

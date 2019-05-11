@@ -3,6 +3,7 @@ import userReducer from './reducers/userReducer'
 import listsReducer from './reducers/listsReducer'
 import privateResultsReducer from './reducers/privateResultsReducer'
 import facebookReducer from './reducers/facebookLoginReducer'
+import facebookCommentsReducer from './reducers/facebookCommentsReducer'
 import { reducer as toastrReducer } from 'react-redux-toastr'
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
     user: userReducer,
     lists: listsReducer,
     privateResults: privateResultsReducer,
-    facebook: facebookReducer
+    facebook: facebookReducer,
+    facebookComments: facebookCommentsReducer,
 })
