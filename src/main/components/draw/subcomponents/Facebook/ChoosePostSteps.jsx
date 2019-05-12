@@ -144,7 +144,11 @@ const ChoosePostSteps = (props) => {
     if (code === keycodes.ENTER) {
       drawComments()
     }
-    setQuantityInputValid(quantity > 0 && quantity <= props.comments.length)
+  }
+
+  const setQuantityAndValidate = (value) => {
+    setQuantity(value)
+    setQuantityInputValid(value > 0 && value <= props.comments.length)
   }
 
   return <>
@@ -218,9 +222,9 @@ const ChoosePostSteps = (props) => {
                 invalid={!isQuantityInputValid}
                 valid={isQuantityInputValid}
                 value={quantity}
-                onChange={e => setQuantity(parseInt(e.target.value))}
+                onChange={e => setQuantityAndValidate(parseInt(e.target.value))}
                 onKeyUp={setQuantityInputValidAndDrawOnEnter} />
-              <button onClick={drawComments} className="btn btn-success btn-block btn-pulse-success">Sortear!</button>
+              <button onClick={drawComments} className={`btn btn-success btn-block ${isQuantityInputValid ? 'btn-pulse-success' : ''}`}>Sortear!</button>
             </If>
             <If c={drawnComments.length > 0}>
               <DrawResults title="Os comentários sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
