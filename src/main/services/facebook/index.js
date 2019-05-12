@@ -21,15 +21,15 @@ const facebookLogin = () => {
             } else {
                 rej('Aconteceu um problema ao recuperar a chave de acesso, por favor tente novamente mais tarde.')
             }
-        }, { scope: 'public_profile,email,manage_pages', return_scopes: true });
+        }, { scope: 'public_profile,email,manage_pages,instagram_basic,instagram_manage_comments', return_scopes: true });
     })
 }
 
-const getPagePosts = async (pageId, pageAccessToken) =>
-    await apiAsync(`/${pageId}/posts`, { "access_token": pageAccessToken })
+const getPagePosts = async (pageId, pageAccessToken, limit = 10) =>
+    await apiAsync(`/${pageId}/posts`, { "access_token": pageAccessToken, "fields": "message,full_picture", "limit": limit })
 
 const getUserPages = async (userId, accessToken) =>
-    await apiAsync(`/${userId || 'me'}/accounts`, { "access_token": accessToken, "fields": "id,name,access_token" })
+    await apiAsync(`/${userId || 'me'}/accounts`, { "access_token": accessToken, "fields": "id,name,access_token"})
 
 export {
     apiAsync, getPagePosts, getUserPages, facebookLogin

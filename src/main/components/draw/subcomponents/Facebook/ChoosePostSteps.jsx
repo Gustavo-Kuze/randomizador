@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse } from '../../../../redux/core/actions/facebookLoginActions'
 import { setPagePosts, setSelectedPage, setSelectedPost, setUserPages } from "../../../../redux/core/actions/facebookCommentsActions";
-import { facebookLogin, getUserPages } from "../../../../services/facebook";
+import { facebookLogin, getUserPages, getPagePosts } from "../../../../services/facebook";
 import If from '../../../utils/If'
 
 const ChoosePostSteps = (props) => {
@@ -38,24 +38,42 @@ const ChoosePostSteps = (props) => {
     facebookLogin().then((loginResponse) => {
       props.setAuthResponse(loginResponse)
       setStepOneOpen(false)
+      setStepTwoOpen(true)
       fulfillUserPages(loginResponse)
     }).catch(err => {
       toastr.error('Erro', err)
     })
   }
 
+  const setPageAndGetPosts = (page) => {
+    props.setSelectedPage(page)
+    getPagePosts(page.id, page.accessToken).then(response => {
+        let posts = response.data.filter(p => (p.message))
+        props.setPagePosts(posts)
+    }).catch(err => {
+      toastr.error('Erro', err)
+    } )
+    setStepTwoOpen(false)
+    setStepThreeOpen(true)
+  }
+
   const renderPageRadio = (page) => <>
     <input type="radio" id={`page-radio-${page.name}`} className="custom-control-input"
-    checked={props.selectedPage ? props.selectedPage.name === page.name : false}
-    onChange={e => props.setSelectedPage(page)} />
+      checked={props.selectedPage ? props.selectedPage.name === page.name : false}
+      onChange={e => setPageAndGetPosts(page)} />
     <label className="custom-control-label" htmlFor={`page-radio-${page.name}`}>{page.name}</label>
   </>
 
   const renderPostRadio = (post) => {
     let id = `post-radio--${post.message[0]}--${(Math.floor(Math.random() * (20 - 1)) + 1)}`
     return <>
-      <input type="radio" id={id} className="custom-control-input" onChange={e => props.setSelectedPost(post)} />
-      <label className="custom-control-label" htmlFor={id}>{post.message}</label>
+      <input type="radio" id={id} className="custom-control-input"
+        checked={props.selectedPost ? props.selectedPost.message === post.message : false}
+        onChange={e => props.setSelectedPost(post)} />
+      <label className="custom-control-label" htmlFor={id}>
+      <img className="img-thumbnail mt-4" src={post.full_picture} alt="Post sem imagem" style={{maxWidth: '160px'}}/>
+        <span className="text-truncate d-block lead mt-2 mb-5" style={{ maxWidth: 'calc(50vw)' }}>{post.message}</span>
+      </label>
     </>
   }
   return <>
@@ -87,9 +105,9 @@ const ChoosePostSteps = (props) => {
     <Collapse isOpen={isStepThreeOpen}>
       <div className="card p-5 my-3">
         <If c={props.pagePosts.length > 0}>
-          <p className="lead text-center">Escolha a página que contém o post para sortear!</p>
+          <p className="lead text-center">Escolha o post para sortear!</p>
           {
-            props.pagePosts ? props.pagePosts.map((p, i) => <div key={`page-pots-radio-key--${i}`} className="custom-control custom-radio">{renderPostRadio(p)}</div>)
+            props.pagePosts ? props.pagePosts.map((p, i) => <div key={`page-posts-radio-key--${i}`} className="custom-control custom-radio">{renderPostRadio(p)}</div>)
               : ''}
         </If>
         <If c={!props.pagePosts.length > 0}>Você não tem nenhum post</If>
