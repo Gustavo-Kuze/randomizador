@@ -3,8 +3,9 @@ import types from '../actions/types/facebookCommentsTypes'
 const STATE = {
     userPages: [],
     pagePosts: [],
-    selectedPage: null,
-    selectedPost: null,
+    selectedPage: {},
+    selectedPost: {},
+    comments: []
 }
 
 export default (state = STATE, action) => {
@@ -17,6 +18,8 @@ export default (state = STATE, action) => {
             return { ...state, selectedPage: action.payload }
         case types.SET_SELECTED_POST:
             return { ...state, selectedPost: action.payload }
+        case types.SET_POST_COMMENTS:
+            return { ...state, comments: action.payload }
         default:
             return state
     }

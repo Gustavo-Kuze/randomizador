@@ -4,8 +4,11 @@ import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse } from '../../../../redux/core/actions/facebookLoginActions'
-import { setPagePosts, setSelectedPage, setSelectedPost, setUserPages } from "../../../../redux/core/actions/facebookCommentsActions";
-import { facebookLogin, getUserPages, getPagePosts } from "../../../../services/facebook";
+import {
+  setPagePosts, setSelectedPage, setSelectedPost,
+  setUserPages, setPostComments
+} from "../../../../redux/core/actions/facebookCommentsActions";
+import { facebookLogin, getUserPages, getPagePosts, getPostComments } from "../../../../services/facebook";
 import If from '../../../utils/If'
 
 const ChoosePostSteps = (props) => {
@@ -47,20 +50,26 @@ const ChoosePostSteps = (props) => {
 
   const setPageAndGetPosts = (page) => {
     props.setSelectedPage(page)
-    getPagePosts(page.id, page.accessToken).then(response => {
-        let posts = response.data.filter(p => (p.message))
-        props.setPagePosts(posts)
+    getPagePosts(page.id, page.access_token).then(response => {
+      let posts = response.data.filter(p => (p.message))
+      props.setPagePosts(posts)
     }).catch(err => {
       toastr.error('Erro', err)
-    } )
+    })
     setStepTwoOpen(false)
     setStepThreeOpen(true)
   }
 
   const setPost = (post) => {
-    props.setSelectedPost(post)
-    setStepThreeOpen(false)
-    setStepFourOpen(true)
+    let postCopy = { ...post }
+    props.setSelectedPost(postCopy)
+    getPostComments(postCopy.id, props.accessToken).then(resp => {
+      props.setPostComments(resp.data)
+      setStepThreeOpen(false)
+      setStepFourOpen(true)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   const renderPageRadio = (page) => <>
@@ -77,7 +86,7 @@ const ChoosePostSteps = (props) => {
         checked={props.selectedPost ? props.selectedPost.message === post.message : false}
         onChange={e => setPost(post)} />
       <label className="custom-control-label" htmlFor={id}>
-      <img className="img-thumbnail mt-4" src={post.full_picture} alt="Post sem imagem" style={{maxWidth: '160px'}}/>
+        <img className="img-thumbnail mt-4" src={post.full_picture} alt="Post sem imagem" style={{ maxWidth: '160px' }} />
         <span className="text-truncate d-block lead mt-2 mb-5" style={{ maxWidth: 'calc(50vw)' }}>{post.message}</span>
       </label>
     </>
@@ -124,6 +133,14 @@ const ChoosePostSteps = (props) => {
       onClick={() => setStepFourOpen(!isStepFourOpen)}>4- Sorteie!</button>
     <Collapse isOpen={isStepFourOpen}>
       <div className="card p-5 my-3">
+        {
+          props.comments ? props.comments.map((c, i) => (
+            <ul key={c.id}>
+              <li><p>{c.message}</p></li>
+              <li><a target="_blank" rel="noopener noreferrer" href={c.permalink_url} >{c.permalink_url}</a></li>
+            </ul>
+          )) : ''
+        }
       </div>
     </Collapse>
   </>
@@ -132,16 +149,17 @@ const ChoosePostSteps = (props) => {
 const mapStateToProps = state => ({
   loginStatus: state.facebook.status,
   authResponse: state.facebook.authResponse,
-  accessToken: state.facebook.accessToken,
+  accessToken: state.facebookComments.selectedPage.access_token,
   userPages: state.facebookComments.userPages,
   pagePosts: state.facebookComments.pagePosts,
   selectedPage: state.facebookComments.selectedPage,
   selectedPost: state.facebookComments.selectedPost,
+  comments: state.facebookComments.comments
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setAuthResponse, setPagePosts, setSelectedPage,
-  setSelectedPost, setUserPages
+  setSelectedPost, setUserPages, setPostComments
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChoosePostSteps)

@@ -29,8 +29,11 @@ const getPagePosts = async (pageId, pageAccessToken, limit = 30) =>
     await apiAsync(`/${pageId}/posts`, { "access_token": pageAccessToken, "fields": "message,full_picture", "limit": limit })
 
 const getUserPages = async (userId, accessToken) =>
-    await apiAsync(`/${userId || 'me'}/accounts`, { "access_token": accessToken, "fields": "id,name,access_token"})
+    await apiAsync(`/${userId || 'me'}/accounts`, { "access_token": accessToken, "fields": "id,name,access_token" })
+
+const getPostComments = async (postId, pageAccessToken) =>
+    await apiAsync(`/${postId}/comments`, { "access_token": pageAccessToken, "fields": "id,message,permalink_url" })
 
 export {
-    apiAsync, getPagePosts, getUserPages, facebookLogin
+    apiAsync, getPagePosts, getUserPages, facebookLogin, getPostComments
 }

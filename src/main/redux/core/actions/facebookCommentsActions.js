@@ -27,3 +27,10 @@ export const setSelectedPost = (post) => {
         payload: post
     }
 }
+
+export const setPostComments = (comments) => {
+    return {
+        type: types.SET_POST_COMMENTS,
+        payload: comments
+    }
+}
