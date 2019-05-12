@@ -10,6 +10,14 @@ import {
 } from "../../../../redux/core/actions/facebookCommentsActions";
 import { facebookLogin, getUserPages, getPagePosts, getPostComments } from "../../../../services/facebook";
 import If from '../../../utils/If'
+import Chance from 'chance'
+import { Input } from 'reactstrap'
+import keycodes from '../../../utils/keycodes'
+import FacebookCommentsDrawResult from '../CommonViewStructures/FacebookCommentsDrawResult'
+import DrawResults from '../DrawResults'
+import drawTypes from '../../drawUtils/drawTypes'
+
+let chance = new Chance()
 
 const ChoosePostSteps = (props) => {
 
@@ -21,6 +29,10 @@ const ChoosePostSteps = (props) => {
   let [isStepTwoEnabled, setStepTwoEnabled] = useState(false)
   let [isStepThreeEnabled, setStepThreeEnabled] = useState(false)
   let [isStepFourEnabled, setStepFourEnabled] = useState(false)
+
+  let [isQuantityInputValid, setQuantityInputValid] = useState(true)
+  let [quantity, setQuantity] = useState(1)
+  let [drawnComments, setDrawnComments] = useState([])
 
   useEffect(() => {
     if (props.loginStatus === 'connected' && !isStepTwoEnabled)
@@ -91,6 +103,24 @@ const ChoosePostSteps = (props) => {
       </label>
     </>
   }
+
+  const drawComments = () => {
+    if(isQuantityInputValid){
+      let drawn = chance.pickset(props.comments, quantity)
+      setDrawnComments(drawn)
+    }else{
+      toastr.warning('Atenção!', 'Você precisa definir uma quantidade maior que zero e menor que o número de comentários do post!')
+    }
+  }
+
+  const setQuantityInputValidAndDrawOnEnter = (e) => {
+    let code = e.keyCode || e.which
+    if (code === keycodes.ENTER) {
+      drawComments()
+    }
+    setQuantityInputValid(quantity > 0 && quantity <= props.comments.length)
+  }
+
   return <>
     <button className="btn btn-outline-primary btn-block text-left"
       onClick={() => setStepOneOpen(!isStepOneOpen)}>1- Permitir que o Randomizador gerencie suas páginas</button>
@@ -133,14 +163,39 @@ const ChoosePostSteps = (props) => {
       onClick={() => setStepFourOpen(!isStepFourOpen)}>4- Sorteie!</button>
     <Collapse isOpen={isStepFourOpen}>
       <div className="card p-5 my-3">
-        {
-          props.comments ? props.comments.map((c, i) => (
-            <ul key={c.id}>
-              <li><p>{c.message}</p></li>
-              <li><a target="_blank" rel="noopener noreferrer" href={c.permalink_url} >{c.permalink_url}</a></li>
-            </ul>
-          )) : ''
-        }
+
+        <If c={!props.comments}>
+          <p className="lead">Ocorreu um erro ao listar os comentários deste post.</p>
+        </If>
+        <If c={props.comments}>
+          <If c={props.comments.length > 0}>
+            <If c={drawnComments.length === 0}>
+              <p className="lead">Finalmente, você já pode sortear! <span role="img" aria-label="Positivo">👍</span></p>
+              <Input className="text-center bg-light mb-3"
+                type="number"
+                placeholder="Quantidade"
+                invalid={!isQuantityInputValid}
+                valid={isQuantityInputValid}
+                value={quantity}
+                onChange={e => setQuantity(parseInt(e.target.value))}
+                onKeyUp={setQuantityInputValidAndDrawOnEnter} />
+              <button onClick={drawComments} className="btn btn-success btn-block btn-pulse-success">Sortear!</button>
+            </If>
+            <If c={drawnComments.length > 0}>
+              <DrawResults title="Os números sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
+                date={`${new Date().toLocaleString()}`}
+                drawType={drawTypes.FACEBOOK_COMMENTS}
+                result={drawnComments}>
+
+                <FacebookCommentsDrawResult items={drawnComments} />
+              </DrawResults>
+            </If>
+          </If>
+          <If c={props.comments.length === 0}>
+            <p className="lead">Este post não tem comentários</p>
+          </If>
+        </If>
+
       </div>
     </Collapse>
   </>

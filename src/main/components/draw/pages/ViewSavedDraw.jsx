@@ -10,6 +10,7 @@ import { Input } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
 import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult'
 import NumbersDrawResult from '../subcomponents/CommonViewStructures/NumbersDrawResult'
+import FacebookCommentsDrawResult from '../subcomponents/CommonViewStructures/FacebookCommentsDrawResult'
 
 const ViewSavedDraw = (props) => {
 
@@ -79,6 +80,9 @@ const ViewSavedDraw = (props) => {
                                                 </If>
                                                 <If c={drawResult.drawType === drawTypes.LISTS}>
                                                     <ListsDrawResult items={drawResult.result} />
+                                                </If>
+                                                <If c={drawResult.drawType === drawTypes.FACEBOOK_COMMENTS}>
+                                                    <FacebookCommentsDrawResult items={drawResult.result} />
                                                 </If>
                                             </DrawResults>
                                         </If>
