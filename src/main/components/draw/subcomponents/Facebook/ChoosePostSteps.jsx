@@ -8,7 +8,7 @@ import {
   setPagePosts, setSelectedPage, setSelectedPost,
   setUserPages, setPostComments
 } from "../../../../redux/core/actions/facebookCommentsActions";
-import { facebookLogin, getUserPages, getPagePosts, getPostComments } from "../../../../services/facebook";
+import { facebookLogin, getUserPages, getPagePosts, getPostComments, getPagePostsFromPagination } from "../../../../services/facebook";
 import If from '../../../utils/If'
 import Chance from 'chance'
 import { Input } from 'reactstrap'
@@ -26,6 +26,7 @@ const ChoosePostSteps = (props) => {
   let [isStepThreeOpen, setStepThreeOpen] = useState(false)
   let [isStepFourOpen, setStepFourOpen] = useState(false)
 
+  let [isStepOneEnabled, setStepOneEnabled] = useState(true)
   let [isStepTwoEnabled, setStepTwoEnabled] = useState(false)
   let [isStepThreeEnabled, setStepThreeEnabled] = useState(false)
   let [isStepFourEnabled, setStepFourEnabled] = useState(false)
@@ -34,12 +35,15 @@ const ChoosePostSteps = (props) => {
   let [quantity, setQuantity] = useState(1)
   let [drawnComments, setDrawnComments] = useState([])
 
+  let [nextPostsHref, setNextPostsHref] = useState()
+  let [prevPostsHref, setPrevPostsHref] = useState()
+
   useEffect(() => {
-    if (props.loginStatus === 'connected' && !isStepTwoEnabled)
+    if (props.loginStatus === 'connected' && !isStepTwoEnabled && isStepOneEnabled)
       setStepTwoEnabled(true)
-    if (props.userPages.length > 0 && !isStepThreeEnabled && isStepTwoEnabled)
+    if (props.userPages.length > 0 && !isStepThreeEnabled && isStepTwoEnabled && isStepOneEnabled)
       setStepThreeEnabled(true)
-    if (props.pagePosts.length > 0 && !isStepFourEnabled && isStepThreeEnabled && isStepTwoEnabled)
+    if (props.pagePosts.length > 0 && !isStepFourEnabled && isStepThreeEnabled && isStepTwoEnabled && isStepOneEnabled)
       setStepFourEnabled(true)
   })
 
@@ -60,14 +64,31 @@ const ChoosePostSteps = (props) => {
     })
   }
 
-  const setPageAndGetPosts = (page) => {
-    props.setSelectedPage(page)
-    getPagePosts(page.id, page.access_token).then(response => {
-      let posts = response.data.filter(p => (p.message))
-      props.setPagePosts(posts)
+  const paginateTo = (href) => {
+    getPagePostsFromPagination(href).then(response => {
+      preparePagePosts(response)
     }).catch(err => {
       toastr.error('Erro', err)
     })
+  }
+
+  const preparePagePosts = (response) => {
+    if (response.paging) {
+      if (response.paging.next)
+        setNextPostsHref(response.paging.next)
+      if (response.paging.previous)
+        setPrevPostsHref(response.paging.previous)
+    }
+    props.setPagePosts(response.data)
+  }
+
+  const setPageAndGetPosts = (page) => {
+    props.setSelectedPage(page)
+    getPagePosts(page.id, page.access_token)
+      .then(preparePagePosts)
+      .catch(err => {
+        toastr.error('Erro', err)
+      })
     setStepTwoOpen(false)
     setStepThreeOpen(true)
   }
@@ -92,23 +113,28 @@ const ChoosePostSteps = (props) => {
   </>
 
   const renderPostRadio = (post) => {
-    let id = `post-radio--${post.message[0]}--${(Math.floor(Math.random() * (20 - 1)) + 1)}`
+    let id = `post-radio--${post.id}`
     return <>
       <input type="radio" id={id} className="custom-control-input"
-        checked={props.selectedPost ? props.selectedPost.message === post.message : false}
+        checked={props.selectedPost ? props.selectedPost.id === post.id : false}
         onChange={e => setPost(post)} />
       <label className="custom-control-label" htmlFor={id}>
-        <img className="img-thumbnail mt-4" src={post.full_picture} alt="Post sem imagem" style={{ maxWidth: '160px' }} />
-        <span className="text-truncate d-block lead mt-2 mb-5" style={{ maxWidth: 'calc(50vw)' }}>{post.message}</span>
+        <img className="img-thumbnail mt-4" src={post.full_picture || '/img/randomizador_icon_64.png'} alt="Post sem imagem" style={{ maxWidth: '160px' }} />
+        <span className={`text-truncate d-block mt-2 mb-5 ${post.message ? 'lead' : 'text-secondary'}`} style={{ maxWidth: 'calc(50vw)' }}>{post.message || 'Post sem mensagem'}</span>
       </label>
     </>
   }
 
   const drawComments = () => {
-    if(isQuantityInputValid){
+    if (isQuantityInputValid) {
       let drawn = chance.pickset(props.comments, quantity)
       setDrawnComments(drawn)
-    }else{
+
+      setStepOneEnabled(false)
+      setStepTwoEnabled(false)
+      setStepThreeEnabled(false)
+      setStepFourEnabled(false)
+    } else {
       toastr.warning('Atenção!', 'Você precisa definir uma quantidade maior que zero e menor que o número de comentários do post!')
     }
   }
@@ -122,7 +148,8 @@ const ChoosePostSteps = (props) => {
   }
 
   return <>
-    <button className="btn btn-outline-primary btn-block text-left"
+    <button className={`btn btn-outline-primary btn-block text-left mt-3 ${isStepOneEnabled ? '' : 'disabled'}`}
+      disabled={!isStepOneEnabled}
       onClick={() => setStepOneOpen(!isStepOneOpen)}>1- Permitir que o Randomizador gerencie suas páginas</button>
     <Collapse isOpen={isStepOneOpen}>
       <div className="card p-5 my-3">
@@ -141,12 +168,12 @@ const ChoosePostSteps = (props) => {
             props.userPages ? props.userPages.map((p, i) => <div key={`page-radio-key--${i}`} className="custom-control custom-radio">{renderPageRadio(p)}</div>)
               : ''}
         </If>
-        <If c={!props.userPages.length > 0}>Você não tem nenhuma página</If>
+        <If c={!props.userPages.length > 0}>Você não tem nenhuma página ou ainda não deu as permissões para o App</If>
       </div>
     </Collapse>
     <button className={`btn btn-outline-primary btn-block text-left mt-3 ${isStepThreeEnabled ? '' : 'disabled'}`}
       disabled={!isStepThreeEnabled}
-      onClick={() => setStepThreeOpen(!isStepThreeOpen)}>3- Escolha o post</button>
+      onClick={() => setStepThreeOpen(!isStepThreeOpen)}>3- Escolher o post</button>
     <Collapse isOpen={isStepThreeOpen}>
       <div className="card p-5 my-3">
         <If c={props.pagePosts.length > 0}>
@@ -154,6 +181,20 @@ const ChoosePostSteps = (props) => {
           {
             props.pagePosts ? props.pagePosts.map((p, i) => <div key={`page-posts-radio-key--${i}`} className="custom-control custom-radio">{renderPostRadio(p)}</div>)
               : ''}
+          <div className="container">
+            <div className="row">
+              <div className="col-6">
+                <If c={prevPostsHref}>
+                  <button onClick={() => paginateTo(prevPostsHref)} className="btn btn-outline-success float-right">Anteriores</button>
+                </If>
+              </div>
+              <div className="col-6">
+                <If c={nextPostsHref}>
+                  <button onClick={() => paginateTo(nextPostsHref)} className="btn btn-outline-success">Próximos</button>
+                </If>
+              </div>
+            </div>
+          </div>
         </If>
         <If c={!props.pagePosts.length > 0}>Você não tem nenhum post</If>
       </div>
@@ -170,7 +211,7 @@ const ChoosePostSteps = (props) => {
         <If c={props.comments}>
           <If c={props.comments.length > 0}>
             <If c={drawnComments.length === 0}>
-              <p className="lead">Finalmente, você já pode sortear! <span role="img" aria-label="Positivo">👍</span></p>
+              <p className="lead text-center">Finalmente, você já pode sortear! <span role="img" aria-label="Positivo">👍</span></p>
               <Input className="text-center bg-light mb-3"
                 type="number"
                 placeholder="Quantidade"
@@ -182,7 +223,7 @@ const ChoosePostSteps = (props) => {
               <button onClick={drawComments} className="btn btn-success btn-block btn-pulse-success">Sortear!</button>
             </If>
             <If c={drawnComments.length > 0}>
-              <DrawResults title="Os números sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
+              <DrawResults title="Os comentários sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
                 date={`${new Date().toLocaleString()}`}
                 drawType={drawTypes.FACEBOOK_COMMENTS}
                 result={drawnComments}>
