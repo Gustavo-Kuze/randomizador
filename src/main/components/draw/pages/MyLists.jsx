@@ -17,6 +17,7 @@ import FilePicker from '../../utils/FilePicker'
 import DrawResults from '../subcomponents/DrawResults'
 import drawTypes from '../drawUtils/drawTypes'
 import keyCodes from '../../utils/keycodes'
+import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult'
 
 let chance = new Chance()
 
@@ -92,9 +93,9 @@ const MyLists = (props) => {
                 canCreateList = false
         })
 
-        if (canCreateList){
+        if (canCreateList) {
             props.addList()
-        }else{
+        } else {
             toastr.warning('Atenção', 'Você já possui uma lista vazia')
         }
     }
@@ -143,26 +144,9 @@ const MyLists = (props) => {
                                                             title="Os itens sorteados foram:"
                                                             date={`${new Date().toLocaleString()}`}
                                                             drawType={drawTypes.LISTS}
-                                                            result={drawnItems}
-                                                        >
-                                                            <table className="table table-striped table-borderless text-center">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Posição</th>
-                                                                        <th>Item sorteado</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {
-                                                                        drawnItems.map((di, i) => (
-                                                                            <tr key={`${di}--${i}`}>
-                                                                                <td>{i + 1}</td>
-                                                                                <td>{di}</td>
-                                                                            </tr>
-                                                                        ))
-                                                                    }
-                                                                </tbody>
-                                                            </table>
+                                                            result={drawnItems}>
+
+                                                            <ListsDrawResult items={drawnItems} />
                                                         </DrawResults>
                                                     </div>
                                                 </If>

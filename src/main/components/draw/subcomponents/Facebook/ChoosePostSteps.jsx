@@ -57,6 +57,12 @@ const ChoosePostSteps = (props) => {
     setStepThreeOpen(true)
   }
 
+  const setPost = (post) => {
+    props.setSelectedPost(post)
+    setStepThreeOpen(false)
+    setStepFourOpen(true)
+  }
+
   const renderPageRadio = (page) => <>
     <input type="radio" id={`page-radio-${page.name}`} className="custom-control-input"
       checked={props.selectedPage ? props.selectedPage.name === page.name : false}
@@ -69,7 +75,7 @@ const ChoosePostSteps = (props) => {
     return <>
       <input type="radio" id={id} className="custom-control-input"
         checked={props.selectedPost ? props.selectedPost.message === post.message : false}
-        onChange={e => props.setSelectedPost(post)} />
+        onChange={e => setPost(post)} />
       <label className="custom-control-label" htmlFor={id}>
       <img className="img-thumbnail mt-4" src={post.full_picture} alt="Post sem imagem" style={{maxWidth: '160px'}}/>
         <span className="text-truncate d-block lead mt-2 mb-5" style={{ maxWidth: 'calc(50vw)' }}>{post.message}</span>
