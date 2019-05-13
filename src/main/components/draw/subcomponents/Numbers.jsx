@@ -7,6 +7,7 @@ import { drawIntegers as draw } from '../../../drawEngine'
 import drawTypes from '../drawUtils/drawTypes'
 import DrawResults from '../subcomponents/DrawResults'
 import keycodes from '../../utils/keycodes'
+import NumbersDrawResult from './CommonViewStructures/NumbersDrawResult'
 
 const Numbers = () => {
 
@@ -117,24 +118,9 @@ const Numbers = () => {
                 <DrawResults title="Os números sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
                     date={`${new Date().toLocaleString()}`}
                     drawType={drawTypes.NUMBERS}
-                    result={randNums}
-                >
-                    <table className="table table-striped table-bordered h3 text-center">
-                        <thead>
-                            <tr>
-                                <th>Posição</th>
-                                <th>Número sorteado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {randNums.map((n, i) => (
-                                <tr key={`${n}--${i}_${n}`}>
-                                    <td>{++i}º</td>
-                                    <td>{n}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    result={randNums}>
+
+                    <NumbersDrawResult items={randNums} />
                 </DrawResults>
             </If>
         </div>

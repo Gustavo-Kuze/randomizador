@@ -8,6 +8,9 @@ import { toastr } from 'react-redux-toastr'
 import If from '../../utils/If'
 import { Input } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
+import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult'
+import NumbersDrawResult from '../subcomponents/CommonViewStructures/NumbersDrawResult'
+import FacebookCommentsDrawResult from '../subcomponents/CommonViewStructures/FacebookCommentsDrawResult'
 
 const ViewSavedDraw = (props) => {
 
@@ -52,74 +55,35 @@ const ViewSavedDraw = (props) => {
                                                 result={drawResult.result}
                                                 viewMode={true}
                                             >
-                                                {
-                                                    drawResult.drawType === drawTypes.NUMBERS ? (
-                                                        <table className="table table-striped table-bordered h3 text-center">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Posição</th>
-                                                                    <th>Número sorteado</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {drawResult.result.map((n, i) => (
-                                                                    <tr key={`${n}--${i}_${n}`}>
-                                                                        <td>{++i}º</td>
-                                                                        <td>{n}</td>
-                                                                    </tr>
-                                                                ))}
-                                                            </tbody>
-                                                        </table>
-                                                    ) : ''
-                                                }
-                                                {
-                                                    drawResult.drawType === drawTypes.HEAD_OR_TAILS ? (
-                                                        <>
-                                                            <div id="moeda">
-                                                                <If c={drawResult.result === 'Cara!'}>
-                                                                    <div>
-                                                                        <img src="/img/cara.png" alt="Cara" />
-                                                                    </div>
-                                                                </If>
-                                                                <If c={drawResult.result === 'Coroa!'}>
-                                                                    <div >
-                                                                        <img src="/img/coroa.png" alt="Coroa" />
-                                                                    </div>
-                                                                </If>
+                                                <If c={drawResult.drawType === drawTypes.NUMBERS}>
+                                                    <NumbersDrawResult items={drawResult.result} />
+                                                </If>
+                                                <If c={drawResult.drawType === drawTypes.HEAD_OR_TAILS}>
+                                                    <div id="moeda">
+                                                        <If c={drawResult.result === 'Cara!'}>
+                                                            <div>
+                                                                <img src="/img/cara.png" alt="Cara" />
                                                             </div>
-                                                            <h3 className="display-4 text-center my-5 lobster h2 text-weight-bold">{drawResult.result}</h3>
-                                                        </>
-                                                    ) : ''
-                                                }
-                                                {
-                                                    drawResult.drawType === drawTypes.SHUFFLE ? (
-                                                        <div className="d-flex justify-content-betweend align-items-center flex-column">
-                                                            <Input id="input-resultado" type="textarea" className="sort-textarea bg-light" value={drawResult.result} rows="10" readOnly="readonly" />
-                                                        </div>
-                                                    ) : ''
-                                                }
-                                                {
-                                                    drawResult.drawType === drawTypes.LISTS ? (
-                                                        <table className="table table-striped table-borderless">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Posição</th>
-                                                                    <th>Item sorteado</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {
-                                                                    drawResult.result.map((di, i) => (
-                                                                        <tr key={`${di}--${i}`}>
-                                                                            <td>{i + 1}</td>
-                                                                            <td>{di}</td>
-                                                                        </tr>
-                                                                    ))
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    ) : ''
-                                                }
+                                                        </If>
+                                                        <If c={drawResult.result === 'Coroa!'}>
+                                                            <div >
+                                                                <img src="/img/coroa.png" alt="Coroa" />
+                                                            </div>
+                                                        </If>
+                                                    </div>
+                                                    <h3 className="display-4 text-center my-5 lobster h2 text-weight-bold">{drawResult.result}</h3>
+                                                </If>
+                                                <If c={drawResult.drawType === drawTypes.SHUFFLE}>
+                                                    <div className="d-flex justify-content-betweend align-items-center flex-column">
+                                                        <Input id="input-resultado" type="textarea" className="sort-textarea bg-light" value={drawResult.result} rows="10" readOnly="readonly" />
+                                                    </div>
+                                                </If>
+                                                <If c={drawResult.drawType === drawTypes.LISTS}>
+                                                    <ListsDrawResult items={drawResult.result} />
+                                                </If>
+                                                <If c={drawResult.drawType === drawTypes.FACEBOOK_COMMENTS}>
+                                                    <FacebookCommentsDrawResult items={drawResult.result} />
+                                                </If>
                                             </DrawResults>
                                         </If>
                                     ) : ''

@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import combinedReducers from './combinedReducers'
-import sagas from '../saga/sagas'
+import sagas from '../sagas/'
 import createSaga from 'redux-saga'
 import { loadState } from '../storage/localStorage'
 

@@ -28,6 +28,7 @@ const DrawResults = props => {
 
     const savePrivately = () => {
         if (props.emailVerified) {
+            debugger
             savePrivateResult({
                 description: drawDescription,
                 drawType: props.drawType,
@@ -40,6 +41,7 @@ const DrawResults = props => {
                 }
                 toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions)
             }).catch(err => {
+                debugger
                 toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, teste fazer login novamente.')
             })
         } else {
