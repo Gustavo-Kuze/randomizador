@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Template from '../../Template/'
 import { toastr } from 'react-redux-toastr'
-import ChoosePostSteps from "../subcomponents/Facebook/ChoosePostSteps";
+import ChoosePostSteps from "../subcomponents/Facebook/FacebookComments/ChoosePostSteps";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLoginActions'

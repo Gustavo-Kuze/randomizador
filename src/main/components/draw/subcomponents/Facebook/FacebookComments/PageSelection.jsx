@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Collapse } from 'reactstrap'
-import { setAuthResponse } from '../../../../redux/core/actions/facebookLoginActions'
+import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
-import { setSelectedPage } from "../../../../redux/core/actions/facebookCommentsActions";
-import If from '../../../utils/If'
+import { setSelectedPage } from "../../../../../redux/core/actions/facebookCommentsActions";
+import If from '../../../../utils/If'
 
 const PageSelection = (props) => {
 

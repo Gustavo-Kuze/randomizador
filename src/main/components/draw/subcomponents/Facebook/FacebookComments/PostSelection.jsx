@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { Collapse } from 'reactstrap'
-import { setSelectedPost } from "../../../../redux/core/actions/facebookCommentsActions";
-import If from '../../../utils/If'
+import { setSelectedPost } from "../../../../../redux/core/actions/facebookCommentsActions";
+import If from '../../../../utils/If'
 
 const PostSelection = (props) => {
 

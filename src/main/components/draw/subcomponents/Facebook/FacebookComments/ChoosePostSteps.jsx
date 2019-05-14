@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
-import { setAuthResponse } from '../../../../redux/core/actions/facebookLoginActions'
+import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
 import {
   setPagePosts, setUserPages, setPostComments
-} from "../../../../redux/core/actions/facebookCommentsActions";
-
+} from "../../../../../redux/core/actions/facebookCommentsActions";
+ 
 import {
   getUserPages, getPagePosts, getPostComments,
   getPagePostsFromPagination
-} from "../../../../services/facebook";
+} from "../../../../../services/facebook";
 
-import FacebookPermission from './FacebookPermission'
+import FacebookPermission from '../Common/FacebookPermission'
 import PageSelection from './PageSelection'
 import PostSelection from './PostSelection'
 import FbCommentsDraw from './FbCommentsDraw'

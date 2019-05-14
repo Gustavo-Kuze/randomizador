@@ -159,9 +159,11 @@ const MyLists = (props) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-2 col-12">
+                    <div className="col-md-6 col-12">
                         <MyListsControlsSub />
                     </div>
+                </div>
+                <div className="row my-5">
                     <div className="col-md-10 col-12">
                         <ListItemsCounters lists={props.lists} />
                     </div>

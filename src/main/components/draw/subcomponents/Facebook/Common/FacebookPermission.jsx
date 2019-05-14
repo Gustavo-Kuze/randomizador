@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Collapse } from 'reactstrap'
-import { facebookLogin } from "../../../../services/facebook";
-import { setAuthResponse } from '../../../../redux/core/actions/facebookLoginActions'
+import { facebookLogin } from "../../../../../services/facebook";
+import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 
