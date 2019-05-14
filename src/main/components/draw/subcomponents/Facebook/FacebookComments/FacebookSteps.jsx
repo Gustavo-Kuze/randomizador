@@ -17,7 +17,7 @@ import PageSelection from './PageSelection'
 import PostSelection from './PostSelection'
 import FbCommentsDraw from './FbCommentsDraw'
 
-const ChoosePostSteps = (props) => {
+const FacebookSteps = (props) => {
 
   let [isStepOneOpen, setStepOneOpen] = useState(true)
   let [isStepTwoOpen, setStepTwoOpen] = useState(false)
@@ -131,4 +131,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setAuthResponse, setPagePosts, setUserPages, setPostComments
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChoosePostSteps)
+export default connect(mapStateToProps, mapDispatchToProps)(FacebookSteps)

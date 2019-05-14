@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Template from '../../Template/'
+import Template from '../../Template'
 import { toastr } from 'react-redux-toastr'
 import FacebookSteps from "../subcomponents/Facebook/FacebookComments/FacebookSteps";
 import { bindActionCreators } from "redux";
@@ -28,7 +28,7 @@ const FacebookDraw = (props) => {
             <div className="container">
                 <div className="row">
                     <div className="col-12 col-md-10 offset-md-1">
-                        <h1 className="h2">Sorteio de Comentários do Facebook</h1>
+                        <h1 className="h2">Sorteio de Comentários do Instagram</h1>
                     </div>
                 </div>
                 <div className="row mt-5">

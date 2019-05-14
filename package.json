@@ -21,6 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "https": "set https=true&&npm start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "net-init": "netlify init",
