@@ -3,10 +3,12 @@ import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
+import { setBusinessId, setComments, setMedias, setSelectedMedia } from '../../../../../redux/core/actions/instagramCommentsActions'
 import { getPaginationResult } from '../../../../../services/facebook/'
-import { getBusinessAccount, getMedia, getMediaComments } from '../../../../../services/facebook/instagram'
-
+import { getBusinessAccountId, getMedia, getMediaComments } from '../../../../../services/facebook/instagram'
 import FacebookPermission from '../Common/FacebookPermission'
+import { InstaCommentsDraw } from "./InstaCommentsDraw";
+import { MediaSelection } from "./MediaSelection";
 
 const InstagramSteps = (props) => {
 
@@ -18,8 +20,8 @@ const InstagramSteps = (props) => {
   let [isStepTwoEnabled, setStepTwoEnabled] = useState(false)
   let [isStepThreeEnabled, setStepThreeEnabled] = useState(false)
 
-  let [nextPostsHref, setNextPostsHref] = useState()
-  let [prevPostsHref, setPrevPostsHref] = useState()
+  let [nextMediasHref, setNextPostsHref] = useState()
+  let [prevMediasHref, setPrevPostsHref] = useState()
 
   useEffect(() => {
     if (props.loginStatus === 'connected' && !isStepTwoEnabled && isStepOneEnabled)
@@ -30,7 +32,7 @@ const InstagramSteps = (props) => {
 
   const fulfillMedias = (businessId, authResponse) => {
     getMedia(businessId, authResponse.accessToken).then(response => {
-      props.setUserPages(response.data)
+      props.setMedias(response.data)
     })
   }
 
@@ -55,24 +57,16 @@ const InstagramSteps = (props) => {
   const onFacebookLogin = response => {
     setStepOneOpen(false)
     setStepTwoOpen(true)
-    fulfillMedias(response)
+
+    getBusinessAccountId(response.accessToken).then((id) =>
+      fulfillMedias(id, response))
   }
 
   const toastOnError = err => toastr.error('Erro', err)
 
-  const onPageSelected = page => {
-    getPagePosts(page.id, page.access_token)
-      .then(preparePagePosts)
-      .catch(err => {
-        toastr.error('Erro', err)
-      })
-    setStepTwoOpen(false)
-    setStepThreeOpen(true)
-  }
-
-  const onPostSelected = post => {
-    getPostComments(post.id, props.accessToken).then(resp => {
-      props.setPostComments(resp.data)
+  const onMediaSelected = media => {
+    getMediaComments(media.id, props.accessToken).then(resp => {
+      props.setComments(resp.data)
       setStepThreeOpen(false)
     }).catch(err => {
       console.log(err)
@@ -91,14 +85,12 @@ const InstagramSteps = (props) => {
   return <>
     <FacebookPermission onLogin={onFacebookLogin} onError={toastOnError} enabled={isStepOneEnabled}
       isOpen={isStepOneOpen} setIsOpen={setStepOneOpen} />
-    <PageSelection onPageSelected={onPageSelected} enabled={isStepTwoEnabled}
-      isOpen={isStepTwoOpen} setIsOpen={setStepTwoOpen} />
-    <PostSelection paginateTo={paginateTo} next={nextPostsHref} previous={prevPostsHref}
-      isOpen={isStepThreeOpen} enabled={isStepThreeEnabled} setIsOpen={setStepThreeOpen}
-      onPostSelected={onPostSelected} />
-    <FbCommentsDraw
-      isOpen={isStepFourOpen} enabled={isStepFourEnabled}
-      setIsOpen={setStepFourOpen}
+    <MediaSelection paginateTo={paginateTo} next={nextMediasHref} previous={prevMediasHref}
+      isOpen={isStepTwoOpen} enabled={isStepTwoEnabled} setIsOpen={setStepTwoOpen}
+      onMediaSelected={onMediaSelected} />
+    <InstaCommentsDraw
+      isOpen={isStepThreeOpen} enabled={isStepThreeEnabled}
+      setIsOpen={setStepThreeOpen}
       onCommentsDrawn={onCommentsDrawn} />
   </>
 }
@@ -110,7 +102,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setAuthResponse
+  setAuthResponse, setBusinessId, setComments,
+  setMedias, setSelectedMedia
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(InstagramSteps)

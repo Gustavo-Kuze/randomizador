@@ -7,7 +7,7 @@ export const setBusinessId = (id) => {
     }
 }
 
-export const setPageMedia = (medias) => {
+export const setMedias = (medias) => {
     return {
         type: types.SET_MEDIAS,
         payload: medias
