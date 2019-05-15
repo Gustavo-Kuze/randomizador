@@ -8,7 +8,7 @@ import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebook
 
 let face = null
 
-const FacebookDraw = (props) => {
+const InstagramDraw = (props) => {
 
     useEffect(() => {
         if (window.Facebook) {
@@ -46,4 +46,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setAuthResponse, setStatus
 }, dispatch)
 
-export default connect(null, mapDispatchToProps)(FacebookDraw)
+export default connect(null, mapDispatchToProps)(InstagramDraw)

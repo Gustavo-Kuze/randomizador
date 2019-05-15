@@ -34,9 +34,9 @@ const getUserPages = async (userId, accessToken) =>
 const getPostComments = async (postId, pageAccessToken) =>
     await apiAsync(`/${postId}/comments`, { "access_token": pageAccessToken, "fields": "id,message,permalink_url" })
 
-const getPagePostsFromPagination = async (url) => await apiAsync(url)
+const getPaginationResult = async (url) => await apiAsync(url)
 
 export {
     facebookLogin, apiAsync, getPagePosts, getUserPages,
-    getPostComments, getPagePostsFromPagination
+    getPostComments, getPaginationResult
 }

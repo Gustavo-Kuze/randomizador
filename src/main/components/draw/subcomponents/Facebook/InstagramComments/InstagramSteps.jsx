@@ -3,31 +3,20 @@ import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
-import {
-  setPagePosts, setUserPages, setPostComments
-} from "../../../../../redux/core/actions/facebookCommentsActions";
- 
-import {
-  getUserPages, getPagePosts, getPostComments,
-  getPaginationResult
-} from "../../../../../services/facebook";
+import { getPaginationResult } from '../../../../../services/facebook/'
+import { getBusinessAccount, getMedia, getMediaComments } from '../../../../../services/facebook/instagram'
 
 import FacebookPermission from '../Common/FacebookPermission'
-import PageSelection from './PageSelection'
-import PostSelection from './PostSelection'
-import FbCommentsDraw from './FbCommentsDraw'
 
-const FacebookSteps = (props) => {
+const InstagramSteps = (props) => {
 
   let [isStepOneOpen, setStepOneOpen] = useState(true)
   let [isStepTwoOpen, setStepTwoOpen] = useState(false)
   let [isStepThreeOpen, setStepThreeOpen] = useState(false)
-  let [isStepFourOpen, setStepFourOpen] = useState(false)
 
   let [isStepOneEnabled, setStepOneEnabled] = useState(true)
   let [isStepTwoEnabled, setStepTwoEnabled] = useState(false)
   let [isStepThreeEnabled, setStepThreeEnabled] = useState(false)
-  let [isStepFourEnabled, setStepFourEnabled] = useState(false)
 
   let [nextPostsHref, setNextPostsHref] = useState()
   let [prevPostsHref, setPrevPostsHref] = useState()
@@ -37,13 +26,11 @@ const FacebookSteps = (props) => {
       setStepTwoEnabled(true)
     if (props.userPages.length > 0 && !isStepThreeEnabled && isStepTwoEnabled && isStepOneEnabled)
       setStepThreeEnabled(true)
-    if (props.pagePosts.length > 0 && !isStepFourEnabled && isStepThreeEnabled && isStepTwoEnabled && isStepOneEnabled)
-      setStepFourEnabled(true)
   })
 
-  const fulfillUserPages = (authResponse) => {
-    getUserPages(authResponse.userID, authResponse.accessToken).then(pagesResponse => {
-      props.setUserPages(pagesResponse.data)
+  const fulfillMedias = (businessId, authResponse) => {
+    getMedia(businessId, authResponse.accessToken).then(response => {
+      props.setUserPages(response.data)
     })
   }
 
@@ -68,7 +55,7 @@ const FacebookSteps = (props) => {
   const onFacebookLogin = response => {
     setStepOneOpen(false)
     setStepTwoOpen(true)
-    fulfillUserPages(response)
+    fulfillMedias(response)
   }
 
   const toastOnError = err => toastr.error('Erro', err)
@@ -87,7 +74,6 @@ const FacebookSteps = (props) => {
     getPostComments(post.id, props.accessToken).then(resp => {
       props.setPostComments(resp.data)
       setStepThreeOpen(false)
-      setStepFourOpen(true)
     }).catch(err => {
       console.log(err)
     })
@@ -97,11 +83,9 @@ const FacebookSteps = (props) => {
     setStepOneEnabled(false)
     setStepTwoEnabled(false)
     setStepThreeEnabled(false)
-    setStepFourEnabled(false)
     setStepOneOpen(false)
     setStepTwoOpen(false)
     setStepThreeOpen(false)
-    setStepFourOpen(true)
   }
 
   return <>
@@ -123,12 +107,10 @@ const mapStateToProps = state => ({
   loginStatus: state.facebook.status,
   authResponse: state.facebook.authResponse,
   accessToken: state.facebookComments.selectedPage.access_token,
-  pagePosts: state.facebookComments.pagePosts,
-  userPages: state.facebookComments.userPages
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setAuthResponse, setPagePosts, setUserPages, setPostComments
+  setAuthResponse
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(FacebookSteps)
+export default connect(mapStateToProps, mapDispatchToProps)(InstagramSteps)
