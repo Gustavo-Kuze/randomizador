@@ -4,21 +4,25 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
 import { setBusinessId, setComments, setMedias, setSelectedMedia } from '../../../../../redux/core/actions/instagramCommentsActions'
-import { getPaginationResult } from '../../../../../services/facebook/'
+import { getUserPages, getPaginationResult } from '../../../../../services/facebook/'
 import { getBusinessAccountId, getMedia, getMediaComments } from '../../../../../services/facebook/instagram'
+import { setUserPages } from "../../../../../redux/core/actions/facebookCommentsActions";
 import FacebookPermission from '../Common/FacebookPermission'
-import { InstaCommentsDraw } from "./InstaCommentsDraw";
-import { MediaSelection } from "./MediaSelection";
+import PageSelection from '../FacebookComments/PageSelection'
+import InstaCommentsDraw from "./InstaCommentsDraw";
+import MediaSelection from "./MediaSelection";
 
 const InstagramSteps = (props) => {
 
   let [isStepOneOpen, setStepOneOpen] = useState(true)
   let [isStepTwoOpen, setStepTwoOpen] = useState(false)
   let [isStepThreeOpen, setStepThreeOpen] = useState(false)
+  let [isStepFourOpen, setStepFourOpen] = useState(false)
 
   let [isStepOneEnabled, setStepOneEnabled] = useState(true)
   let [isStepTwoEnabled, setStepTwoEnabled] = useState(false)
   let [isStepThreeEnabled, setStepThreeEnabled] = useState(false)
+  let [isStepFourEnabled, setStepFourEnabled] = useState(false)
 
   let [nextMediasHref, setNextPostsHref] = useState()
   let [prevMediasHref, setPrevPostsHref] = useState()
@@ -28,11 +32,13 @@ const InstagramSteps = (props) => {
       setStepTwoEnabled(true)
     if (props.userPages.length > 0 && !isStepThreeEnabled && isStepTwoEnabled && isStepOneEnabled)
       setStepThreeEnabled(true)
+    if (props.medias.length > 0 && !isStepFourEnabled && isStepThreeEnabled && isStepTwoEnabled && isStepOneEnabled)
+      setStepFourEnabled(true)
   })
 
-  const fulfillMedias = (businessId, authResponse) => {
-    getMedia(businessId, authResponse.accessToken).then(response => {
-      props.setMedias(response.data)
+  const fulfillUserPages = (authResponse) => {
+    getUserPages(authResponse.userID, authResponse.accessToken).then(pagesResponse => {
+      props.setUserPages(pagesResponse.data)
     })
   }
 
@@ -57,12 +63,24 @@ const InstagramSteps = (props) => {
   const onFacebookLogin = response => {
     setStepOneOpen(false)
     setStepTwoOpen(true)
-
-    getBusinessAccountId(response.accessToken).then((id) =>
-      fulfillMedias(id, response))
+    fulfillUserPages(response)
   }
 
   const toastOnError = err => toastr.error('Erro', err)
+
+  const fulfillMedias = (businessId, accessToken) => {
+    getMedia(businessId, accessToken).then(response => {
+      props.setMedias(response.data)
+    })
+  }
+
+  const onPageSelected = page => {
+    getBusinessAccountId(page.id, page.access_token).then((id) => {
+      fulfillMedias(id, page.access_token)
+    })
+    setStepTwoOpen(false)
+    setStepThreeOpen(true)
+  }
 
   const onMediaSelected = media => {
     getMediaComments(media.id, props.accessToken).then(resp => {
@@ -85,6 +103,8 @@ const InstagramSteps = (props) => {
   return <>
     <FacebookPermission onLogin={onFacebookLogin} onError={toastOnError} enabled={isStepOneEnabled}
       isOpen={isStepOneOpen} setIsOpen={setStepOneOpen} />
+    <PageSelection onPageSelected={onPageSelected} enabled={isStepTwoEnabled}
+      isOpen={isStepTwoOpen} setIsOpen={setStepTwoOpen} />
     <MediaSelection paginateTo={paginateTo} next={nextMediasHref} previous={prevMediasHref}
       isOpen={isStepTwoOpen} enabled={isStepTwoEnabled} setIsOpen={setStepTwoOpen}
       onMediaSelected={onMediaSelected} />
@@ -99,11 +119,13 @@ const mapStateToProps = state => ({
   loginStatus: state.facebook.status,
   authResponse: state.facebook.authResponse,
   accessToken: state.facebookComments.selectedPage.access_token,
+  userPages: state.facebookComments.userPages,
+  medias: state.instagramComments.medias
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setAuthResponse, setBusinessId, setComments,
-  setMedias, setSelectedMedia
+  setMedias, setSelectedMedia, setUserPages
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(InstagramSteps)

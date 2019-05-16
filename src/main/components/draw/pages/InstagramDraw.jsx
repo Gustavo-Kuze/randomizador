@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Template from '../../Template'
 import { toastr } from 'react-redux-toastr'
-import FacebookSteps from "../subcomponents/Facebook/FacebookComments/FacebookSteps";
+import InstagramSteps from "../subcomponents/Facebook/InstagramComments/InstagramSteps";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLoginActions'
@@ -34,7 +34,7 @@ const InstagramDraw = (props) => {
                 <div className="row mt-5">
                     <div className="col-12 col-md-10 offset-md-1">
                         <h2 className="h4 mb-4">Siga os passos a seguir para fazer o sorteio</h2>
-                        <FacebookSteps />
+                        <InstagramSteps />
                     </div>
                 </div>
             </div>
