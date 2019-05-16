@@ -6,7 +6,7 @@ import { setAuthResponse } from '../../../../../redux/core/actions/facebookLogin
 import {
   setPagePosts, setUserPages, setPostComments
 } from "../../../../../redux/core/actions/facebookCommentsActions";
- 
+
 import {
   getUserPages, getPagePosts, getPostComments,
   getPaginationResult
@@ -16,8 +16,12 @@ import FacebookPermission from '../Common/FacebookPermission'
 import PageSelection from './PageSelection'
 import PostSelection from './PostSelection'
 import FbCommentsDraw from './FbCommentsDraw'
+import { Spinner } from 'reactstrap'
+import If from '../../../../utils/If'
 
 const FacebookSteps = (props) => {
+
+  let [isLoading, setIsLoading] = useState(false)
 
   let [isStepOneOpen, setStepOneOpen] = useState(true)
   let [isStepTwoOpen, setStepTwoOpen] = useState(false)
@@ -42,16 +46,21 @@ const FacebookSteps = (props) => {
   })
 
   const fulfillUserPages = (authResponse) => {
+    setIsLoading(true)
     getUserPages(authResponse.userID, authResponse.accessToken).then(pagesResponse => {
       props.setUserPages(pagesResponse.data)
+      setIsLoading(false)
     })
   }
 
   const paginateTo = (href) => {
+    setIsLoading(true)
     getPaginationResult(href).then(response => {
       preparePagePosts(response)
+      setIsLoading(false)
     }).catch(err => {
       toastr.error('Erro', err)
+      setIsLoading(false)
     })
   }
 
@@ -63,6 +72,7 @@ const FacebookSteps = (props) => {
         setPrevPostsHref(response.paging.previous)
     }
     props.setPagePosts(response.data)
+    setIsLoading(false)
   }
 
   const onFacebookLogin = response => {
@@ -74,22 +84,27 @@ const FacebookSteps = (props) => {
   const toastOnError = err => toastr.error('Erro', err)
 
   const onPageSelected = page => {
+    setIsLoading(true)
     getPagePosts(page.id, page.access_token)
       .then(preparePagePosts)
       .catch(err => {
         toastr.error('Erro', err)
+        setIsLoading(false)
       })
     setStepTwoOpen(false)
     setStepThreeOpen(true)
   }
 
   const onPostSelected = post => {
+    setIsLoading(true)
     getPostComments(post.id, props.accessToken).then(resp => {
       props.setPostComments(resp.data)
       setStepThreeOpen(false)
       setStepFourOpen(true)
+      setIsLoading(false)
     }).catch(err => {
       console.log(err)
+      setIsLoading(false)
     })
   }
 
@@ -105,6 +120,12 @@ const FacebookSteps = (props) => {
   }
 
   return <>
+    <If c={isLoading} cssHide>
+      <div className="d-flex justify-content-center align-items-center flex-column">
+        <Spinner color="warning" />
+        <p className="mt-3">Carregando, por favor aguarde...</p>
+      </div>
+    </If>
     <FacebookPermission onLogin={onFacebookLogin} onError={toastOnError} enabled={isStepOneEnabled}
       isOpen={isStepOneOpen} setIsOpen={setStepOneOpen} />
     <PageSelection onPageSelected={onPageSelected} enabled={isStepTwoEnabled}

@@ -72,7 +72,7 @@ const FbCommentsDraw = (props) => {
                                     drawType={drawTypes.INSTAGRAM_COMMENTS}
                                     result={drawnComments}>
 
-                                    <InstagramCommentsDrawResult items={drawnComments} />
+                                    <InstagramCommentsDrawResult items={drawnComments} link={props.selectedPost ? props.selectedPost.permalink : ''} />
                                 </DrawResults>
                             </If>
                         </If>

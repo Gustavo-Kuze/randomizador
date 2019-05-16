@@ -11,8 +11,12 @@ import FacebookPermission from '../Common/FacebookPermission'
 import PageSelection from '../FacebookComments/PageSelection'
 import InstaCommentsDraw from "./InstaCommentsDraw";
 import MediaSelection from "./MediaSelection";
+import { Spinner } from 'reactstrap'
+import If from '../../../../utils/If';
 
 const InstagramSteps = (props) => {
+
+  let [isLoading, setIsLoading] = useState(false)
 
   let [isStepOneOpen, setStepOneOpen] = useState(true)
   let [isStepTwoOpen, setStepTwoOpen] = useState(false)
@@ -36,15 +40,11 @@ const InstagramSteps = (props) => {
       setStepFourEnabled(true)
   })
 
-  const fulfillUserPages = (authResponse) => {
-    getUserPages(authResponse.userID, authResponse.accessToken).then(pagesResponse => {
-      props.setUserPages(pagesResponse.data)
-    })
-  }
-
   const paginateTo = (href) => {
+    setIsLoading(true)
     getPaginationResult(href).then(response => {
       preparePagePosts(response)
+      setIsLoading(false)
     }).catch(err => {
       toastr.error('Erro', err)
     })
@@ -66,26 +66,45 @@ const InstagramSteps = (props) => {
     fulfillUserPages(response)
   }
 
+  const fulfillUserPages = (authResponse) => {
+    setIsLoading(true)
+    getUserPages(authResponse.userID, authResponse.accessToken).then(pagesResponse => {
+      props.setUserPages(pagesResponse.data)
+      setIsLoading(false)
+    })
+  }
   const toastOnError = err => toastr.error('Erro', err)
 
   const fulfillMedias = (businessId, accessToken) => {
+    setIsLoading(true)
     getMedia(businessId, accessToken).then(response => {
       props.setMedias(response.data)
+      setIsLoading(false)
     })
   }
 
   const onPageSelected = page => {
+    setIsLoading(true)
     getBusinessAccountId(page.id, page.access_token).then((id) => {
-      fulfillMedias(id, page.access_token)
+      if (id) {
+        fulfillMedias(id, page.access_token)
+        props.setBusinessId(id)
+      } else {
+        toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela')
+      }
+      setIsLoading(false)
     })
     setStepTwoOpen(false)
     setStepThreeOpen(true)
   }
 
   const onMediaSelected = media => {
+    setIsLoading(true)
     getMediaComments(media.id, props.accessToken).then(resp => {
-      props.setComments(resp.data)
+      props.setComments(resp.data.map(comment => ({ ...comment, permalink: media.permalink })))
       setStepThreeOpen(false)
+      setStepFourOpen(true)
+      setIsLoading(false)
     }).catch(err => {
       console.log(err)
     })
@@ -95,22 +114,30 @@ const InstagramSteps = (props) => {
     setStepOneEnabled(false)
     setStepTwoEnabled(false)
     setStepThreeEnabled(false)
+    setStepFourEnabled(true)
     setStepOneOpen(false)
     setStepTwoOpen(false)
     setStepThreeOpen(false)
+    setStepFourOpen(true)
   }
 
   return <>
+    <If c={isLoading} cssHide>
+      <div className="d-flex justify-content-center align-items-center flex-column">
+        <Spinner color="warning" />
+        <p className="mt-3">Carregando, por favor aguarde...</p>
+      </div>
+    </If>
     <FacebookPermission onLogin={onFacebookLogin} onError={toastOnError} enabled={isStepOneEnabled}
       isOpen={isStepOneOpen} setIsOpen={setStepOneOpen} />
     <PageSelection onPageSelected={onPageSelected} enabled={isStepTwoEnabled}
       isOpen={isStepTwoOpen} setIsOpen={setStepTwoOpen} />
     <MediaSelection paginateTo={paginateTo} next={nextMediasHref} previous={prevMediasHref}
-      isOpen={isStepTwoOpen} enabled={isStepTwoEnabled} setIsOpen={setStepTwoOpen}
+      isOpen={isStepThreeOpen} enabled={isStepThreeEnabled} setIsOpen={setStepThreeOpen}
       onMediaSelected={onMediaSelected} />
     <InstaCommentsDraw
-      isOpen={isStepThreeOpen} enabled={isStepThreeEnabled}
-      setIsOpen={setStepThreeOpen}
+      isOpen={isStepFourOpen} enabled={isStepFourEnabled}
+      setIsOpen={setStepFourOpen}
       onCommentsDrawn={onCommentsDrawn} />
   </>
 }

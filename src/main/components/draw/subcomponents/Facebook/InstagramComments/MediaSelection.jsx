@@ -10,7 +10,7 @@ const MediaSelection = (props) => {
     const setMediaAndCallback = (media) => {
         let postCopy = { ...media }
         props.setSelectedMedia(postCopy)
-        props.onPostSelected(media)
+        props.onMediaSelected(media)
     }
 
     const renderMediaRadio = (media) => {
@@ -30,7 +30,7 @@ const MediaSelection = (props) => {
         <>
             <button className={`btn btn-outline-primary btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
                 disabled={!props.enabled}
-                onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>2- Escolher o post</button>
+                onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>3- Escolher o post</button>
             <Collapse isOpen={props.enabled && props.isOpen}>
                 <div className="card p-5 my-3">
                     <If c={props.medias.length > 0}>

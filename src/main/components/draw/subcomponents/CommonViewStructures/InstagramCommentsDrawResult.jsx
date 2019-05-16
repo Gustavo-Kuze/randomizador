@@ -3,6 +3,12 @@ import React from 'react'
 const FacebookCommentsDrawResult = (props) => {
     return (
         <div className="container">
+            <div className="row my-5">
+                <div className="col">
+                    <h5>Link do post</h5>
+                    <a href={props.items[0].permalink} target="_blank" rel="noopener noreferrer">{props.items[0].permalink}</a>
+                </div>
+            </div>
             {
                 props.items.map((c, i) => (
                     <div className="row my-5" key={c.id}>

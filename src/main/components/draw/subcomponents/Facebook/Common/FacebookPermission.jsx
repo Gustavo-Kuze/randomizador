@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Collapse } from 'reactstrap'
 import { facebookLogin } from "../../../../../services/facebook";
 import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
@@ -11,9 +11,9 @@ const FacebookPermission = (props) => {
         facebookLogin().then((loginResponse) => {
             props.setAuthResponse(loginResponse)
             props.onLogin(loginResponse)
-            
         }).catch(err => {
-            props.onError(err)
+            props.onError('O servidor do Facebook pode estar fora do ar')
+            console.log(err)
         })
     }
 
@@ -31,9 +31,9 @@ const FacebookPermission = (props) => {
         </>
     )
 }
-  
-  const mapDispatchToProps = dispatch => bindActionCreators({
+
+const mapDispatchToProps = dispatch => bindActionCreators({
     setAuthResponse
-  }, dispatch)
-  
-  export default connect(null, mapDispatchToProps)(FacebookPermission)
+}, dispatch)
+
+export default connect(null, mapDispatchToProps)(FacebookPermission)
