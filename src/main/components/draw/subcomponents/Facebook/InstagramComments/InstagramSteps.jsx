@@ -82,7 +82,6 @@ const InstagramSteps = (props) => {
       setIsLoading(false)
     }).catch(err => {
       toastr.error('Erro', err)
-      debugger
       setIsLoading(false)
     })
   }
