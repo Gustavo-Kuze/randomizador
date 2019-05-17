@@ -27,3 +27,5 @@ export const setComments = (comments) => {
         payload: comments
     }
 }
+
+export const resetInstagramComments = () => ({ type: types.RESET_STATE })

@@ -5,6 +5,7 @@ import FacebookSteps from "../subcomponents/Facebook/FacebookComments/FacebookSt
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLoginActions'
+import { resetFacebookComments } from '../../../redux/core/actions/facebookCommentsActions'
 
 let face = null
 
@@ -21,6 +22,7 @@ const FacebookDraw = (props) => {
             toastr.error('Erro interno', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue a página.')
         }
 
+        return () => props.resetFacebookComments()
     }, [])
 
     return (
@@ -43,7 +45,7 @@ const FacebookDraw = (props) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    setAuthResponse, setStatus
+    setAuthResponse, setStatus, resetFacebookComments
 }, dispatch)
 
 export default connect(null, mapDispatchToProps)(FacebookDraw)

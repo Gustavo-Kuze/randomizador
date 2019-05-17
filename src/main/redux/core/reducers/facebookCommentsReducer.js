@@ -20,6 +20,8 @@ export default (state = STATE, action) => {
             return { ...state, selectedPost: action.payload }
         case types.SET_POST_COMMENTS:
             return { ...state, comments: action.payload }
+        case types.RESET_STATE:
+            return STATE
         default:
             return state
     }

@@ -34,3 +34,5 @@ export const setPostComments = (comments) => {
         payload: comments
     }
 }
+
+export const resetFacebookComments = () => ({ type: types.RESET_STATE })

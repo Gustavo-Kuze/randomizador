@@ -5,6 +5,7 @@ import InstagramSteps from "../subcomponents/Facebook/InstagramComments/Instagra
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLoginActions'
+import { resetInstagramComments } from '../../../redux/core/actions/instagramCommentsActions'
 
 let face = null
 
@@ -21,6 +22,7 @@ const InstagramDraw = (props) => {
             toastr.error('Erro interno', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue a página.')
         }
 
+        return () => props.resetInstagramComments()
     }, [])
 
     return (
@@ -43,7 +45,7 @@ const InstagramDraw = (props) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    setAuthResponse, setStatus
+    setAuthResponse, setStatus, resetInstagramComments
 }, dispatch)
 
 export default connect(null, mapDispatchToProps)(InstagramDraw)
