@@ -57,6 +57,7 @@ const FacebookSteps = (props) => {
     setIsLoading(true)
     getPaginationResult(href).then(response => {
       preparePagePosts(response)
+      window.scrollTo(0, 0)
       setIsLoading(false)
     }).catch(err => {
       toastr.error('Erro', err)

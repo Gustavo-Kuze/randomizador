@@ -33,27 +33,31 @@ const MediaSelection = (props) => {
                 onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>3- Escolher o post</button>
             <Collapse isOpen={props.enabled && props.isOpen}>
                 <div className="card p-5 my-3">
-                    <If c={props.medias.length > 0}>
-                        <p className="lead text-center">Escolha o post para sortear!</p>
-                        {
-                            props.medias ? props.medias.map((p, i) => <div key={`page-posts-radio-key--${i}`} className="custom-control custom-radio">{renderMediaRadio(p)}</div>)
-                                : ''}
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-6">
-                                    <If c={props.previous}>
-                                        <button onClick={() => props.paginateTo(props.previous)} className="btn btn-outline-success float-right">Anteriores</button>
-                                    </If>
+                    {
+                        props.medias ? <>
+                            <If c={props.medias.length > 0}>
+                                <p className="lead text-center">Escolha o post para sortear!</p>
+                                {
+                                    props.medias ? props.medias.map((p, i) => <div key={`page-posts-radio-key--${i}`} className="custom-control custom-radio">{renderMediaRadio(p)}</div>)
+                                        : ''}
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <If c={props.previous}>
+                                                <button onClick={() => props.paginateTo(props.previous)} className="btn btn-outline-success float-right">Anteriores</button>
+                                            </If>
+                                        </div>
+                                        <div className="col-6">
+                                            <If c={props.next}>
+                                                <button onClick={() => props.paginateTo(props.next)} className="btn btn-outline-success">Próximos</button>
+                                            </If>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="col-6">
-                                    <If c={props.next}>
-                                        <button onClick={() => props.paginateTo(props.next)} className="btn btn-outline-success">Próximos</button>
-                                    </If>
-                                </div>
-                            </div>
-                        </div>
-                    </If>
-                    <If c={!props.medias.length > 0}>Você não tem nenhum post</If>
+                            </If>
+                            <If c={!props.medias.length > 0}>Você não tem nenhum post</If>
+                        </> : ''
+                    }
                 </div>
             </Collapse>
         </>
