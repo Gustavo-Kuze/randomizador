@@ -44,6 +44,7 @@ const InstagramSteps = (props) => {
     setIsLoading(true)
     getPaginationResult(href).then(response => {
       preparePagePosts(response)
+      window.scrollTo(0, 0)
       setIsLoading(false)
     }).catch(err => {
       toastr.error('Erro', err)
@@ -94,8 +95,8 @@ const InstagramSteps = (props) => {
         props.setBusinessId(id)
       } else {
         toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela')
+        setIsLoading(false)
       }
-      setIsLoading(false)
     })
     setStepTwoOpen(false)
     setStepThreeOpen(true)
