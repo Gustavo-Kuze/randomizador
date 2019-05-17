@@ -118,7 +118,7 @@ const InstagramSteps = (props) => {
     setStepOneEnabled(false)
     setStepTwoEnabled(false)
     setStepThreeEnabled(false)
-    setStepFourEnabled(true)
+    setStepFourEnabled(false)
     setStepOneOpen(false)
     setStepTwoOpen(false)
     setStepThreeOpen(false)
