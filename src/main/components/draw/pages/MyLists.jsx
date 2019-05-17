@@ -66,6 +66,7 @@ const MyLists = (props) => {
                 })
                 if (allItems.length > 0) {
                     setDrawnItems(chance.pickset(chance.shuffle(allItems), quantity))
+                    setIsQuantityInputTouched(false)
                 } else {
                     toastr.warning('Atenção', 'Você não tem nenhum item habilitado para sortear')
                 }
@@ -111,9 +112,9 @@ const MyLists = (props) => {
     return (
         <Template>
             <div className="container">
-                <div className="row">
+                <div className="row mt-3">
                     <div className="col">
-                        <h1>Minhas listas</h1>
+                        <h1 className="sofia"><strong>Minhas listas</strong></h1>
                     </div>
                 </div>
                 <div className="row">
@@ -133,7 +134,7 @@ const MyLists = (props) => {
                                                 />
                                             </div>
                                             <div className="col-sm-6">
-                                                <button className="btn btn-warning btn-block" onClick={() => draw()}>Sortear</button>
+                                                <button className={`btn btn-warning btn-block ${isQuantityInputTouched && isQuantityInputValid ? 'btn-pulse-warning' : ''}`} onClick={() => draw()}>Sortear</button>
                                             </div>
                                         </div>
                                         <div className="row mt-3">
@@ -159,9 +160,11 @@ const MyLists = (props) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-2 col-12">
+                    <div className="col-md-6 col-12">
                         <MyListsControlsSub />
                     </div>
+                </div>
+                <div className="row my-5">
                     <div className="col-md-10 col-12">
                         <ListItemsCounters lists={props.lists} />
                     </div>

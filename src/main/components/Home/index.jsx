@@ -33,7 +33,7 @@ const Home = () => {
                 <ToolsSection />
             </div>
             <hr className="my-4" />
-            <div className="section">
+            <div className="section bg-warning text-white py-5">
                 <CheckResultsSection />
             </div>
         </Template>

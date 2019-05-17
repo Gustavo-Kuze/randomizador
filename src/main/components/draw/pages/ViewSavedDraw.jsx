@@ -11,6 +11,7 @@ import { Redirect } from 'react-router-dom'
 import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult'
 import NumbersDrawResult from '../subcomponents/CommonViewStructures/NumbersDrawResult'
 import FacebookCommentsDrawResult from '../subcomponents/CommonViewStructures/FacebookCommentsDrawResult'
+import InstagramCommentsDrawResult from '../subcomponents/CommonViewStructures/InstagramCommentsDrawResult'
 
 const ViewSavedDraw = (props) => {
 
@@ -80,6 +81,9 @@ const ViewSavedDraw = (props) => {
                                                 </If>
                                                 <If c={drawResult.drawType === drawTypes.LISTS}>
                                                     <ListsDrawResult items={drawResult.result} />
+                                                </If>
+                                                <If c={drawResult.drawType === drawTypes.INSTAGRAM_COMMENTS}>
+                                                    <InstagramCommentsDrawResult items={drawResult.result} />
                                                 </If>
                                                 <If c={drawResult.drawType === drawTypes.FACEBOOK_COMMENTS}>
                                                     <FacebookCommentsDrawResult items={drawResult.result} />
