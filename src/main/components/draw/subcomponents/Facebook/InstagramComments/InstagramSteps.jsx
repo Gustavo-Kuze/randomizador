@@ -57,7 +57,7 @@ const InstagramSteps = (props) => {
       if (response.paging.previous)
         setPrevPostsHref(response.paging.previous)
     }
-    props.setPagePosts(response.data)
+    props.setMedias(response.data)
   }
 
   const onFacebookLogin = response => {
@@ -78,7 +78,10 @@ const InstagramSteps = (props) => {
   const fulfillMedias = (businessId, accessToken) => {
     setIsLoading(true)
     getMedia(businessId, accessToken).then(response => {
-      props.setMedias(response.data)
+      preparePagePosts(response)
+      setIsLoading(false)
+    }).catch(err => {
+      toastr.error('Erro', err)
       setIsLoading(false)
     })
   }
