@@ -21,6 +21,8 @@ O nome "Randomizador" é uma referência à palavra da língua Inglesa "Random",
 - [x] **Embaralhador de frases** - Digite as frases ou carregue um arquivo .txt com as mesmas separadas por enters para embaralhá-las
 - [x] **Cara ou Coroa** - Tem uma decisão difícil pela frente? Com apenas um clique o Randomizador pode decidir por você! 😜
 - [x] **Salvar o resultado** - Qualquer um dos sorteios listados acima podem ser salvos publicamente, ou apenas para o usuário.
-- [ ] **Sorteio de comentários do Facebook**
+- [x] **Sorteio de comentários do Facebook**
+
+- [x] **Sorteio de comentários do Instagram**
 
 Atenção: Os sorteios públicos não podem ser alterados ou removidos. Qualquer pessoa que possua o número do sorteio pode consultá-lo a qualquer momento, podendo conferir o resultado na hora.
