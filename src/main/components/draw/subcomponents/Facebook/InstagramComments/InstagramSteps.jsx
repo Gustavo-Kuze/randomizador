@@ -4,8 +4,8 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
 import { setBusinessId, setComments, setMedias, setSelectedMedia } from '../../../../../redux/core/actions/instagramCommentsActions'
-import { getUserPages, getPaginationResult } from '../../../../../services/facebook/'
-import { getBusinessAccountId, getMedia, getMediaComments } from '../../../../../services/facebook/instagram'
+import { getUserPages, getPaginationResult, getAllComments } from '../../../../../services/facebook/'
+import { getBusinessAccountId, getMedia } from '../../../../../services/facebook/instagram'
 import { setUserPages } from "../../../../../redux/core/actions/facebookCommentsActions";
 import FacebookPermission from '../Common/FacebookPermission'
 import PageSelection from '../FacebookComments/PageSelection'
@@ -104,14 +104,16 @@ const InstagramSteps = (props) => {
 
   const onMediaSelected = media => {
     setIsLoading(true)
-    getMediaComments(media.id, props.accessToken).then(resp => {
-      props.setComments(resp.data.map(comment => ({ ...comment, permalink: media.permalink })))
-      setStepThreeOpen(false)
-      setStepFourOpen(true)
-      setIsLoading(false)
-    }).catch(err => {
-      console.log(err)
-    })
+    getAllComments(`/${media.id}/comments?fields=username,text&access_token=${props.accessToken}`)
+      .then(data => {
+        props.setComments(data.map(comment => ({ ...comment, permalink: media.permalink })))
+        setStepThreeOpen(false)
+        setStepFourOpen(true)
+        setIsLoading(false)
+      }).catch(err => {
+        console.log(err)
+        setIsLoading(false)
+      })
   }
 
   const onCommentsDrawn = () => {

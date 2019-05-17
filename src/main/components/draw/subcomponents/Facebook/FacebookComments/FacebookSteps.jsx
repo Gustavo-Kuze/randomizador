@@ -9,7 +9,7 @@ import {
 
 import {
   getUserPages, getPagePosts, getPostComments,
-  getPaginationResult
+  getPaginationResult, getAllComments
 } from "../../../../../services/facebook";
 
 import FacebookPermission from '../Common/FacebookPermission'
@@ -98,15 +98,16 @@ const FacebookSteps = (props) => {
 
   const onPostSelected = post => {
     setIsLoading(true)
-    getPostComments(post.id, props.accessToken).then(resp => {
-      props.setPostComments(resp.data)
-      setStepThreeOpen(false)
-      setStepFourOpen(true)
-      setIsLoading(false)
-    }).catch(err => {
-      console.log(err)
-      setIsLoading(false)
-    })
+    getAllComments(`/${post.id}/comments?fields=id,message,permalink_url&access_token=${props.accessToken}`)
+      .then(data => {
+        props.setPostComments(data)
+        setStepThreeOpen(false)
+        setStepFourOpen(true)
+        setIsLoading(false)
+      }).catch(err => {
+        console.log(err)
+        setIsLoading(false)
+      })
   }
 
   const onCommentsDrawn = () => {

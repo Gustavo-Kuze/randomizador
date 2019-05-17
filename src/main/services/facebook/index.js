@@ -36,7 +36,19 @@ const getPostComments = async (postId, pageAccessToken) =>
 
 const getPaginationResult = async (url) => await apiAsync(url)
 
+const getAllComments = async (url, all = []) => {
+    let result = await apiAsync(url)
+    if (result.data) {
+        if (result.paging)
+            if (result.paging.next)
+                return getAllComments(result.paging.next, [...all, ...result.data])
+        return [...all, ...result.data]
+    } else {
+        return []
+    }
+}
+
 export {
     facebookLogin, apiAsync, getPagePosts, getUserPages,
-    getPostComments, getPaginationResult
+    getPostComments, getPaginationResult, getAllComments
 }
