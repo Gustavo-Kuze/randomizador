@@ -19,7 +19,7 @@ const FacebookPermission = (props) => {
 
     return (
         <>
-            <button className={`btn btn-outline-primary btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
+            <button className={`btn btn-outline-${props.isInstagram ? 'info' : 'primary'} btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
                 disabled={!props.enabled}
                 onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>1- Permitir que o Randomizador gerencie suas páginas</button>
             <Collapse isOpen={(props.enabled && props.isOpen) || props.isOpen}>

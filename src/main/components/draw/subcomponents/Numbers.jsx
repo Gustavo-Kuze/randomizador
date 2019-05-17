@@ -109,7 +109,7 @@ const Numbers = () => {
                     </div>
                     <div className="row mt-3">
                         <div className="col-md-4 col-12 offset-md-4 ">
-                            <button onClick={drawNow} type="submit" className="btn btn-warning btn-block btn-lg mt-5">Sortear</button>
+                            <button onClick={drawNow} type="submit" className={`${randNums.length === 0 && isRandMaxInputValid && isRandMinInputValid && isQuantityInputValid ? 'btn-pulse-warning' : ''} btn btn-warning btn-block btn-lg mt-5`}>Sortear</button>
                         </div>
                     </div>
                 </div>

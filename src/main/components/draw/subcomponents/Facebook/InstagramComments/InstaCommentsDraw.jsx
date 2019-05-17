@@ -43,7 +43,7 @@ const FbCommentsDraw = (props) => {
 
     return (
         <>
-            <button className={`btn btn-outline-primary btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
+            <button className={`btn btn-outline-info btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
                 disabled={!props.enabled}
                 onClick={() => props.setIsOpen(!props.isOpen)}>4- Sorteie!</button>
             <Collapse isOpen={props.isOpen}>

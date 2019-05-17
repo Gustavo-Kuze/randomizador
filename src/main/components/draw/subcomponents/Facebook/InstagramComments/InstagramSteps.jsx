@@ -129,9 +129,11 @@ const InstagramSteps = (props) => {
       </div>
     </If>
     <FacebookPermission onLogin={onFacebookLogin} onError={toastOnError} enabled={isStepOneEnabled}
-      isOpen={isStepOneOpen} setIsOpen={setStepOneOpen} />
+      isOpen={isStepOneOpen} setIsOpen={setStepOneOpen}
+      isInstagram={true} />
     <PageSelection onPageSelected={onPageSelected} enabled={isStepTwoEnabled}
-      isOpen={isStepTwoOpen} setIsOpen={setStepTwoOpen} />
+      isOpen={isStepTwoOpen} setIsOpen={setStepTwoOpen}
+      isInstagram={true} />
     <MediaSelection paginateTo={paginateTo} next={nextMediasHref} previous={prevMediasHref}
       isOpen={isStepThreeOpen} enabled={isStepThreeEnabled} setIsOpen={setStepThreeOpen}
       onMediaSelected={onMediaSelected} />

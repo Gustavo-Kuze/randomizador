@@ -22,7 +22,7 @@ const PageSelection = (props) => {
 
     return (
         <>
-            <button className={`btn btn-outline-primary btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
+            <button className={`btn btn-outline-${props.isInstagram ? 'info' : 'primary'} btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
                 disabled={!props.enabled}
                 onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>2- Escolher sua página</button>
             <Collapse isOpen={props.enabled && props.isOpen}>

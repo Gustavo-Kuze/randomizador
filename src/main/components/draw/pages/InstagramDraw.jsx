@@ -26,9 +26,9 @@ const InstagramDraw = (props) => {
     return (
         <Template>
             <div className="container">
-                <div className="row">
-                    <div className="col-12 col-md-10 offset-md-1">
-                        <h1 className="h2">Sorteio de Comentários do Instagram</h1>
+                <div className="row mb-5">
+                    <div className="col">
+                        <h1 className="sofia"><strong>Sorteio de Comentários do Instagram</strong></h1>
                     </div>
                 </div>
                 <div className="row mt-5">

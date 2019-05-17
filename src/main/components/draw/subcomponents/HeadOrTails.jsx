@@ -35,9 +35,14 @@ const HeadOrTails = () => {
         <>
             <div className="section">
                 <div className="container">
+                    <div className="row mb-5">
+                        <div className="col">
+                            <h1 className="sofia"><strong>Cara ou Coroa</strong></h1>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col">
-                            <h1 className="text-center mb-5 lobster">Clique na moeda para jogar</h1>
+                            <h1 className="h3 text-center mb-5">Clique na moeda para jogar</h1>
                         </div>
                     </div>
                 </div>
