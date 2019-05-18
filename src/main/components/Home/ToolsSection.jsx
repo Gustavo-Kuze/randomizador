@@ -36,7 +36,7 @@ const ToolsSection = () => {
         <div className="container">
             <div className="row">
                 <div className="col">
-                    <p className="h2 text-center my-5 sofia"><strong>Faça sorteios de comentário</strong>!</p>
+                    <p className="h2 text-center my-5 sofia"><strong>Faça sorteios de comentários</strong>!</p>
                 </div>
             </div>
             <div className="row mb-5">

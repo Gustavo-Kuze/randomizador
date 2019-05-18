@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { logout } from '../../redux/core/actions/userActions'
 import { Spinner } from 'reactstrap'
 import firebase from '../../services/firebase/'
+import { toastr } from 'react-redux-toastr'
 
 const Logout = (props) => {
 
@@ -12,7 +13,8 @@ const Logout = (props) => {
 
     useEffect(() => {
         firebase.auth().signOut().then(() => {
-            props.logout()            
+            toastr.success('Sucesso', 'Você saiu de sua conta. Clique no botão login, no menu, para entrar novamente!')
+            props.logout()
             setLogoutComplete(true)
         })
     }, [])
