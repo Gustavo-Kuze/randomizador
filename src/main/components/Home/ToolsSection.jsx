@@ -4,20 +4,30 @@ import { Link } from 'react-router-dom'
 import If from '../utils/If'
 
 const Card = cardProps => {
-    return (
-        <div className={`card tools-section-card ${cardProps.className}`} style={cardProps.style}>
-            <Link className="text-decoration-none" to={`/${cardProps.link}`}>
-                <div className="card-body d-flex justify-content-center align-items-center flex-column">
-                    <If c={cardProps.src}>
+    return (<>
+        <If c={cardProps.src}>
+            <div className={`card tools-section-card ${cardProps.className}`} style={cardProps.style}>
+                <Link className="text-decoration-none" to={`/${cardProps.link}`}>
+                    <div className="card-body d-flex justify-content-center align-items-center flex-column">
                         <img src={cardProps.src} alt={cardProps.alt} />
-                    </If>
-                    <If c={!cardProps.src}>
-                        <i className={cardProps.icon} ></i>
-                    </If>
-                    <h3>{cardProps.description}</h3>
-                </div>
-            </Link>
-        </div>
+                        <h3>{cardProps.description}</h3>
+                    </div>
+                </Link>
+            </div>
+        </If>
+        <If c={!cardProps.src}>
+            <div className={`card tools-section-card ${cardProps.className}`} style={cardProps.style}>
+                <Link className="text-decoration-none d-flex w-100" to={`/${cardProps.link}`}>
+                    <div className="card-body d-flex justify-content-center align-items-center flex-column">
+                        <p>
+                            <i className={cardProps.icon} ></i>
+                        </p>
+                        <h3>{cardProps.description}</h3>
+                    </div>
+                </Link>
+            </div>
+        </If>
+    </>
     )
 }
 
