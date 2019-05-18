@@ -38,7 +38,7 @@ const FbCommentsDraw = (props) => {
 
     const setQuantityAndValidate = (value) => {
         setQuantity(value)
-        setQuantityInputValid(value > 0 && value <= props.comments.length)
+        setQuantityInputValid(value > 0 && value <= props.comments.length && value <= 10)
     }
 
     return (
@@ -56,6 +56,7 @@ const FbCommentsDraw = (props) => {
                         <If c={props.comments.length > 0}>
                             <If c={drawnComments.length === 0}>
                                 <p className="lead text-center">Finalmente, você já pode sortear! <span role="img" aria-label="Positivo">👍</span></p>
+                                <p className="text-center">Você pode sortear até 10 comentários</p>
                                 <Input className="text-center bg-light mb-3"
                                     type="number"
                                     placeholder="Quantidade"
@@ -63,7 +64,9 @@ const FbCommentsDraw = (props) => {
                                     valid={isQuantityInputValid}
                                     value={quantity}
                                     onChange={e => setQuantityAndValidate(parseInt(e.target.value))}
-                                    onKeyUp={setQuantityInputValidAndDrawOnEnter} />
+                                    onKeyUp={setQuantityInputValidAndDrawOnEnter}
+                                    max="10"
+                                />
                                 <button onClick={drawComments} className={`btn btn-success btn-block ${isQuantityInputValid ? 'btn-pulse-success' : ''}`}>Sortear!</button>
                             </If>
                             <If c={drawnComments.length > 0}>

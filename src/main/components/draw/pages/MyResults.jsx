@@ -45,6 +45,8 @@ const MyResults = (props) => {
                 return <h4>Embaralhamento de frases</h4>
             case drawTypes.FACEBOOK_COMMENTS:
                 return <h4>Comentários do Facebook</h4>
+            case drawTypes.INSTAGRAM_COMMENTS:
+                return <h4>Comentários do Instagram</h4>
             default:
                 return <h4>Sorteio</h4>
         }
