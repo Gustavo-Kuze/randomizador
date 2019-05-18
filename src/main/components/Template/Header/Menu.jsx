@@ -18,7 +18,7 @@ const Menu = () => {
     })
 
     return <>
-        <p className="lead">{`Bem-vindo, ${userName}`}</p>
+        <p className="lead">{`Bem-vindo(a), ${userName}`}</p>
         <ListGroup className="text-center">
             <p className="text-secondary">Ferramentas de sorteio</p>
             <Link to="/user/lists" className="list-group-item list-group-item-action" >Minhas listas</Link>

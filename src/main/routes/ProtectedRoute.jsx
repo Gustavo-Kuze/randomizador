@@ -8,7 +8,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         if (rest.email !== '') {
-          if (!rest.emailVerified) {
+          if (false) {
             return (
               <Redirect
                 to={{
