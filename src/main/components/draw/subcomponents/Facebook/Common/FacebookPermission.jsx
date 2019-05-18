@@ -23,9 +23,11 @@ const FacebookPermission = (props) => {
                 disabled={!props.enabled}
                 onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>1- Permitir que o Randomizador gerencie suas páginas</button>
             <Collapse isOpen={(props.enabled && props.isOpen) || props.isOpen}>
-                <div className="card p-5 my-3">
-                    <p className="lead text-center">Clique no ícone para fazer login com sua conta do Facebook e permitir o acesso do Randomizador</p>
-                    <button className="btn btn-link text-decoration-none" onClick={() => callFacebookLogin()}><i className="fab fa-facebook-square fa-3x"></i></button>
+                <div className="card p-5 my-3 ">
+                    <div className="card-body d-flex justify-content-center align-items-center flex-column">
+                        <p className="lead text-center">Clique no botão abaixo para fazer login com sua conta do Facebook e permitir o acesso do Randomizador</p>
+                        <button className="btn btn-primary btn-sm mt-3 d-flex justify-content-center align-items-center" onClick={() => callFacebookLogin()}><i className="fab fa-facebook-square fa-3x pr-3"></i> <span> Continuar com Facebook</span></button>
+                    </div>
                 </div>
             </Collapse>
         </>
