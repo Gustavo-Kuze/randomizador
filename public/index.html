@@ -39,7 +39,9 @@
         xfbml: true,
         version: 'v3.3'
       });
-      window.Facebook = {...FB};
+      if(FB){
+        window.Facebook = FB
+      }
     };
   </script>
   <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
