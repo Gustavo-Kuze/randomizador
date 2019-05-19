@@ -21,7 +21,7 @@ const facebookLogin = () => {
             } else {
                 rej('Aconteceu um problema ao recuperar a chave de acesso, por favor tente novamente mais tarde.')
             }
-        }, { scope: 'public_profile,email,manage_pages,instagram_basic,instagram_manage_comments,pages_show_list', return_scopes: true });
+        }, { scope: 'manage_pages,instagram_basic,instagram_manage_comments,pages_show_list', return_scopes: true });
     })
 }
 
