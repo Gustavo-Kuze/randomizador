@@ -6,7 +6,7 @@ const apiAsync = (path, params, method = 'get') => {
                 method,
                 params,
                 (resp) => res(resp)
-            );
+            )
         } catch (err) {
             rej(err)
         }

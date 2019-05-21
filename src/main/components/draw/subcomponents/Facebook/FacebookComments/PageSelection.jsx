@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Collapse } from 'reactstrap'
 import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
 import { bindActionCreators } from "redux";
@@ -24,7 +24,7 @@ const PageSelection = (props) => {
         <>
             <button className={`btn btn-outline-${props.isInstagram ? 'info' : 'primary'} btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
                 disabled={!props.enabled}
-                onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>2- Escolher sua página</button>
+                onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>1- Escolher sua página</button>
             <Collapse isOpen={props.enabled && props.isOpen}>
                 <div className="card p-5 my-3">
                     <If c={props.userPages.length > 0}>

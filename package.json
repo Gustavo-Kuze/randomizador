@@ -8,8 +8,6 @@
     "firebaseui": "3.5.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-facebook": "^8.0.4",
-    "react-facebook-login": "^4.1.1",
     "react-redux": "7.0.2",
     "react-redux-toastr": "7.4.8",
     "react-router-dom": "5.0.0",
