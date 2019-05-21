@@ -24,13 +24,15 @@ const FacebookSteps = (props) => {
 
   let [shouldRedirect, setShouldRedirect] = useState(false)
 
-  let [isPickPageStepOpen, setPickPageStepOpen] = useState(false)
+  let [isPickPageStepOpen, setPickPageStepOpen] = useState(true)
   let [isPickPostStepOpen, setPickPostStepOpen] = useState(false)
   let [isDrawStepOpen, setDrawStepOpen] = useState(false)
 
-  let [isPickPageEnabled, setPickPageEnabled] = useState(false)
+  let [isPickPageEnabled, setPickPageEnabled] = useState(true)
   let [isPickPostEnabled, setPickPostEnabled] = useState(false)
   let [isDrawStepEnabled, setDrawStepEnabled] = useState(false)
+
+  let [isDrawOver, setDrawOver] = useState(false)
 
   let [nextPostsHref, setNextPostsHref] = useState()
   let [prevPostsHref, setPrevPostsHref] = useState()
@@ -42,14 +44,13 @@ const FacebookSteps = (props) => {
   }, [])
 
   useEffect(() => {
-    debugger
     if (props.login.additionalUserInfo) {
       if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-        if (!isPickPageEnabled)
+        if (!isPickPageEnabled && !isDrawOver)
           setPickPageEnabled(true)
-        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled)
+        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
           setPickPostEnabled(true)
-        if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled)
+        if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
           setDrawStepEnabled(true)
       } else {
         setShouldRedirect(true)
@@ -116,6 +117,7 @@ const FacebookSteps = (props) => {
   }
 
   const onCommentsDrawn = () => {
+    setDrawOver(true)
     setPickPageEnabled(false)
     setPickPostEnabled(false)
     setDrawStepEnabled(false)

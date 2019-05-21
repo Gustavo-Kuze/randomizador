@@ -20,13 +20,15 @@ const InstagramSteps = (props) => {
 
   let [shouldRedirect, setShouldRedirect] = useState(false)
 
-  let [isStepTwoOpen, setStepTwoOpen] = useState(false)
-  let [isStepThreeOpen, setStepThreeOpen] = useState(false)
-  let [isStepFourOpen, setStepFourOpen] = useState(false)
+  let [isPickPageStepOpen, setPickPageStepOpen] = useState(true)
+  let [isPickPostStepOpen, setPickPostStepOpen] = useState(false)
+  let [isDrawStepOpen, setDrawStepOpen] = useState(false)
 
-  let [isStepTwoEnabled, setStepTwoEnabled] = useState(false)
-  let [isStepThreeEnabled, setStepThreeEnabled] = useState(false)
-  let [isStepFourEnabled, setStepFourEnabled] = useState(false)
+  let [isPickPageEnabled, setPickPageEnabled] = useState(true)
+  let [isPickPostEnabled, setPickPostEnabled] = useState(false)
+  let [isDrawStepEnabled, setDrawStepEnabled] = useState(false)
+
+  let [isDrawOver, setDrawOver] = useState(false)
 
   let [nextMediasHref, setNextPostsHref] = useState()
   let [prevMediasHref, setPrevPostsHref] = useState()
@@ -40,13 +42,12 @@ const InstagramSteps = (props) => {
   useEffect(() => {
     if (props.login.additionalUserInfo) {
       if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-        if (!isStepTwoEnabled) {
-          setStepTwoEnabled(true)
-        }
-        if (props.userPages.length > 0 && !isStepThreeEnabled && isStepTwoEnabled)
-          setStepThreeEnabled(true)
-        if (props.medias.length > 0 && !isStepFourEnabled && isStepThreeEnabled && isStepTwoEnabled)
-          setStepFourEnabled(true)
+        if (!isPickPageEnabled && !isDrawOver)
+          setPickPageEnabled(true)
+        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+          setPickPostEnabled(true)
+        if (props.medias.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+          setDrawStepEnabled(true)
       } else {
         setShouldRedirect(true)
         toastr.warning('Atenção!', 'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!')
@@ -101,12 +102,12 @@ const InstagramSteps = (props) => {
         fulfillMedias(id, page.access_token)
         props.setBusinessId(id)
       } else {
-        toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela')
+        toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela, ou você não deu as permissões de login necessárias para o app.')
         setIsLoading(false)
       }
     })
-    setStepTwoOpen(false)
-    setStepThreeOpen(true)
+    setPickPageStepOpen(false)
+    setPickPostStepOpen(true)
   }
 
   const onMediaSelected = media => {
@@ -114,8 +115,8 @@ const InstagramSteps = (props) => {
     getAllComments(`/${media.id}/comments?fields=username,text&access_token=${props.accessToken}`)
       .then(data => {
         props.setComments(data.map(comment => ({ ...comment, permalink: media.permalink })))
-        setStepThreeOpen(false)
-        setStepFourOpen(true)
+        setPickPostStepOpen(false)
+        setDrawStepOpen(true)
         setIsLoading(false)
       }).catch(err => {
         console.log(err)
@@ -124,12 +125,13 @@ const InstagramSteps = (props) => {
   }
 
   const onCommentsDrawn = () => {
-    setStepTwoEnabled(false)
-    setStepThreeEnabled(false)
-    setStepFourEnabled(false)
-    setStepTwoOpen(false)
-    setStepThreeOpen(false)
-    setStepFourOpen(true)
+    setDrawOver(true)
+    setPickPageEnabled(false)
+    setPickPostEnabled(false)
+    setDrawStepEnabled(false)
+    setPickPageStepOpen(false)
+    setPickPostStepOpen(false)
+    setDrawStepOpen(true)
   }
 
   return <>
@@ -143,15 +145,15 @@ const InstagramSteps = (props) => {
               <p className="mt-3">Carregando, por favor aguarde...</p>
             </div>
           </If>
-          <PageSelection onPageSelected={onPageSelected} enabled={isStepTwoEnabled}
-            isOpen={isStepTwoOpen} setIsOpen={setStepTwoOpen}
+          <PageSelection onPageSelected={onPageSelected} enabled={isPickPageEnabled}
+            isOpen={isPickPageStepOpen} setIsOpen={setPickPageStepOpen}
             isInstagram={true} />
           <MediaSelection paginateTo={paginateTo} next={nextMediasHref} previous={prevMediasHref}
-            isOpen={isStepThreeOpen} enabled={isStepThreeEnabled} setIsOpen={setStepThreeOpen}
+            isOpen={isPickPostStepOpen} enabled={isPickPostEnabled} setIsOpen={setPickPostStepOpen}
             onMediaSelected={onMediaSelected} />
           <InstaCommentsDraw
-            isOpen={isStepFourOpen} enabled={isStepFourEnabled}
-            setIsOpen={setStepFourOpen}
+            isOpen={isDrawStepOpen} enabled={isDrawStepEnabled}
+            setIsOpen={setDrawStepOpen}
             onCommentsDrawn={onCommentsDrawn} />
         </>
     }
