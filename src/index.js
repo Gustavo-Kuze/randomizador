@@ -13,6 +13,7 @@ import store from './main/redux/core/store'
 store.subscribe(() => {
     saveState({
         user: store.getState().user,
+        login: store.getState().login,
     })
 })
 

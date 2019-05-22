@@ -2,55 +2,69 @@ import React, { useState, useEffect } from 'react'
 import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
-import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
 import {
   setPagePosts, setUserPages, setPostComments
 } from "../../../../../redux/core/actions/facebookCommentsActions";
 
 import {
-  getUserPages, getPagePosts, getPostComments,
-  getPaginationResult, getAllComments
+  getUserPages, getPagePosts, getPaginationResult, getAllComments
 } from "../../../../../services/facebook";
 
-import FacebookPermission from '../Common/FacebookPermission'
+import firebase from '../../../../../services/firebase/'
 import PageSelection from './PageSelection'
 import PostSelection from './PostSelection'
 import FbCommentsDraw from './FbCommentsDraw'
 import { Spinner } from 'reactstrap'
 import If from '../../../../utils/If'
+import { Redirect } from 'react-router-dom'
 
 const FacebookSteps = (props) => {
 
   let [isLoading, setIsLoading] = useState(false)
 
-  let [isStepOneOpen, setStepOneOpen] = useState(true)
-  let [isStepTwoOpen, setStepTwoOpen] = useState(false)
-  let [isStepThreeOpen, setStepThreeOpen] = useState(false)
-  let [isStepFourOpen, setStepFourOpen] = useState(false)
+  let [shouldRedirect, setShouldRedirect] = useState(false)
 
-  let [isStepOneEnabled, setStepOneEnabled] = useState(true)
-  let [isStepTwoEnabled, setStepTwoEnabled] = useState(false)
-  let [isStepThreeEnabled, setStepThreeEnabled] = useState(false)
-  let [isStepFourEnabled, setStepFourEnabled] = useState(false)
+  let [isPickPageStepOpen, setPickPageStepOpen] = useState(true)
+  let [isPickPostStepOpen, setPickPostStepOpen] = useState(false)
+  let [isDrawStepOpen, setDrawStepOpen] = useState(false)
+
+  let [isPickPageEnabled, setPickPageEnabled] = useState(true)
+  let [isPickPostEnabled, setPickPostEnabled] = useState(false)
+  let [isDrawStepEnabled, setDrawStepEnabled] = useState(false)
+
+  let [isDrawOver, setDrawOver] = useState(false)
 
   let [nextPostsHref, setNextPostsHref] = useState()
   let [prevPostsHref, setPrevPostsHref] = useState()
 
   useEffect(() => {
-    if (props.loginStatus === 'connected' && !isStepTwoEnabled && isStepOneEnabled)
-      setStepTwoEnabled(true)
-    if (props.userPages.length > 0 && !isStepThreeEnabled && isStepTwoEnabled && isStepOneEnabled)
-      setStepThreeEnabled(true)
-    if (props.pagePosts.length > 0 && !isStepFourEnabled && isStepThreeEnabled && isStepTwoEnabled && isStepOneEnabled)
-      setStepFourEnabled(true)
+    fulfillUserPages(
+      props.login.additionalUserInfo.profile.id,
+      props.login.credential.accessToken)
+  }, [])
+
+  useEffect(() => {
+    if (props.login.additionalUserInfo) {
+      if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
+        if (!isPickPageEnabled && !isDrawOver)
+          setPickPageEnabled(true)
+        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+          setPickPostEnabled(true)
+        if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+          setDrawStepEnabled(true)
+      } else {
+        setShouldRedirect(true)
+        toastr.warning('Atenção!', 'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!')
+      }
+    }
   })
 
-  const fulfillUserPages = (authResponse) => {
+  const fulfillUserPages = (userID, accessToken) => {
     setIsLoading(true)
-    getUserPages(authResponse.userID, authResponse.accessToken).then(pagesResponse => {
+    getUserPages(userID, accessToken).then(pagesResponse => {
       props.setUserPages(pagesResponse.data)
       setIsLoading(false)
-    })
+    }).catch(err => { })
   }
 
   const paginateTo = (href) => {
@@ -76,14 +90,6 @@ const FacebookSteps = (props) => {
     setIsLoading(false)
   }
 
-  const onFacebookLogin = response => {
-    setStepOneOpen(false)
-    setStepTwoOpen(true)
-    fulfillUserPages(response)
-  }
-
-  const toastOnError = err => toastr.error('Erro', err)
-
   const onPageSelected = page => {
     setIsLoading(true)
     getPagePosts(page.id, page.access_token)
@@ -92,8 +98,8 @@ const FacebookSteps = (props) => {
         toastr.error('Erro', err)
         setIsLoading(false)
       })
-    setStepTwoOpen(false)
-    setStepThreeOpen(true)
+    setPickPageStepOpen(false)
+    setPickPostStepOpen(true)
   }
 
   const onPostSelected = post => {
@@ -101,8 +107,8 @@ const FacebookSteps = (props) => {
     getAllComments(`/${post.id}/comments?fields=id,message,permalink_url&access_token=${props.accessToken}`)
       .then(data => {
         props.setPostComments(data)
-        setStepThreeOpen(false)
-        setStepFourOpen(true)
+        setPickPostStepOpen(false)
+        setDrawStepOpen(true)
         setIsLoading(false)
       }).catch(err => {
         console.log(err)
@@ -111,47 +117,49 @@ const FacebookSteps = (props) => {
   }
 
   const onCommentsDrawn = () => {
-    setStepOneEnabled(false)
-    setStepTwoEnabled(false)
-    setStepThreeEnabled(false)
-    setStepFourEnabled(false)
-    setStepOneOpen(false)
-    setStepTwoOpen(false)
-    setStepThreeOpen(false)
-    setStepFourOpen(true)
+    setDrawOver(true)
+    setPickPageEnabled(false)
+    setPickPostEnabled(false)
+    setDrawStepEnabled(false)
+    setPickPageStepOpen(false)
+    setPickPostStepOpen(false)
+    setDrawStepOpen(true)
   }
 
   return <>
-    <If c={isLoading} cssHide>
-      <div className="d-flex justify-content-center align-items-center flex-column">
-        <Spinner color="warning" />
-        <p className="mt-3">Carregando, por favor aguarde...</p>
-      </div>
-    </If>
-    <FacebookPermission onLogin={onFacebookLogin} onError={toastOnError} enabled={isStepOneEnabled}
-      isOpen={isStepOneOpen} setIsOpen={setStepOneOpen} />
-    <PageSelection onPageSelected={onPageSelected} enabled={isStepTwoEnabled}
-      isOpen={isStepTwoOpen} setIsOpen={setStepTwoOpen} />
-    <PostSelection paginateTo={paginateTo} next={nextPostsHref} previous={prevPostsHref}
-      isOpen={isStepThreeOpen} enabled={isStepThreeEnabled} setIsOpen={setStepThreeOpen}
-      onPostSelected={onPostSelected} />
-    <FbCommentsDraw
-      isOpen={isStepFourOpen} enabled={isStepFourEnabled}
-      setIsOpen={setStepFourOpen}
-      onCommentsDrawn={onCommentsDrawn} />
+    {
+      shouldRedirect ? (
+        <Redirect to="/" />
+      ) : <>
+          <If c={isLoading} cssHide>
+            <div className="d-flex justify-content-center align-items-center flex-column">
+              <Spinner color="warning" />
+              <p className="mt-3">Carregando, por favor aguarde...</p>
+            </div>
+          </If>
+          <PageSelection onPageSelected={onPageSelected} enabled={isPickPageEnabled}
+            isOpen={isPickPageStepOpen} setIsOpen={setPickPageStepOpen} />
+          <PostSelection paginateTo={paginateTo} next={nextPostsHref} previous={prevPostsHref}
+            isOpen={isPickPostStepOpen} enabled={isPickPostEnabled} setIsOpen={setPickPostStepOpen}
+            onPostSelected={onPostSelected} />
+          <FbCommentsDraw
+            isOpen={isDrawStepOpen} enabled={isDrawStepEnabled}
+            setIsOpen={setDrawStepOpen}
+            onCommentsDrawn={onCommentsDrawn} />
+        </>
+    }
   </>
 }
 
 const mapStateToProps = state => ({
-  loginStatus: state.facebook.status,
-  authResponse: state.facebook.authResponse,
   accessToken: state.facebookComments.selectedPage.access_token,
   pagePosts: state.facebookComments.pagePosts,
-  userPages: state.facebookComments.userPages
+  userPages: state.facebookComments.userPages,
+  login: state.login
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setAuthResponse, setPagePosts, setUserPages, setPostComments
+  setPagePosts, setUserPages, setPostComments
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(FacebookSteps)

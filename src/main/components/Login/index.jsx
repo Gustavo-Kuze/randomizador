@@ -7,6 +7,9 @@ import If from '../utils/If'
 import { Redirect } from 'react-router-dom'
 import { Spinner } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { setAuthResult } from "../../redux/core/actions/loginActions"
 
 const Login = (props) => {
 
@@ -23,6 +26,7 @@ const Login = (props) => {
                 toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
             })
         }
+        props.setAuthResult(authResult)
         setSigningAsDone(true)
     }
 
@@ -33,7 +37,17 @@ const Login = (props) => {
             signInOptions: [
                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                 firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                firebase.auth.FacebookAuthProvider.PROVIDER_ID
+                {
+                    provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+                    scopes: [
+                        'email',
+                        'public_profile',
+                        'instagram_manage_comments',
+                        'instagram_basic',
+                        'pages_show_list',
+                        'manage_pages'
+                    ]
+                }
             ],
             callbacks: {
                 uiShown: () => setIsLoadingUi(false),
@@ -66,4 +80,8 @@ const Login = (props) => {
 
 }
 
-export default Login
+const mapDispatchToProps = dispatch => bindActionCreators({
+    setAuthResult
+}, dispatch)
+
+export default connect(null, mapDispatchToProps)(Login)
