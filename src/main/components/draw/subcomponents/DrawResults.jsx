@@ -29,7 +29,8 @@ const DrawResults = props => {
     }
 
     const savePrivately = () => {
-        if (props.emailVerified) {
+        //emailVerified
+        if (true) {
             savePrivateResult({
                 description: drawDescription,
                 drawType: props.drawType,

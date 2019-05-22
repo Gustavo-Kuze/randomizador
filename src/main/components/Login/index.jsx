@@ -21,11 +21,11 @@ const Login = (props) => {
     }, [])
 
     const signInSuccessful = (authResult, resirectUrl) => {
-        if (!authResult.user.emailVerified) {
-            firebase.auth().currentUser.sendEmailVerification().then(() => {
-                toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
-            })
-        }
+        // if (!authResult.user.emailVerified) {
+        //     firebase.auth().currentUser.sendEmailVerification().then(() => {
+        //         toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
+        //     })
+        // }
         props.setAuthResult(authResult)
         setSigningAsDone(true)
     }
