@@ -48,7 +48,6 @@ const InstagramSteps = (props) => {
   }, [])
 
   useEffect(() => {
-    if (props.login.additionalUserInfo) {
       if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
         if (!isPickPageEnabled && !isDrawOver)
           setPickPageEnabled(true)
@@ -59,7 +58,6 @@ const InstagramSteps = (props) => {
       } else {
         warnAndRedirect()
       }
-    }
   })
 
   const warnAndRedirect = () => {

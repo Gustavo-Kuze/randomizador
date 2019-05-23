@@ -5,7 +5,7 @@ import * as firebaseui from 'firebaseui'
 import Template from '../../components/Template/'
 import If from '../utils/If'
 import { Redirect } from 'react-router-dom'
-import { Spinner } from 'reactstrap'
+import { Spinner, Container, Row, Col } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -65,6 +65,8 @@ const Login = (props) => {
             </If>
             <If c={!isSigningInDone}>
                 <Template>
+
+                    <h1 className="my-5 lobster text-center h3">Escolha um método de login</h1>
                     <div id="firebaseui-auth-container" className={isLoadingUi ? 'invisible' : ''}></div>
                     <If c={isLoadingUi}>
                         <div className="row">
@@ -73,6 +75,13 @@ const Login = (props) => {
                             </div>
                         </div>
                     </If>
+                    <Container className="mt-5">
+                        <Row>
+                            <Col xs={{ size: '10', offset: '1' }}>
+                                <p className="lead"><span className="text-warning"><strong>Atenção!</strong></span> Você será redirecionado para o link do provedor de login que escolher. Caso clique em um dos botões de login e nada aconteça, pode ser que uma extensão em seu navegador esteja bloqueando o redirecionamento!</p>
+                            </Col>
+                        </Row>
+                    </Container>
                 </Template>
             </If>
         </>
