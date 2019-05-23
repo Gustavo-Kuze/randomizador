@@ -86,7 +86,7 @@ const DrawResults = props => {
                                         <div className={'col-12 col-sm-6 my-1'}>
                                             <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>
                                                 O resultado ficará acessível para quem possuir seu número. Isso não pode ser desfeito!
-                                    </Tooltip>
+                                            </Tooltip>
                                             <button id="btn-save-publicly" className="btn btn-block btn-outline-warning" onClick={savePublicly}>Salvar publicamente</button>
                                         </div>
                                         <div className={'col-12 col-sm-6 my-1'}>
