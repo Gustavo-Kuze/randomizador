@@ -38,26 +38,36 @@ const FacebookSteps = (props) => {
   let [prevPostsHref, setPrevPostsHref] = useState()
 
   useEffect(() => {
-    fulfillUserPages(
-      props.login.additionalUserInfo.profile.id,
-      props.login.credential.accessToken)
+    if (props.login.additionalUserInfo.profile) {
+      if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
+        fulfillUserPages(
+          props.login.additionalUserInfo.profile.id,
+          props.login.credential.accessToken)
+      } else {
+        warnAndRedirect()
+      }
+    } else {
+      warnAndRedirect()
+    }
   }, [])
 
   useEffect(() => {
-    if (props.login.additionalUserInfo) {
-      if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-        if (!isPickPageEnabled && !isDrawOver)
-          setPickPageEnabled(true)
-        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-          setPickPostEnabled(true)
-        if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-          setDrawStepEnabled(true)
-      } else {
-        setShouldRedirect(true)
-        toastr.warning('Atenção!', 'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!')
-      }
+    if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
+      if (!isPickPageEnabled && !isDrawOver)
+        setPickPageEnabled(true)
+      if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+        setPickPostEnabled(true)
+      if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+        setDrawStepEnabled(true)
+    } else {
+      warnAndRedirect()
     }
   })
+
+  const warnAndRedirect = () => {
+    setShouldRedirect(true)
+    toastr.warning('Atenção!', 'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!')
+  }
 
   const fulfillUserPages = (userID, accessToken) => {
     setIsLoading(true)

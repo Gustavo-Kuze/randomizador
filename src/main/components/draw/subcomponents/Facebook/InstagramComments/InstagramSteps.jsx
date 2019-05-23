@@ -34,9 +34,17 @@ const InstagramSteps = (props) => {
   let [prevMediasHref, setPrevPostsHref] = useState()
 
   useEffect(() => {
-    fulfillUserPages(
-      props.login.additionalUserInfo.profile.id,
-      props.login.credential.accessToken)
+    if (props.login.additionalUserInfo.profile) {
+      if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
+        fulfillUserPages(
+          props.login.additionalUserInfo.profile.id,
+          props.login.credential.accessToken)
+      } else {
+        warnAndRedirect()
+      }
+    } else {
+      warnAndRedirect()
+    }
   }, [])
 
   useEffect(() => {
@@ -49,12 +57,16 @@ const InstagramSteps = (props) => {
         if (props.medias.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
           setDrawStepEnabled(true)
       } else {
-        setShouldRedirect(true)
-        toastr.warning('Atenção!', 'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!')
+        warnAndRedirect()
       }
     }
   })
 
+  const warnAndRedirect = () => {
+    setShouldRedirect(true)
+    toastr.warning('Atenção!', 'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!')
+  }
+  
   const paginateTo = (href) => {
     setIsLoading(true)
     getPaginationResult(href).then(response => {
