@@ -74,7 +74,9 @@ const FacebookSteps = (props) => {
     getUserPages(userID, accessToken).then(pagesResponse => {
       props.setUserPages(pagesResponse.data)
       setIsLoading(false)
-    }).catch(err => { })
+    }).catch(err => {
+      //logger
+    })
   }
 
   const paginateTo = (href) => {

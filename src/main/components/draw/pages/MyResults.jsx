@@ -27,6 +27,8 @@ const MyResults = (props) => {
                         })
                     }
                     setResults(resultsFromFirestore)
+                }).catch(error => {
+                    //logger
                 })
             }
         })
@@ -72,6 +74,8 @@ const MyResults = (props) => {
             onOk: () => {
                 deleteAllPrivateResults().then(() => {
                     window.location.reload()
+                }).catch(error => {
+                    //logger
                 })
             }
         }

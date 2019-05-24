@@ -16,6 +16,8 @@ const Logout = (props) => {
             toastr.success('Sucesso', 'Você saiu de sua conta. Clique no botão login, no menu, para entrar novamente!')
             props.logout()
             setLogoutComplete(true)
+        }).catch(error => {
+            //logger
         })
     }, [])
 

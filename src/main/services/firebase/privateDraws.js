@@ -17,21 +17,21 @@ const savePrivateResult = async (drawResults) => {
     if (drawsRef) {
         return await drawsRef.doc(`${chance.android_id()}`).set(drawResults)
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection draws. drawsRef era null'))
 }
 
 const getPrivateResults = async () => {
     if (drawsRef) {
         return await drawsRef.orderBy('date', 'desc').get()
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection draws. drawsRef era null'))
 }
 
 const deletePrivateResult = async (id) => {
     if (drawsRef) {
         return await drawsRef.doc(id).delete()
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection draws. drawsRef era null'))
 }
 
 const deleteAllPrivateResults = async () => {
@@ -41,7 +41,7 @@ const deleteAllPrivateResults = async () => {
             return await doc.ref.delete()
         }))
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection draws. drawsRef era null'))
 }
 
 export {

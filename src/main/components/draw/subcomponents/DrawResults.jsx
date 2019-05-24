@@ -25,6 +25,8 @@ const DrawResults = props => {
                 onOk: () => setRedirect(true)
             }
             toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions)
+        }).catch(error => {
+            //logger
         })
     }
 

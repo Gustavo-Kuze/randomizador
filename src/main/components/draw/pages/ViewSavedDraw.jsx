@@ -27,6 +27,8 @@ const ViewSavedDraw = (props) => {
                     toastr.error('Erro', 'Não foi possível encontrar o sorteio')
                     setShouldRedirect(true)
                 }
+            }).catch(error => {
+                //logger
             })
         } else {
             setDrawResult(props.resultOnState)
