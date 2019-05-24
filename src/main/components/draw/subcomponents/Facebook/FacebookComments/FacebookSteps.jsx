@@ -86,6 +86,7 @@ const FacebookSteps = (props) => {
       window.scrollTo(0, 0)
       setIsLoading(false)
     }).catch(err => {
+      //logger
       toastr.error('Erro', err)
       setIsLoading(false)
     })
@@ -123,6 +124,7 @@ const FacebookSteps = (props) => {
         setDrawStepOpen(true)
         setIsLoading(false)
       }).catch(err => {
+        //logger
         console.log(err)
         setIsLoading(false)
       })

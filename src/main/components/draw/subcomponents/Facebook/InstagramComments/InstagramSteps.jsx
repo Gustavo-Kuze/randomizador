@@ -98,80 +98,81 @@ const InstagramSteps = (props) => {
 
   const fulfillMedias = (businessId, accessToken) => {
     setIsLoading(true)
-    getMedia(businessId, accessToken)response => {
+    getMedia(businessId, accessToken).then(response => {
       preparePagePosts(response)
       setIsLoading(false)
-    }).catch (err => {
-  toastr.error('Erro', err)
-  setIsLoading(false)
-})
-  }
-
-const onPageSelected = page => {
-  setIsLoading(true)
-  getBusinessAccountId(page.id, page.access_token).then((id) => {
-    if (id) {
-      fulfillMedias(id, page.access_token)
-      props.setBusinessId(id)
-    } else {
-      toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela, ou você não deu as permissões de login necessárias para o app.')
-      setIsLoading(false)
-    }
-  }).catch(error => {
-    //logger
-  })
-  setPickPageStepOpen(false)
-  setPickPostStepOpen(true)
-}
-
-const onMediaSelected = media => {
-  setIsLoading(true)
-  getAllComments(`/${media.id}/comments?fields=username,text&access_token=${props.accessToken}`)
-    .then(data => {
-      props.setComments(data.map(comment => ({ ...comment, permalink: media.permalink })))
-      setPickPostStepOpen(false)
-      setDrawStepOpen(true)
-      setIsLoading(false)
     }).catch(err => {
-      console.log(err)
+      //logger
+      toastr.error('Erro', err)
       setIsLoading(false)
     })
-}
-
-const onCommentsDrawn = () => {
-  setDrawOver(true)
-  setPickPageEnabled(false)
-  setPickPostEnabled(false)
-  setDrawStepEnabled(false)
-  setPickPageStepOpen(false)
-  setPickPostStepOpen(false)
-  setDrawStepOpen(true)
-}
-
-return <>
-  {
-    shouldRedirect ? (
-      <Redirect to="/" />
-    ) : <>
-        <If c={isLoading} cssHide>
-          <div className="d-flex justify-content-center align-items-center flex-column">
-            <Spinner color="warning" />
-            <p className="mt-3">Carregando, por favor aguarde...</p>
-          </div>
-        </If>
-        <PageSelection onPageSelected={onPageSelected} enabled={isPickPageEnabled}
-          isOpen={isPickPageStepOpen} setIsOpen={setPickPageStepOpen}
-          isInstagram={true} />
-        <MediaSelection paginateTo={paginateTo} next={nextMediasHref} previous={prevMediasHref}
-          isOpen={isPickPostStepOpen} enabled={isPickPostEnabled} setIsOpen={setPickPostStepOpen}
-          onMediaSelected={onMediaSelected} />
-        <InstaCommentsDraw
-          isOpen={isDrawStepOpen} enabled={isDrawStepEnabled}
-          setIsOpen={setDrawStepOpen}
-          onCommentsDrawn={onCommentsDrawn} />
-      </>
   }
-</>
+
+  const onPageSelected = page => {
+    setIsLoading(true)
+    getBusinessAccountId(page.id, page.access_token).then((id) => {
+      if (id) {
+        fulfillMedias(id, page.access_token)
+        props.setBusinessId(id)
+      } else {
+        toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela, ou você não deu as permissões de login necessárias para o app.')
+        setIsLoading(false)
+      }
+    }).catch(error => {
+      //logger
+    })
+    setPickPageStepOpen(false)
+    setPickPostStepOpen(true)
+  }
+
+  const onMediaSelected = media => {
+    setIsLoading(true)
+    getAllComments(`/${media.id}/comments?fields=username,text&access_token=${props.accessToken}`)
+      .then(data => {
+        props.setComments(data.map(comment => ({ ...comment, permalink: media.permalink })))
+        setPickPostStepOpen(false)
+        setDrawStepOpen(true)
+        setIsLoading(false)
+      }).catch(err => {
+        console.log(err)
+        setIsLoading(false)
+      })
+  }
+
+  const onCommentsDrawn = () => {
+    setDrawOver(true)
+    setPickPageEnabled(false)
+    setPickPostEnabled(false)
+    setDrawStepEnabled(false)
+    setPickPageStepOpen(false)
+    setPickPostStepOpen(false)
+    setDrawStepOpen(true)
+  }
+
+  return <>
+    {
+      shouldRedirect ? (
+        <Redirect to="/" />
+      ) : <>
+          <If c={isLoading} cssHide>
+            <div className="d-flex justify-content-center align-items-center flex-column">
+              <Spinner color="warning" />
+              <p className="mt-3">Carregando, por favor aguarde...</p>
+            </div>
+          </If>
+          <PageSelection onPageSelected={onPageSelected} enabled={isPickPageEnabled}
+            isOpen={isPickPageStepOpen} setIsOpen={setPickPageStepOpen}
+            isInstagram={true} />
+          <MediaSelection paginateTo={paginateTo} next={nextMediasHref} previous={prevMediasHref}
+            isOpen={isPickPostStepOpen} enabled={isPickPostEnabled} setIsOpen={setPickPostStepOpen}
+            onMediaSelected={onMediaSelected} />
+          <InstaCommentsDraw
+            isOpen={isDrawStepOpen} enabled={isDrawStepEnabled}
+            setIsOpen={setDrawStepOpen}
+            onCommentsDrawn={onCommentsDrawn} />
+        </>
+    }
+  </>
 
 }
 
