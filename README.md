@@ -5,6 +5,8 @@ Listas de sorteio personalizáveis, Cara ou Coroa e varias ferramentas de sortei
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/c81a36f1-0f50-45e7-9b5f-f91aa52fa51b/deploy-status)](https://app.netlify.com/sites/randomizador/deploys)
 
+**Atenção!** Este app se encontra em DESENVOLVIMENTO! Os sorteios do Facebook e Instagram precisam passar pela aprovação do Facebook e não estão 100% funcionais!
+
 ## Motivação
 O Randomizador surgiu com a ideia de criar uma ferramenta que desse ao usuário total controle sobre suas listas de sorteio, além de ser um excelente laboratório para meus estudos com Reactjs.
 
