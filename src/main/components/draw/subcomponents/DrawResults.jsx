@@ -7,6 +7,7 @@ import { Input } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
 import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
+import { log } from '../../../services/logger/'
 
 const DrawResults = props => {
     let [shouldRedirect, setRedirect] = useState(false)
@@ -26,7 +27,9 @@ const DrawResults = props => {
             }
             toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions)
         }).catch(error => {
-            //logger
+            log(`Erro ao tentar SALVAR um resultado público em DrawResults: ${error.message}`,
+            props.uid,
+            props.authResult)
         })
     }
 
@@ -46,6 +49,9 @@ const DrawResults = props => {
                 toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions)
             }).catch(err => {
                 toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, teste fazer login novamente.')
+                log(`Erro ao tentar SALVAR resultado privado em DrawResults: ${err.message}`,
+                props.uid,
+                props.authResult)
             })
         } else {
             toastr.error('Erro!', 'Você precisa estar logado com um e-mail verificado para salvar resultados de sorteio!')
@@ -105,7 +111,9 @@ const DrawResults = props => {
 }
 
 const mapStateToProps = state => ({
-    emailVerified: state.user.emailVerified
+    emailVerified: state.user.emailVerified,
+    uid: state.user.uid,
+    authResult: state.login
 })
 
 export default connect(mapStateToProps)(DrawResults)

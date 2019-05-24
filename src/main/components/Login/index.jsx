@@ -10,6 +10,7 @@ import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { setAuthResult } from "../../redux/core/actions/loginActions"
+import { log } from '../../services/logger/'
 
 const Login = (props) => {
 
@@ -20,7 +21,7 @@ const Login = (props) => {
         initializeFirebaseUi()
     }, [])
 
-    const signInSuccessful = (authResult, resirectUrl) => {
+    function signInSuccessful(authResult, resirectUrl) {
         // if (!authResult.user.emailVerified) {
         //     firebase.auth().currentUser.sendEmailVerification().then(() => {
         //         toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
@@ -28,7 +29,24 @@ const Login = (props) => {
         // }
         props.setAuthResult(authResult)
         setSigningAsDone(true)
+        return false
     }
+
+    function signInFailure(err) {
+        log(`Erro ao tentar fazer LOGIN em Login index: ${err.message}`,
+        props.uid,
+        props.login)
+    }
+
+    // const signInSuccessful = (authResult, resirectUrl) => {
+    //     // if (!authResult.user.emailVerified) {
+    //     //     firebase.auth().currentUser.sendEmailVerification().then(() => {
+    //     //         toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
+    //     //     })
+    //     // }
+    //     props.setAuthResult(authResult)
+    //     setSigningAsDone(true)
+    // }
 
     const initializeFirebaseUi = () => {
         var ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth())
@@ -51,7 +69,8 @@ const Login = (props) => {
             ],
             callbacks: {
                 uiShown: () => setIsLoadingUi(false),
-                signInSuccessWithAuthResult: signInSuccessful
+                signInSuccessWithAuthResult: signInSuccessful,
+                signInFailure: signInFailure
             }
         }
 
@@ -89,8 +108,13 @@ const Login = (props) => {
 
 }
 
+const mapStateToProps = state => ({
+    login: state.login,
+    uid: state.user.uid
+})
+
 const mapDispatchToProps = dispatch => bindActionCreators({
     setAuthResult
 }, dispatch)
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

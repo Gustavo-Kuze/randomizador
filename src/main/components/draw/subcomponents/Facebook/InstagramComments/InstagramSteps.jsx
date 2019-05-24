@@ -13,6 +13,7 @@ import MediaSelection from "./MediaSelection";
 import { Spinner } from 'reactstrap'
 import If from '../../../../utils/If';
 import { Redirect } from 'react-router-dom'
+import { log } from '../../../../../services/logger/'
 
 const InstagramSteps = (props) => {
 
@@ -72,6 +73,9 @@ const InstagramSteps = (props) => {
       window.scrollTo(0, 0)
       setIsLoading(false)
     }).catch(err => {
+      log(`Erro ao tentar OBTER o resultado da paginação em InstagramSteps: ${err.message}`,
+        props.uid,
+        props.login)
       toastr.error('Erro', err)
     })
   }
@@ -92,7 +96,9 @@ const InstagramSteps = (props) => {
       props.setUserPages(pagesResponse.data)
       setIsLoading(false)
     }).catch(err => {
-      //logger
+      log(`Erro ao tentar OBTER as páginas do usuário em InstagramSteps: ${err.message}`,
+        props.uid,
+        props.login)
     })
   }
 
@@ -102,7 +108,9 @@ const InstagramSteps = (props) => {
       preparePagePosts(response)
       setIsLoading(false)
     }).catch(err => {
-      //logger
+      log(`Erro ao tentar OBTER os posts do Instagram em InstagramSteps: ${err.message}`,
+        props.uid,
+        props.login)
       toastr.error('Erro', err)
       setIsLoading(false)
     })
@@ -118,8 +126,10 @@ const InstagramSteps = (props) => {
         toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela, ou você não deu as permissões de login necessárias para o app.')
         setIsLoading(false)
       }
-    }).catch(error => {
-      //logger
+    }).catch(err => {
+      log(`Erro ao tentar OBTER o business ID em InstagramSteps: ${err.message}`,
+        props.uid,
+        props.login)
     })
     setPickPageStepOpen(false)
     setPickPostStepOpen(true)
@@ -134,6 +144,9 @@ const InstagramSteps = (props) => {
         setDrawStepOpen(true)
         setIsLoading(false)
       }).catch(err => {
+        log(`Erro ao tentar OBTER os comentários em InstagramSteps: ${err.message}`,
+          props.uid,
+          props.login)
         console.log(err)
         setIsLoading(false)
       })
@@ -180,7 +193,8 @@ const mapStateToProps = state => ({
   accessToken: state.facebookComments.selectedPage.access_token,
   userPages: state.facebookComments.userPages,
   medias: state.instagramComments.medias,
-  login: state.login
+  login: state.login,
+  uid: state.user.uid
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

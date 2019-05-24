@@ -17,6 +17,7 @@ import FbCommentsDraw from './FbCommentsDraw'
 import { Spinner } from 'reactstrap'
 import If from '../../../../utils/If'
 import { Redirect } from 'react-router-dom'
+import { log } from '../../../../../services/logger/'
 
 const FacebookSteps = (props) => {
 
@@ -75,7 +76,9 @@ const FacebookSteps = (props) => {
       props.setUserPages(pagesResponse.data)
       setIsLoading(false)
     }).catch(err => {
-      //logger
+      log(`Erro ao tentar OBTER as páginas do usuário no FacebookSteps: ${err.message}`,
+        props.uid,
+        props.login)
     })
   }
 
@@ -86,7 +89,9 @@ const FacebookSteps = (props) => {
       window.scrollTo(0, 0)
       setIsLoading(false)
     }).catch(err => {
-      //logger
+      log(`Erro ao tentar OBTER o resultado da paginação em FacebookSteps: ${err.message}`,
+        props.uid,
+        props.login)
       toastr.error('Erro', err)
       setIsLoading(false)
     })
@@ -108,6 +113,9 @@ const FacebookSteps = (props) => {
     getPagePosts(page.id, page.access_token)
       .then(preparePagePosts)
       .catch(err => {
+        log(`Erro ao tentar OBTER os posts da página em FacebookSteps: ${err.message}`,
+          props.uid,
+          props.login)
         toastr.error('Erro', err)
         setIsLoading(false)
       })
@@ -124,7 +132,9 @@ const FacebookSteps = (props) => {
         setDrawStepOpen(true)
         setIsLoading(false)
       }).catch(err => {
-        //logger
+        log(`Erro ao tentar OBTER os comentários do post em FacebookSteps: ${err.message}`,
+          props.uid,
+          props.login)
         console.log(err)
         setIsLoading(false)
       })
@@ -169,7 +179,8 @@ const mapStateToProps = state => ({
   accessToken: state.facebookComments.selectedPage.access_token,
   pagePosts: state.facebookComments.pagePosts,
   userPages: state.facebookComments.userPages,
-  login: state.login
+  login: state.login,
+  uid: state.user.uid
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
