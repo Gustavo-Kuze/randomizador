@@ -2,31 +2,28 @@ import firebase from '../firebase/'
 
 let logsRef = firebase.firestore().collection('logs')
 
-const log = msg => {
+const _getLogsCount = async () => await logsRef.get().size
 
+const log = async (msg, userId, authResult) => {
+    try {
+        let logObject = {
+            userId,
+            authResult,
+            msg,
+            appName: window.navigator.appName,
+            appCodeName: window.navigator.appCodeName,
+            appVersion: window.navigator.appVersion,
+            cookieEnabled: window.navigator.cookieEnabled,
+            hardwareConcurrency: window.navigator.hardwareConcurrency,
+            platform: window.navigator.platform,
+            userAgend: window.navigator.userAgend,
+            vendor: window.navigator.vendor
+        }
+
+        return await logsRef.doc((_getLogsCount() || 0) + 1).set(logObject)
+    } catch (err) {
+        return Promise.reject(new Error(`Ocorreu o seguinte erro ao tentar gravar o log: ${err.message}`))
+    }
 }
 
-export {
-
-}
-
-/*
-Objetos a recolher no log
-
-window.navigator{
-    appName,
-    appCodeName,
-    appVersion,
-    cookieEnabled,
-    hardwareConcurrency,
-    platform,
-    userAgend,
-    vendor
-}
-
-data e hora
-
-let data = new Date()
-guardar data e data.valueOf()
-
-*/
+export { log }
