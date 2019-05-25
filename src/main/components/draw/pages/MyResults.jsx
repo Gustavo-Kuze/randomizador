@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Template from '../../Template/'
 import { Redirect } from 'react-router-dom'
-import { getPrivateResults, deletePrivateResult, deleteAllPrivateResults } from '../../../services/firebase/privateDraws'
+import {
+    getPrivateResults, deletePrivateResult, deleteAllPrivateResults
+} from '../../../services/firebase/privateDraws'
 import drawTypes from '../drawUtils/drawTypes'
 import { setPrivateResultOnState } from '../../../redux/core/actions/privateResults'
 import { connect } from 'react-redux'
@@ -9,12 +11,12 @@ import { bindActionCreators } from "redux"
 import firebase from '../../../services/firebase/'
 import If from '../../utils/If'
 import { toastr } from 'react-redux-toastr'
+import { log } from '../../../services/logger/'
 
 const MyResults = (props) => {
 
     let [results, setResults] = useState([])
     let [shouldRedirect, setShouldRedirect] = useState(false)
-
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
@@ -27,6 +29,13 @@ const MyResults = (props) => {
                         })
                     }
                     setResults(resultsFromFirestore)
+                }).catch(error => {
+                    log(`[ERRO] ao tentar OBTER os resultados privados em MyResults: ${error.message}`,
+                        props.uid,
+                        props.authResult).then(logId => {
+                            toastr.error('Error logged', `Log ID: ${logId}`)
+                        }).catch(err => toastr.error('LOG ERROR',
+                            'Não foi possível criar o log. OBTER os resultados privados em MyResults'))
                 })
             }
         })
@@ -61,8 +70,14 @@ const MyResults = (props) => {
         deletePrivateResult(result.id).then(sucess => {
             toastr.success('Sucesso!', 'O resultado foi excluído.')
             window.location.reload()
-        }).catch(err => {
+        }).catch(error => {
             toastr.error('Erro', 'Ocorreu um erro ao tentar excluir o resultado')
+            log(`[ERRO] ao tentar EXCLUIR UM resultado privado em MyResults: ${error.message}`,
+                props.uid,
+                props.authResult).then(logId => {
+                    toastr.error('Error logged', `Log ID: ${logId}`)
+                }).catch(err => toastr.error('LOG ERROR',
+                    'Não foi possível criar o log de ERRO. EXCLUIR UM resultado privado em MyResults'))
         })
     }
 
@@ -72,6 +87,13 @@ const MyResults = (props) => {
             onOk: () => {
                 deleteAllPrivateResults().then(() => {
                     window.location.reload()
+                }).catch(error => {
+                    log(`[ERRO] ao tentar EXCLUIR TODOS os resultados privados em MyResults: ${error.message}`,
+                        props.uid,
+                        props.authResult).then(logId => {
+                            toastr.error('Error logged', `Log ID: ${logId}`)
+                        }).catch(err => toastr.error('LOG ERROR',
+                            'Não foi possível criar o log de ERRO. EXCLUIR TODOS os resultados privados em MyResults'))
                 })
             }
         }
@@ -124,8 +146,13 @@ const MyResults = (props) => {
     </>
 }
 
+const mapStateToProps = state => ({
+    uid: state.user.uid,
+    authResult: state.login
+})
+
 const mapDispatchToProps = dispatch => bindActionCreators({
     setPrivateResultOnState
 }, dispatch)
 
-export default connect(null, mapDispatchToProps)(MyResults)
+export default connect(mapStateToProps, mapDispatchToProps)(MyResults)

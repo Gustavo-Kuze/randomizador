@@ -17,6 +17,7 @@ import FbCommentsDraw from './FbCommentsDraw'
 import { Spinner } from 'reactstrap'
 import If from '../../../../utils/If'
 import { Redirect } from 'react-router-dom'
+import { log } from '../../../../../services/logger/'
 
 const FacebookSteps = (props) => {
 
@@ -38,33 +39,52 @@ const FacebookSteps = (props) => {
   let [prevPostsHref, setPrevPostsHref] = useState()
 
   useEffect(() => {
-    fulfillUserPages(
-      props.login.additionalUserInfo.profile.id,
-      props.login.credential.accessToken)
+    if (props.login.additionalUserInfo.profile) {
+      if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
+        fulfillUserPages(
+          props.login.additionalUserInfo.profile.id,
+          props.login.credential.accessToken)
+      } else {
+        warnAndRedirect()
+      }
+    } else {
+      warnAndRedirect()
+    }
   }, [])
 
   useEffect(() => {
-    if (props.login.additionalUserInfo) {
-      if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-        if (!isPickPageEnabled && !isDrawOver)
-          setPickPageEnabled(true)
+    if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
+      if (!isPickPageEnabled && !isDrawOver)
+        setPickPageEnabled(true)
+      if (props.userPages)
         if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
           setPickPostEnabled(true)
+      if (props.pagePosts)
         if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
           setDrawStepEnabled(true)
-      } else {
-        setShouldRedirect(true)
-        toastr.warning('Atenção!', 'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!')
-      }
+    } else {
+      warnAndRedirect()
     }
   })
+
+  const warnAndRedirect = () => {
+    setShouldRedirect(true)
+    toastr.warning('Atenção!', 'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!')
+  }
 
   const fulfillUserPages = (userID, accessToken) => {
     setIsLoading(true)
     getUserPages(userID, accessToken).then(pagesResponse => {
       props.setUserPages(pagesResponse.data)
       setIsLoading(false)
-    }).catch(err => { })
+    }).catch(err => {
+      log(`[ERRO] ao tentar OBTER as páginas do usuário no FacebookSteps: ${err.message}`,
+        props.uid,
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+        }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log de ERRO. OBTER as páginas do usuário no FacebookSteps'))
+    })
   }
 
   const paginateTo = (href) => {
@@ -74,6 +94,12 @@ const FacebookSteps = (props) => {
       window.scrollTo(0, 0)
       setIsLoading(false)
     }).catch(err => {
+      log(`[ERRO] ao tentar OBTER o resultado da paginação em FacebookSteps: ${err.message}`,
+        props.uid,
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+        }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log de ERRO. OBTER o resultado da paginação em FacebookSteps'))
       toastr.error('Erro', err)
       setIsLoading(false)
     })
@@ -88,6 +114,13 @@ const FacebookSteps = (props) => {
     }
     props.setPagePosts(response.data)
     setIsLoading(false)
+    if (!response.data)
+      log(`[WARNING] ao tentar OBTER os posts do usuário em InstagramSteps`,
+        props.uid,
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+        }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log de WARNING. OBTER os posts do usuário em InstagramSteps'))
   }
 
   const onPageSelected = page => {
@@ -95,6 +128,12 @@ const FacebookSteps = (props) => {
     getPagePosts(page.id, page.access_token)
       .then(preparePagePosts)
       .catch(err => {
+        log(`[ERRO] ao tentar OBTER os posts da página em FacebookSteps: ${err.message}`,
+          props.uid,
+          props.login).then(logId => {
+            toastr.error('Error logged', `Log ID: ${logId}`)
+          }).catch(err => toastr.error('LOG ERROR',
+            'Não foi possível criar o log de ERRO. OBTER os posts da página em FacebookSteps'))
         toastr.error('Erro', err)
         setIsLoading(false)
       })
@@ -111,6 +150,12 @@ const FacebookSteps = (props) => {
         setDrawStepOpen(true)
         setIsLoading(false)
       }).catch(err => {
+        log(`[ERRO] ao tentar OBTER os comentários do post em FacebookSteps: ${err.message}`,
+          props.uid,
+          props.login).then(logId => {
+            toastr.error('Error logged', `Log ID: ${logId}`)
+          }).catch(err => toastr.error('LOG ERROR',
+            'Não foi possível criar o log de ERRO. OBTER os comentários do post em FacebookSteps'))
         console.log(err)
         setIsLoading(false)
       })
@@ -155,7 +200,8 @@ const mapStateToProps = state => ({
   accessToken: state.facebookComments.selectedPage.access_token,
   pagePosts: state.facebookComments.pagePosts,
   userPages: state.facebookComments.userPages,
-  login: state.login
+  login: state.login,
+  uid: state.user.uid
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

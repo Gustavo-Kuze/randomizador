@@ -7,6 +7,7 @@ import { Input } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
 import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
+import { log } from '../../../services/logger/'
 
 const DrawResults = props => {
     let [shouldRedirect, setRedirect] = useState(false)
@@ -25,6 +26,13 @@ const DrawResults = props => {
                 onOk: () => setRedirect(true)
             }
             toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions)
+        }).catch(error => {
+            log(`[ERRO] ao tentar SALVAR um resultado público em DrawResults: ${error.message}`,
+            props.uid,
+            props.authResult).then(logId => {
+                toastr.error('Error logged', `Log ID: ${logId}`)
+            }).catch(err => toastr.error('LOG ERROR',
+                'Não foi possível criar o log de ERRO. SALVAR um resultado público em DrawResults'))
         })
     }
 
@@ -44,6 +52,12 @@ const DrawResults = props => {
                 toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions)
             }).catch(err => {
                 toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, teste fazer login novamente.')
+                log(`[ERRO] ao tentar SALVAR resultado privado em DrawResults: ${err.message}`,
+                props.uid,
+                props.authResult).then(logId => {
+                    toastr.error('Error logged', `Log ID: ${logId}`)
+                }).catch(err => toastr.error('LOG ERROR',
+                    'Não foi possível criar o log de ERRO. SALVAR um resultado privado em DrawResults'))
             })
         } else {
             toastr.error('Erro!', 'Você precisa estar logado com um e-mail verificado para salvar resultados de sorteio!')
@@ -86,7 +100,7 @@ const DrawResults = props => {
                                         <div className={'col-12 col-sm-6 my-1'}>
                                             <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>
                                                 O resultado ficará acessível para quem possuir seu número. Isso não pode ser desfeito!
-                                    </Tooltip>
+                                            </Tooltip>
                                             <button id="btn-save-publicly" className="btn btn-block btn-outline-warning" onClick={savePublicly}>Salvar publicamente</button>
                                         </div>
                                         <div className={'col-12 col-sm-6 my-1'}>
@@ -103,7 +117,9 @@ const DrawResults = props => {
 }
 
 const mapStateToProps = state => ({
-    emailVerified: state.user.emailVerified
+    emailVerified: state.user.emailVerified,
+    uid: state.user.uid,
+    authResult: state.login
 })
 
 export default connect(mapStateToProps)(DrawResults)

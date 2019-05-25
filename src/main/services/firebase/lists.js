@@ -16,7 +16,7 @@ firebase.auth().onAuthStateChanged(user => {
 const addList = async (list) => {
     if (listsRef)
         return await listsRef.add(list)
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
 const deleteList = async (id) => {
@@ -24,9 +24,9 @@ const deleteList = async (id) => {
         try {
             return await listsRef.doc(id).delete()
         } catch (err) {
-            return err
+            return Promise.reject(new Error('Não foi possível deletar a lista'))
         }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
 const editListName = async (list, name) => {
@@ -35,7 +35,7 @@ const editListName = async (list, name) => {
             name: name,
             items: list.items || []
         })
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
 const addItem = async (list) => {
@@ -46,7 +46,7 @@ const addItem = async (list) => {
             items: list.items ? [...list.items, newItem] : []
         })
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
 const createItemFromText = text => {
@@ -60,7 +60,7 @@ const deleteItem = async (item, list) => {
             items: list.items ? list.items.filter(i => i.id !== item.id) : []
         })
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
 const editItemText = async (item, list) => {
@@ -74,7 +74,7 @@ const editItemText = async (item, list) => {
             }) : []
         })
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
 const setItemEnabledState = async (item, list) => {
@@ -89,7 +89,7 @@ const setItemEnabledState = async (item, list) => {
             }) : []
         })
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
 const setAllItemsEnabledState = async (enabled, list) => {
@@ -99,7 +99,7 @@ const setAllItemsEnabledState = async (enabled, list) => {
             items: list.items ? list.items.map(i => ({ ...i, enabled })) : []
         })
     }
-    return null
+    return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
 const realtimeUpdateLists = (uid, callback) => {

@@ -12,6 +12,7 @@ import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResu
 import NumbersDrawResult from '../subcomponents/CommonViewStructures/NumbersDrawResult'
 import FacebookCommentsDrawResult from '../subcomponents/CommonViewStructures/FacebookCommentsDrawResult'
 import InstagramCommentsDrawResult from '../subcomponents/CommonViewStructures/InstagramCommentsDrawResult'
+import { log } from '../../../services/logger/'
 
 const ViewSavedDraw = (props) => {
 
@@ -27,6 +28,13 @@ const ViewSavedDraw = (props) => {
                     toastr.error('Erro', 'Não foi possível encontrar o sorteio')
                     setShouldRedirect(true)
                 }
+            }).catch(error => {
+                log(`[ERRO] ao tentar OBTER resultados públicos em ViewSavedDraw: ${error.message}`,
+                props.uid,
+                props.authResult).then(logId => {
+                    toastr.error('Error logged', `Log ID: ${logId}`)
+                }).catch(err => toastr.error('LOG ERROR',
+                    'Não foi possível criar o log de ERRO. OBTER resultados públicos em ViewSavedDraw'))
             })
         } else {
             setDrawResult(props.resultOnState)
@@ -102,7 +110,9 @@ const ViewSavedDraw = (props) => {
 }
 
 const mapStateToProps = state => ({
-    resultOnState: state.privateResults.currentPrivateResult
+    resultOnState: state.privateResults.currentPrivateResult,
+    uid: state.user.uid,
+    authResult: state.login
 })
 
 export default connect(mapStateToProps)(ViewSavedDraw) 

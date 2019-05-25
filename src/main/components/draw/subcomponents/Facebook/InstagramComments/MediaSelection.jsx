@@ -56,7 +56,7 @@ const MediaSelection = (props) => {
                                 </div>
                             </If>
                             <If c={!props.medias.length > 0}>Você não tem nenhum post</If>
-                        </> : ''
+                        </> : <p>Não foi possível recuperar seus posts. Por favor, tente sair de sua conta e fazer login com o Facebook novamente.</p>
                     }
                 </div>
             </Collapse>

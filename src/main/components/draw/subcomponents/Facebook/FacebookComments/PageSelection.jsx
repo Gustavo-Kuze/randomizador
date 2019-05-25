@@ -27,16 +27,21 @@ const PageSelection = (props) => {
                 onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>1- Escolher sua página</button>
             <Collapse isOpen={props.enabled && props.isOpen}>
                 <div className="card p-5 my-3">
-                    <If c={props.userPages.length > 0}>
-                        <p className="lead text-center">Escolha a página que contém o post para sortear!</p>
-                        {
-                            props.userPages ?
-                                props.userPages.map((p, i) => (
-                                    <div key={`page-radio-key--${i}`} className="custom-control custom-radio">{renderPageRadio(p)}</div>)
-                                )
-                                : ''}
-                    </If>
-                    <If c={!props.userPages.length > 0}>Você não tem nenhuma página ou ainda não deu as permissões para o App</If>
+                    {
+                        props.userPages ? <>
+                            <If c={props.userPages.length > 0}>
+                                <p className="lead text-center">Escolha a página que contém o post para sortear!</p>
+                                {
+                                    props.userPages ?
+                                        props.userPages.map((p, i) => (
+                                            <div key={`page-radio-key--${i}`} className="custom-control custom-radio">{renderPageRadio(p)}</div>)
+                                        )
+                                        : ''}
+                            </If>
+                            <If c={!props.userPages.length > 0}>Você não tem nenhuma página ou ainda não deu as permissões para o App</If>
+                        </>
+                            : <p>Não foi possível recuperar suas páginas. Por favor, tente sair de sua conta e fazer login com o Facebook novamente.</p>
+                    }
                 </div>
             </Collapse>
         </>
