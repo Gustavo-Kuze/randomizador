@@ -13,6 +13,7 @@ import NumbersDrawResult from '../subcomponents/CommonViewStructures/NumbersDraw
 import FacebookCommentsDrawResult from '../subcomponents/CommonViewStructures/FacebookCommentsDrawResult'
 import InstagramCommentsDrawResult from '../subcomponents/CommonViewStructures/InstagramCommentsDrawResult'
 import { log } from '../../../services/logger/'
+import { Container, Row, Col} from 'reactstrap'
 
 const ViewSavedDraw = (props) => {
 
@@ -30,11 +31,11 @@ const ViewSavedDraw = (props) => {
                 }
             }).catch(error => {
                 log(`[ERRO] ao tentar OBTER resultados públicos em ViewSavedDraw: ${error.message}`,
-                props.uid,
-                props.authResult).then(logId => {
-                    toastr.error('Error logged', `Log ID: ${logId}`)
-                }).catch(err => toastr.error('LOG ERROR',
-                    'Não foi possível criar o log de ERRO. OBTER resultados públicos em ViewSavedDraw'))
+                    props.uid,
+                    props.authResult).then(logId => {
+                        toastr.error('Error logged', `Log ID: ${logId}`)
+                    }).catch(err => toastr.error('LOG ERROR',
+                        'Não foi possível criar o log de ERRO. OBTER resultados públicos em ViewSavedDraw'))
             })
         } else {
             setDrawResult(props.resultOnState)
@@ -48,9 +49,9 @@ const ViewSavedDraw = (props) => {
         <If c={!shouldRedirect}>
             <Template>
                 <div className="section">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-10 offset-1">
+                    <Container>
+                        <Row>
+                            <Col xs={{ size: 10, offset: 1 }}>
                                 {
                                     drawResult.drawType ? (
                                         <If c={drawResult.drawType}>
@@ -100,9 +101,9 @@ const ViewSavedDraw = (props) => {
                                         </If>
                                     ) : ''
                                 }
-                            </div>
-                        </div>
-                    </div>
+                            </Col>
+                        </Row>
+                    </Container>
                 </div>
             </Template >
         </If>

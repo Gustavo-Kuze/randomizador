@@ -1,26 +1,29 @@
 import React from 'react'
 import Shuffle from '../subcomponents/Shuffle'
 import Template from '../../Template'
+import { Container, Row, Col, Card, CardBody } from 'reactstrap'
 
 const ShuffleDraw = () => {
     return (
         <Template>
-            <div className="container mt-3">
-                <div className="row mb-5">
-                    <div className="col">
-                        <h1 className="sofia"><strong>Embaralhador de Frases</strong></h1>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-12 col-md-10 offset-md-1">
-                        <div className="card">
-                            <div className="card-body">
-                                <Shuffle />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Container className="mt-5">
+                <Col>
+                    <Row className="mb-5">
+                        <Col>
+                            <h1 className="sofia"><strong>Embaralhador de Frases</strong></h1>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={{ size: 12 }} md={{ size: 10, offset: 1 }}>
+                            <Card>
+                                <CardBody>
+                                    <Shuffle />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Col>
+            </Container>
         </Template>
     )
 }

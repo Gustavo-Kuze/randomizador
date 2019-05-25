@@ -12,6 +12,7 @@ import firebase from '../../../services/firebase/'
 import If from '../../utils/If'
 import { toastr } from 'react-redux-toastr'
 import { log } from '../../../services/logger/'
+import { Container, Row, Col, Card, Button, ListGroup, ListGroupItem } from 'reactstrap'
 
 const MyResults = (props) => {
 
@@ -106,41 +107,42 @@ const MyResults = (props) => {
         </If>
         <If c={!shouldRedirect}>
             <Template>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-10 offset-1">
-                            <div className="card">
+                <Container>
+                    <Row>
+                        <Col xs={{ size: 10, offset: 1 }}>
+                            <Card>
                                 <If c={results.length > 0}>
-                                    <button className="btn btn-danger" onClick={deleteAllResults}>Excluir todos os resultados</button>
-                                    <div className="list-group">
+                                    <Button color="danger" onClick={deleteAllResults}>Excluir todos os resultados</Button>
+                                    <ListGroup>
                                         {
                                             results.map(result => (
-                                                <div key={result.id} className="list-group-item">
-                                                    <div className="container">
-                                                        <div className="row">
-                                                            <div className="col-10" onClick={() => setResultOnStateAndRedirect(result)} style={{ cursor: 'pointer' }}>
+                                                <ListGroupItem key={result.id}>
+                                                    <Container>
+                                                        <Row>
+                                                            <Col xs={{ size: 10 }} onClick={() => setResultOnStateAndRedirect(result)} style={{ cursor: 'pointer' }}>
                                                                 <DrawType type={result.drawType} />
                                                                 <p>{result.date}</p>
-                                                            </div>
-                                                            <div className="col-2">
-                                                                <button className="btn btn-link text-decoration-none float-right pop-hover" onClick={() => deleteResult(result)}>
+                                                            </Col>
+                                                            <Col xs={{ size: 2 }}>
+                                                                <Button color="link" className="text-decoration-none float-right pop-hover"
+                                                                    onClick={() => deleteResult(result)}>
                                                                     <i className="fa fa-trash text-danger"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                                </Button>
+                                                            </Col>
+                                                        </Row>
+                                                    </Container>
+                                                </ListGroupItem>
                                             ))
                                         }
-                                    </div>
+                                    </ListGroup>
                                 </If>
                                 <If c={results.length === 0}>
                                     <h3 className="text-center p-5">Você não tem nenhum resultado de sorteio salvo...</h3>
                                 </If>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
             </Template >
         </If>
     </>

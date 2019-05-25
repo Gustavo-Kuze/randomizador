@@ -1,26 +1,27 @@
 import React from 'react'
 import Numbers from '../subcomponents/Numbers'
 import Template from '../../Template/'
+import { Container, Row, Col, Card, CardBody } from 'reactstrap'
 
 const NumberDraw = () => {
     return (
         <Template>
-            <div className="container mt-3">
-                <div className="row mb-5">
-                    <div className="col">
+            <Container className="mt-3">
+                <Row className="mb-5">
+                    <Col>
                         <h1 className="sofia"><strong>Sorteio de Números</strong></h1>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-10 offset-1">
-                        <div className="card">
-                            <div className="card-body">
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={{ size: 10, offset: 1 }}>
+                        <Card>
+                            <CardBody>
                                 <Numbers />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         </Template>
     )
 }
