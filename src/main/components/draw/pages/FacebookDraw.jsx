@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLoginActions'
 import { resetFacebookComments } from '../../../redux/core/actions/facebookCommentsActions'
 import { Redirect } from "react-router-dom";
+import { Container, Row, Col } from "reactstrap"
 
 let face = null
 
@@ -35,19 +36,19 @@ const FacebookDraw = (props) => {
                     <Redirect to="/" />
                 ) : (
                         <Template>
-                            <div className="container">
-                                <div className="row mb-5">
-                                    <div className="col">
+                            <Container>
+                                <Row className="mb-5">
+                                    <Col>
                                         <h1 className="sofia"><strong>Sorteio de Comentários do Facebook</strong></h1>
-                                    </div>
-                                </div>
-                                <div className="row mt-5">
-                                    <div className="col-12 col-md-10 offset-md-1">
+                                    </Col>
+                                </Row>
+                                <Row className="mt-5">
+                                    <Col xs={{ size: 12 }} md={{ size: 10, offset: 1 }}>
                                         <h2 className="h4 mb-4">Siga os passos a seguir para fazer o sorteio</h2>
                                         <FacebookSteps />
-                                    </div>
-                                </div>
-                            </div>
+                                    </Col>
+                                </Row>
+                            </Container>
                         </Template>
                     )
             }

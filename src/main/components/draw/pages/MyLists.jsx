@@ -18,6 +18,7 @@ import DrawResults from '../subcomponents/DrawResults'
 import drawTypes from '../drawUtils/drawTypes'
 import keyCodes from '../../utils/keycodes'
 import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult'
+import { Container, Row, Col, Card, CardBody, Button } from 'reactstrap'
 
 let chance = new Chance()
 
@@ -111,20 +112,20 @@ const MyLists = (props) => {
 
     return (
         <Template>
-            <div className="container">
-                <div className="row mt-3">
-                    <div className="col">
+            <Container>
+                <Row className="mt-3">
+                    <Col>
                         <h1 className="sofia"><strong>Minhas listas</strong></h1>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <div className="card my-5">
-                            <div className="card-body">
-                                <div className="row mt-4">
-                                    <div className="col-12">
-                                        <div className="row">
-                                            <div className="col-sm-6">
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Card className="my-5">
+                            <CardBody>
+                                <Row className="mt-4">
+                                    <Col xs={{ size: 12 }}>
+                                        <Row>
+                                            <Col sm={{ size: 6 }}>
                                                 <Input className="text-center bg-light mb-2" type="number"
                                                     placeholder="Sortear quantos items?"
                                                     invalid={isQuantityInputTouched && !isQuantityInputValid}
@@ -132,13 +133,17 @@ const MyLists = (props) => {
                                                     onChange={e => setQuantity(parseInt(e.target.value))}
                                                     onKeyUp={setInputTouchedAndDrawOnEnter}
                                                 />
-                                            </div>
-                                            <div className="col-sm-6">
-                                                <button className={`btn btn-warning btn-block ${isQuantityInputTouched && isQuantityInputValid ? 'btn-pulse-warning' : ''}`} onClick={() => draw()}>Sortear</button>
-                                            </div>
-                                        </div>
-                                        <div className="row mt-3">
-                                            <div className="col">
+                                            </Col>
+                                            <Col sm={{ size: 6 }}>
+                                                <Button color="warning" block
+                                                    className={`${isQuantityInputTouched && isQuantityInputValid ? 'btn-pulse-warning' : ''}`}
+                                                    onClick={() => draw()}>
+                                                    Sortear
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                        <Row className="mt-3">
+                                            <Col>
                                                 <If c={drawnItems.length > 0} cssHide hideClassName>
                                                     <div className="scrollable-y">
                                                         <DrawResults
@@ -146,39 +151,38 @@ const MyLists = (props) => {
                                                             date={`${new Date().toLocaleString()}`}
                                                             drawType={drawTypes.LISTS}
                                                             result={drawnItems}>
-
                                                             <ListsDrawResult items={drawnItems} />
                                                         </DrawResults>
                                                     </div>
                                                 </If>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-6 col-12">
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={{ size: 12 }} md={{ size: 6 }}>
                         <MyListsControlsSub />
-                    </div>
-                </div>
-                <div className="row my-5">
-                    <div className="col-md-10 col-12">
+                    </Col>
+                </Row>
+                <Row className="my-5">
+                    <Col xs={{ size: 12 }} md={{ size: 10 }}>
                         <ListItemsCounters lists={props.lists} />
-                    </div>
-                </div>
-                <div className="row mt-3">
-                    <div className="col-12 col-lg-2">
-                        <button className="btn btn-outline-primary btn-block btn-lg" onClick={() => addEmptyListIfNotExists()}>Nova lista</button>
-                    </div>
-                    <div className="col-12 col-lg-4 mt-3 mt-lg-0">
+                    </Col>
+                </Row>
+                <Row className="mt-3">
+                    <Col xs={{ size: 12 }} lg={{ size: 2 }}>
+                        <Button color="primary" block outline size="lg" onClick={() => addEmptyListIfNotExists()}>Nova lista</Button>
+                    </Col>
+                    <Col xs={{ size: 12 }} lg={{ size: 4 }} className="mt-3 mt-lg-0">
                         <FilePicker onPicked={loadListFromFile} text="Carregar arquivo"
                             tooltip="Criar uma lista a partir de um arquivo. Os itens precisam estar separados por quebras de linha (enter)"
                             labelClassName="btn-block" />
-                    </div>
-                    <div className="col-1 d-none d-lg-block">
+                    </Col>
+                    <Col xs={{ size: 1 }} className="d-none d-lg-block">
                         <Dropdown isOpen={isDropdownOpen} toggle={() => toggleDropDown(!isDropdownOpen)}>
                             <DropdownToggle caret>
                                 Visualizar ({12 / colsSize})
@@ -190,9 +194,9 @@ const MyLists = (props) => {
                                 <DropdownItem onClick={() => setColsSize(12)}>1</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                    </div>
-                </div>
-                <div className="row">
+                    </Col>
+                </Row>
+                <Row>
                     {
                         props.lists.map((l, i) => (
                             <div key={`list-div-${l.id}--${i}`} className={`col-md-${colsSize}`}>
@@ -200,8 +204,8 @@ const MyLists = (props) => {
                             </div>
                         ))
                     }
-                </div>
-            </div>
+                </Row>
+            </Container>
         </Template>
     )
 }
