@@ -52,10 +52,12 @@ const InstagramSteps = (props) => {
     if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
       if (!isPickPageEnabled && !isDrawOver)
         setPickPageEnabled(true)
-      if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-        setPickPostEnabled(true)
-      if (props.medias.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-        setDrawStepEnabled(true)
+      if (props.userPages)
+        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+          setPickPostEnabled(true)
+      if (props.medias)
+        if (props.medias.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+          setDrawStepEnabled(true)
     } else {
       warnAndRedirect()
     }
@@ -75,7 +77,10 @@ const InstagramSteps = (props) => {
     }).catch(err => {
       log(`Erro ao tentar OBTER o resultado da paginação em InstagramSteps: ${err.message}`,
         props.uid,
-        props.login)
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+      }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log. OBTER o resultado da paginação em InstagramSteps'))
       toastr.error('Erro', err)
     })
   }
@@ -98,7 +103,10 @@ const InstagramSteps = (props) => {
     }).catch(err => {
       log(`Erro ao tentar OBTER as páginas do usuário em InstagramSteps: ${err.message}`,
         props.uid,
-        props.login)
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+      }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log. OBTER as páginas do usuário em InstagramSteps'))
     })
   }
 
@@ -110,7 +118,10 @@ const InstagramSteps = (props) => {
     }).catch(err => {
       log(`Erro ao tentar OBTER os posts do Instagram em InstagramSteps: ${err.message}`,
         props.uid,
-        props.login)
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+      }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log. OBTER os posts do Instagram em InstagramSteps'))
       toastr.error('Erro', err)
       setIsLoading(false)
     })
@@ -129,7 +140,10 @@ const InstagramSteps = (props) => {
     }).catch(err => {
       log(`Erro ao tentar OBTER o business ID em InstagramSteps: ${err.message}`,
         props.uid,
-        props.login)
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+      }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log. OBTER o business ID em InstagramSteps'))
     })
     setPickPageStepOpen(false)
     setPickPostStepOpen(true)
@@ -146,7 +160,10 @@ const InstagramSteps = (props) => {
       }).catch(err => {
         log(`Erro ao tentar OBTER os comentários em InstagramSteps: ${err.message}`,
           props.uid,
-          props.login)
+          props.login).then(logId => {
+            toastr.error('Error logged', `Log ID: ${logId}`)
+        }).catch(err => toastr.error('LOG ERROR',
+            'Não foi possível criar o log. OBTER os comentários em InstagramSteps'))
         console.log(err)
         setIsLoading(false)
       })

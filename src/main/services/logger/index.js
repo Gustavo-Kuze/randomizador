@@ -2,14 +2,38 @@ import firebase from '../firebase/'
 
 let logsRef = firebase.firestore().collection('logs')
 
+const _prepareAuthResultForLog = authResult => {
+    return {
+        user: {
+            uid: authResult.uid || '',
+            displayName: authResult.displayName || '',
+            email: authResult.email || '',
+            apiKey: authResult.apiKey || '',
+            authDomain: authResult.authDomain || '',
+            lastLoginAt: authResult.lastLoginAt || '',
+        },
+        credential: {
+            accessToken: authResult.credential ? authResult.credential.accessToken || '' : ''
+        },
+        additionalUserInfo: {
+            name: authResult.additionalUserInfo ? authResult.additionalUserInfo.name || '' : '',
+            providerId: authResult.additionalUserInfo ? authResult.additionalUserInfo.providerId || '' : '',
+            granted_scopes: authResult.additionalUserInfo ?
+                authResult.additionalUserInfo.profile ?
+                    authResult.additionalUserInfo.profile.granted_scopes || '' : '' : ''
+        }
+    }
+}
+
 const _getLogsCount = async () => {
     let span = await logsRef.get()
     return span.size
-} 
+}
 
 const log = async (msg, userId, authResult) => {
     try {
         let date = new Date()
+        let preparedAuthResult = authResult ? _prepareAuthResultForLog(authResult) : {}
         let logObject = {
             msg,
             loggedAt: {
@@ -23,13 +47,14 @@ const log = async (msg, userId, authResult) => {
             cookieEnabled: window.navigator.cookieEnabled || '',
             hardwareConcurrency: window.navigator.hardwareConcurrency || '',
             platform: window.navigator.platform || '',
-            userAgend: window.navigator.userAgend || '',
+            userAgent: window.navigator.userAgent || '',
             vendor: window.navigator.vendor || '',
-            authResult: authResult || {},
+            authResult: preparedAuthResult
         }
 
         let logId = ((await _getLogsCount()) || 0) + 1
-        return await logsRef.doc(`${logId}`).set(logObject)
+        await logsRef.doc(`${logId}`).set(logObject)
+        return logId
     } catch (err) {
         return Promise.reject(new Error(`Ocorreu o seguinte erro ao tentar gravar o log: ${err.message}`))
     }

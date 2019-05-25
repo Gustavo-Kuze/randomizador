@@ -29,7 +29,10 @@ const DrawResults = props => {
         }).catch(error => {
             log(`Erro ao tentar SALVAR um resultado público em DrawResults: ${error.message}`,
             props.uid,
-            props.authResult)
+            props.authResult).then(logId => {
+                toastr.error('Error logged', `Log ID: ${logId}`)
+            }).catch(err => toastr.error('LOG ERROR',
+                'Não foi possível criar o log. SALVAR um resultado público em DrawResults'))
         })
     }
 
@@ -51,7 +54,10 @@ const DrawResults = props => {
                 toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, teste fazer login novamente.')
                 log(`Erro ao tentar SALVAR resultado privado em DrawResults: ${err.message}`,
                 props.uid,
-                props.authResult)
+                props.authResult).then(logId => {
+                    toastr.error('Error logged', `Log ID: ${logId}`)
+                }).catch(err => toastr.error('LOG ERROR',
+                    'Não foi possível criar o log. SALVAR um resultado privado em DrawResults'))
             })
         } else {
             toastr.error('Erro!', 'Você precisa estar logado com um e-mail verificado para salvar resultados de sorteio!')

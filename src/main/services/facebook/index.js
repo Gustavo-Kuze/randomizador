@@ -37,18 +37,3 @@ export {
     apiAsync, getPagePosts, getUserPages,
     getPaginationResult, getAllComments
 }
-
-// const facebookLogin = () => {
-//     return new Promise((res, rej) => {
-//         window.Facebook.login((loginResponse) => {
-//             if (loginResponse.authResponse) {
-//                 res(loginResponse.authResponse)
-//             } else {
-//                 rej('Aconteceu um problema ao recuperar a chave de acesso, por favor tente novamente mais tarde.')
-//             }
-//         }, { scope: 'manage_pages,instagram_basic,instagram_manage_comments,pages_show_list', return_scopes: true });
-//     })
-// }
-
-// const getPostComments = async (postId, pageAccessToken) =>
-//     await apiAsync(`/${postId}/comments`, { "access_token": pageAccessToken, "fields": "id,message,permalink_url" })

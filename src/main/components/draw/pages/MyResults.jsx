@@ -32,7 +32,10 @@ const MyResults = (props) => {
                 }).catch(error => {
                     log(`Erro ao tentar OBTER os resultados privados em MyResults: ${error.message}`,
                         props.uid,
-                        props.authResult)
+                        props.authResult).then(logId => {
+                            toastr.error('Error logged', `Log ID: ${logId}`)
+                        }).catch(err => toastr.error('LOG ERROR',
+                            'Não foi possível criar o log. OBTER os resultados privados em MyResults'))
                 })
             }
         })
@@ -70,8 +73,11 @@ const MyResults = (props) => {
         }).catch(error => {
             toastr.error('Erro', 'Ocorreu um erro ao tentar excluir o resultado')
             log(`Erro ao tentar EXCLUIR UM resultado privado em MyResults: ${error.message}`,
-            props.uid,
-            props.authResult)
+                props.uid,
+                props.authResult).then(logId => {
+                    toastr.error('Error logged', `Log ID: ${logId}`)
+                }).catch(err => toastr.error('LOG ERROR',
+                    'Não foi possível criar o log. EXCLUIR UM resultado privado em MyResults'))
         })
     }
 
@@ -83,8 +89,11 @@ const MyResults = (props) => {
                     window.location.reload()
                 }).catch(error => {
                     log(`Erro ao tentar EXCLUIR TODOS os resultados privados em MyResults: ${error.message}`,
-                    props.uid,
-                    props.authResult)
+                        props.uid,
+                        props.authResult).then(logId => {
+                            toastr.error('Error logged', `Log ID: ${logId}`)
+                        }).catch(err => toastr.error('LOG ERROR',
+                            'Não foi possível criar o log. EXCLUIR TODOS os resultados privados em MyResults'))
                 })
             }
         }

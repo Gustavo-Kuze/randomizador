@@ -56,10 +56,12 @@ const FacebookSteps = (props) => {
     if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
       if (!isPickPageEnabled && !isDrawOver)
         setPickPageEnabled(true)
-      if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-        setPickPostEnabled(true)
-      if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-        setDrawStepEnabled(true)
+      if (props.userPages)
+        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+          setPickPostEnabled(true)
+      if (props.pagePosts)
+        if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+          setDrawStepEnabled(true)
     } else {
       warnAndRedirect()
     }
@@ -78,7 +80,10 @@ const FacebookSteps = (props) => {
     }).catch(err => {
       log(`Erro ao tentar OBTER as páginas do usuário no FacebookSteps: ${err.message}`,
         props.uid,
-        props.login)
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+      }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log. OBTER as páginas do usuário no FacebookSteps'))
     })
   }
 
@@ -91,7 +96,10 @@ const FacebookSteps = (props) => {
     }).catch(err => {
       log(`Erro ao tentar OBTER o resultado da paginação em FacebookSteps: ${err.message}`,
         props.uid,
-        props.login)
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+      }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log. OBTER o resultado da paginação em FacebookSteps'))
       toastr.error('Erro', err)
       setIsLoading(false)
     })
@@ -115,7 +123,10 @@ const FacebookSteps = (props) => {
       .catch(err => {
         log(`Erro ao tentar OBTER os posts da página em FacebookSteps: ${err.message}`,
           props.uid,
-          props.login)
+          props.login).then(logId => {
+            toastr.error('Error logged', `Log ID: ${logId}`)
+        }).catch(err => toastr.error('LOG ERROR',
+            'Não foi possível criar o log. OBTER os posts da página em FacebookSteps'))
         toastr.error('Erro', err)
         setIsLoading(false)
       })
@@ -134,7 +145,10 @@ const FacebookSteps = (props) => {
       }).catch(err => {
         log(`Erro ao tentar OBTER os comentários do post em FacebookSteps: ${err.message}`,
           props.uid,
-          props.login)
+          props.login).then(logId => {
+            toastr.error('Error logged', `Log ID: ${logId}`)
+        }).catch(err => toastr.error('LOG ERROR',
+            'Não foi possível criar o log. OBTER os comentários do post em FacebookSteps'))
         console.log(err)
         setIsLoading(false)
       })

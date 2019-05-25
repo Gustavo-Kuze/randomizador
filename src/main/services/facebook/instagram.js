@@ -13,5 +13,3 @@ const getMedia = async (businessId, accessToken) => {
 export {
     getBusinessAccountId, getMedia
 }
-
-// const getMediaComments = async (mediaId, accessToken) => await apiAsync(`/${mediaId}/comments`, { "fields": "username,text", "access_token": accessToken })

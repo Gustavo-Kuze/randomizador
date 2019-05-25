@@ -35,7 +35,10 @@ const Login = (props) => {
     function signInFailure(err) {
         log(`Erro ao tentar fazer LOGIN em Login index: ${err.message}`,
         props.uid,
-        props.login)
+        props.login).then(logId => {
+            toastr.error('Error logged', `Log ID: ${logId}`)
+        }).catch(err => toastr.error('LOG ERROR',
+            'Não foi possível criar o log. Erro ao tentar fazer LOGIN em Login index'))
     }
 
     // const signInSuccessful = (authResult, resirectUrl) => {
