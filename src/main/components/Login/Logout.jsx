@@ -18,12 +18,12 @@ const Logout = (props) => {
             props.logout()
             setLogoutComplete(true)
         }).catch(err => {
-            log(`Erro ao tentar fazer LOGOUT em Logout: ${err.message}`,
+            log(`[ERRO] ao tentar fazer LOGOUT em Logout: ${err.message}`,
                 props.uid,
                 props.login).then(logId => {
                     toastr.error('Error logged', `Log ID: ${logId}`)
                 }).catch(err => toastr.error('LOG ERROR',
-                    'Não foi possível criar o log. Erro ao tentar fazer LOGOUT em Logout'))
+                    'Não foi possível criar o log de ERRO. Erro ao tentar fazer LOGOUT em Logout'))
         })
     }, [])
 

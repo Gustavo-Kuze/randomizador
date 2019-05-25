@@ -21,7 +21,7 @@ ReactDOM.render(
     <Provider store={store}>
         <App />
         <ReduxToastr
-            timeOut={15000}
+            timeOut={30000}
             newestOnTop={false}
             preventDuplicates
             position="bottom-right"

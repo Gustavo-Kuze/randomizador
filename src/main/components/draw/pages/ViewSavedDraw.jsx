@@ -29,12 +29,12 @@ const ViewSavedDraw = (props) => {
                     setShouldRedirect(true)
                 }
             }).catch(error => {
-                log(`Erro ao tentar OBTER resultados públicos em ViewSavedDraw: ${error.message}`,
+                log(`[ERRO] ao tentar OBTER resultados públicos em ViewSavedDraw: ${error.message}`,
                 props.uid,
                 props.authResult).then(logId => {
                     toastr.error('Error logged', `Log ID: ${logId}`)
                 }).catch(err => toastr.error('LOG ERROR',
-                    'Não foi possível criar o log. OBTER resultados públicos em ViewSavedDraw'))
+                    'Não foi possível criar o log de ERRO. OBTER resultados públicos em ViewSavedDraw'))
             })
         } else {
             setDrawResult(props.resultOnState)

@@ -24,7 +24,7 @@ const deleteList = async (id) => {
         try {
             return await listsRef.doc(id).delete()
         } catch (err) {
-            return err
+            return Promise.reject(new Error('Não foi possível deletar a lista'))
         }
     return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }

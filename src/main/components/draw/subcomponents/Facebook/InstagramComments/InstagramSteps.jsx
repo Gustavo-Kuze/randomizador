@@ -75,11 +75,11 @@ const InstagramSteps = (props) => {
       window.scrollTo(0, 0)
       setIsLoading(false)
     }).catch(err => {
-      log(`Erro ao tentar OBTER o resultado da paginação em InstagramSteps: ${err.message}`,
+      log(`[ERRO] ao tentar OBTER o resultado da paginação em InstagramSteps: ${err.message}`,
         props.uid,
         props.login).then(logId => {
           toastr.error('Error logged', `Log ID: ${logId}`)
-      }).catch(err => toastr.error('LOG ERROR',
+        }).catch(err => toastr.error('LOG ERROR',
           'Não foi possível criar o log. OBTER o resultado da paginação em InstagramSteps'))
       toastr.error('Erro', err)
     })
@@ -93,6 +93,13 @@ const InstagramSteps = (props) => {
         setPrevPostsHref(response.paging.previous)
     }
     props.setMedias(response.data)
+    if (!response.data)
+      log(`[WARNING] ao tentar OBTER os posts do usuário em InstagramSteps`,
+        props.uid,
+        props.login).then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`)
+        }).catch(err => toastr.error('LOG ERROR',
+          'Não foi possível criar o log de WARNING. OBTER os posts do usuário em InstagramSteps'))
   }
 
   const fulfillUserPages = (userID, accessToken) => {
@@ -101,11 +108,11 @@ const InstagramSteps = (props) => {
       props.setUserPages(pagesResponse.data)
       setIsLoading(false)
     }).catch(err => {
-      log(`Erro ao tentar OBTER as páginas do usuário em InstagramSteps: ${err.message}`,
+      log(`[ERRO] ao tentar OBTER as páginas do usuário em InstagramSteps: ${err.message}`,
         props.uid,
         props.login).then(logId => {
           toastr.error('Error logged', `Log ID: ${logId}`)
-      }).catch(err => toastr.error('LOG ERROR',
+        }).catch(err => toastr.error('LOG ERROR',
           'Não foi possível criar o log. OBTER as páginas do usuário em InstagramSteps'))
     })
   }
@@ -116,11 +123,11 @@ const InstagramSteps = (props) => {
       preparePagePosts(response)
       setIsLoading(false)
     }).catch(err => {
-      log(`Erro ao tentar OBTER os posts do Instagram em InstagramSteps: ${err.message}`,
+      log(`[ERRO] ao tentar OBTER os posts do Instagram em InstagramSteps: ${err.message}`,
         props.uid,
         props.login).then(logId => {
           toastr.error('Error logged', `Log ID: ${logId}`)
-      }).catch(err => toastr.error('LOG ERROR',
+        }).catch(err => toastr.error('LOG ERROR',
           'Não foi possível criar o log. OBTER os posts do Instagram em InstagramSteps'))
       toastr.error('Erro', err)
       setIsLoading(false)
@@ -136,14 +143,20 @@ const InstagramSteps = (props) => {
       } else {
         toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela, ou você não deu as permissões de login necessárias para o app.')
         setIsLoading(false)
+        log(`[WARNING] A conta não possui businessID ou o ID enviado não tem permissões; ao tentar OBTER o business ID em InstagramSteps`,
+          props.uid,
+          props.login).then(logId => {
+            toastr.error('Error logged', `Log ID: ${logId}`)
+          }).catch(err => toastr.error('LOG ERROR',
+            'Não foi possível criar o log de WARNING. OBTER o business ID em InstagramSteps'))
       }
     }).catch(err => {
-      log(`Erro ao tentar OBTER o business ID em InstagramSteps: ${err.message}`,
+      log(`[ERRO] ao tentar OBTER o business ID em InstagramSteps: ${err.message}`,
         props.uid,
         props.login).then(logId => {
           toastr.error('Error logged', `Log ID: ${logId}`)
-      }).catch(err => toastr.error('LOG ERROR',
-          'Não foi possível criar o log. OBTER o business ID em InstagramSteps'))
+        }).catch(err => toastr.error('LOG ERROR',
+          '[ERRO] Não foi possível criar o log de ERRO. OBTER o business ID em InstagramSteps'))
     })
     setPickPageStepOpen(false)
     setPickPostStepOpen(true)
@@ -158,11 +171,11 @@ const InstagramSteps = (props) => {
         setDrawStepOpen(true)
         setIsLoading(false)
       }).catch(err => {
-        log(`Erro ao tentar OBTER os comentários em InstagramSteps: ${err.message}`,
+        log(`[ERRO] ao tentar OBTER os comentários em InstagramSteps: ${err.message}`,
           props.uid,
           props.login).then(logId => {
             toastr.error('Error logged', `Log ID: ${logId}`)
-        }).catch(err => toastr.error('LOG ERROR',
+          }).catch(err => toastr.error('LOG ERROR',
             'Não foi possível criar o log. OBTER os comentários em InstagramSteps'))
         console.log(err)
         setIsLoading(false)

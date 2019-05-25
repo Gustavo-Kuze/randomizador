@@ -27,12 +27,12 @@ const DrawResults = props => {
             }
             toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions)
         }).catch(error => {
-            log(`Erro ao tentar SALVAR um resultado público em DrawResults: ${error.message}`,
+            log(`[ERRO] ao tentar SALVAR um resultado público em DrawResults: ${error.message}`,
             props.uid,
             props.authResult).then(logId => {
                 toastr.error('Error logged', `Log ID: ${logId}`)
             }).catch(err => toastr.error('LOG ERROR',
-                'Não foi possível criar o log. SALVAR um resultado público em DrawResults'))
+                'Não foi possível criar o log de ERRO. SALVAR um resultado público em DrawResults'))
         })
     }
 
@@ -52,12 +52,12 @@ const DrawResults = props => {
                 toastr.confirm(`Sorteio salvo com sucesso, navegue até "meus sorteios" para acessar os resultados salvos.`, toastrConfirmOptions)
             }).catch(err => {
                 toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, teste fazer login novamente.')
-                log(`Erro ao tentar SALVAR resultado privado em DrawResults: ${err.message}`,
+                log(`[ERRO] ao tentar SALVAR resultado privado em DrawResults: ${err.message}`,
                 props.uid,
                 props.authResult).then(logId => {
                     toastr.error('Error logged', `Log ID: ${logId}`)
                 }).catch(err => toastr.error('LOG ERROR',
-                    'Não foi possível criar o log. SALVAR um resultado privado em DrawResults'))
+                    'Não foi possível criar o log de ERRO. SALVAR um resultado privado em DrawResults'))
             })
         } else {
             toastr.error('Erro!', 'Você precisa estar logado com um e-mail verificado para salvar resultados de sorteio!')
