@@ -4,26 +4,27 @@ import Item from './Item'
 import ListTitle from './ListTitle'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { addItem, editListName, removeList } from "../../../../redux/core/actions/listsActions";
+import { addItem, editListName, removeList } from "../../../../redux/core/actions/listsActions"
+import { Button, Card, CardBody, ListGroup, ListGroupItem } from "reactstrap"
 
 const List = (props) => {
     return (
-        <div className="card mt-5">
+        <Card className="mt-5">
             <ListTitle list={props.list} />
-            <div className="card-body">
-                <ul className="list-group">
+            <CardBody >
+                <ListGroup >
                     {props.items ? props.items.map((item, i) => (
                         <Item key={`${item.text}--${props.list.id}--${i}`}
                             item={item} list={props.list} listId={props.list.id} />
                     )) : ''}
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                        <button className="btn btn-outline-success btn-block" onClick={() => props.addItem(props.list)}>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center">
+                        <Button outline block color="success" onClick={() => props.addItem(props.list)}>
                             <i className="fa fa-plus fa-lg"></i>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                        </Button>
+                    </ListGroupItem>
+                </ListGroup>
+            </CardBody>
+        </Card>
     )
 }
 
