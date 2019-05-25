@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { setSelectedPage } from "../../../../../redux/core/actions/facebookCommentsActions";
 import If from '../../../../utils/If'
+import { Card } from "reactstrap"
 
 const PageSelection = (props) => {
 
@@ -26,7 +27,7 @@ const PageSelection = (props) => {
                 disabled={!props.enabled}
                 onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>1- Escolher sua página</button>
             <Collapse isOpen={props.enabled && props.isOpen}>
-                <div className="card p-5 my-3">
+                <Card className="p-5 my-3">
                     {
                         props.userPages ? <>
                             <If c={props.userPages.length > 0}>
@@ -42,7 +43,7 @@ const PageSelection = (props) => {
                         </>
                             : <p>Não foi possível recuperar suas páginas. Por favor, tente sair de sua conta e fazer login com o Facebook novamente.</p>
                     }
-                </div>
+                </Card>
             </Collapse>
         </>
     )

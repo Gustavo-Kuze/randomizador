@@ -1,13 +1,14 @@
 import React from 'react'
+import { Container, Row, Col, Card } from 'reactstrap'
 
 const FacebookCommentsDrawResult = (props) => {
     return (
-        <div className="container">
+        <Container>
             {
                 props.items.map((c, i) => (
-                    <div className="row my-5" key={c.id}>
-                        <div className="col">
-                            <div className="card p-4">
+                    <Row className="my-5" key={c.id}>
+                        <Col>
+                            <Card className="p-4">
                                 <h4>{i + 1}º item sorteado</h4>
                                 <h6 className="mt-2">Id do comentário</h6>
                                 <p className="">{c.id}</p>
@@ -15,12 +16,12 @@ const FacebookCommentsDrawResult = (props) => {
                                 <p className="lead">{c.message}</p>
                                 <h5>Link direto para o comentário</h5>
                                 <a href={c.permalink_url} target="_blank" rel="noopener noreferrer">{c.permalink_url}</a>
-                            </div>
-                        </div>
-                    </div>
+                            </Card>
+                        </Col>
+                    </Row>
                 ))
             }
-        </div>
+        </Container>
     )
 }
 

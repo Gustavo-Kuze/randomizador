@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Collapse } from 'reactstrap'
 import { setSelectedPost } from "../../../../../redux/core/actions/facebookCommentsActions";
 import If from '../../../../utils/If'
+import { Container, Row, Col, Card, Button } from 'reactstrap'
 
 const PostSelection = (props) => {
 
@@ -28,11 +29,14 @@ const PostSelection = (props) => {
 
     return (
         <>
-            <button className={`btn btn-outline-primary btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
+            <Button
+                color="primary"
+                outline block
+                className={`text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
                 disabled={!props.enabled}
-                onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>2- Escolher o post</button>
+                onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}>2- Escolher o post</Button>
             <Collapse isOpen={props.enabled && props.isOpen}>
-                <div className="card p-5 my-3">
+                <Card className="p-5 my-3">
                     {
                         props.pagePosts ? (
                             <>
@@ -41,20 +45,30 @@ const PostSelection = (props) => {
                                     {
                                         props.pagePosts ? props.pagePosts.map((p, i) => <div key={`page-posts-radio-key--${i}`} className="custom-control custom-radio">{renderPostRadio(p)}</div>)
                                             : ''}
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="col-6">
+                                    <Container>
+                                        <Row>
+                                            <Col xs={{ size: 6 }}>
                                                 <If c={props.previous}>
-                                                    <button onClick={() => props.paginateTo(props.previous)} className="btn btn-outline-success float-right">Anteriores</button>
+                                                    <Button
+                                                        outline
+                                                        color="success"
+                                                        onClick={() => props.paginateTo(props.previous)}
+                                                        className=" float-right"
+                                                    >Anteriores</Button>
                                                 </If>
-                                            </div>
-                                            <div className="col-6">
+                                            </Col>
+                                            <Col xs={{ size: 6 }}>
                                                 <If c={props.next}>
-                                                    <button onClick={() => props.paginateTo(props.next)} className="btn btn-outline-success">Próximos</button>
+                                                    <Button
+                                                        outline
+                                                        color="success"
+                                                        onClick={() => props.paginateTo(props.next)}
+                                                        className=""
+                                                    >Próximos</Button>
                                                 </If>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            </Col>
+                                        </Row>
+                                    </Container>
                                 </If>
                                 <If c={!props.pagePosts.length > 0}>Você não tem nenhum post</If>
                             </>
@@ -62,7 +76,7 @@ const PostSelection = (props) => {
                                 <p>Não foi possível recuperar seus posts. Por favor, tente sair de sua conta e fazer login com o Facebook novamente.</p>
                             )
                     }
-                </div>
+                </Card>
             </Collapse>
         </>
     )

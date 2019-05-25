@@ -9,6 +9,7 @@ import { Input } from 'reactstrap'
 import FacebookCommentsDrawResult from '../../CommonViewStructures/FacebookCommentsDrawResult'
 import keycodes from '../../../../utils/keycodes'
 import { toastr } from 'react-redux-toastr'
+import { Card, Button } from 'reactstrap'
 
 import Chance from 'chance'
 let chance = new Chance()
@@ -43,12 +44,11 @@ const FbCommentsDraw = (props) => {
 
     return (
         <>
-            <button className={`btn btn-outline-primary btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
+            <Button color="primary" outline block className={`text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
                 disabled={!props.enabled}
-                onClick={() => props.setIsOpen(!props.isOpen)}>3- Sorteie!</button>
+                onClick={() => props.setIsOpen(!props.isOpen)}>3- Sorteie!</Button>
             <Collapse isOpen={props.isOpen}>
-                <div className="card p-5 my-3">
-
+                <Card className="p-5 my-3">
                     <If c={!props.comments}>
                         <p className="lead">Ocorreu um erro ao listar os comentários deste post.</p>
                     </If>
@@ -67,7 +67,12 @@ const FbCommentsDraw = (props) => {
                                     onKeyUp={setQuantityInputValidAndDrawOnEnter}
                                     max="10"
                                 />
-                                <button onClick={drawComments} className={`btn btn-success btn-block ${isQuantityInputValid ? 'btn-pulse-success' : ''}`}>Sortear!</button>
+                                <Button
+                                    color="success" block
+                                    onClick={drawComments}
+                                    className={`${isQuantityInputValid ? 'btn-pulse-success' : ''}`}>
+                                    Sortear!
+                                </Button>
                             </If>
                             <If c={drawnComments.length > 0}>
                                 <DrawResults title="Os comentários sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
@@ -83,8 +88,7 @@ const FbCommentsDraw = (props) => {
                             <p className="lead">Este post não tem comentários</p>
                         </If>
                     </If>
-
-                </div>
+                </Card>
             </Collapse>
         </>
     )
