@@ -8,6 +8,7 @@ import { toastr } from 'react-redux-toastr'
 import { connect } from 'react-redux'
 import { Redirect } from "react-router-dom";
 import { log } from '../../../services/logger/'
+import { Row, Col, Button } from 'reactstrap'
 
 const DrawResults = props => {
     let [shouldRedirect, setRedirect] = useState(false)
@@ -28,11 +29,11 @@ const DrawResults = props => {
             toastr.confirm(`Sorteio salvo com sucesso, guarde o número para que possa consultar mais tarde: ${number}`, toastrConfirmOptions)
         }).catch(error => {
             log(`[ERRO] ao tentar SALVAR um resultado público em DrawResults: ${error.message}`,
-            props.uid,
-            props.authResult).then(logId => {
-                toastr.error('Error logged', `Log ID: ${logId}`)
-            }).catch(err => toastr.error('LOG ERROR',
-                'Não foi possível criar o log de ERRO. SALVAR um resultado público em DrawResults'))
+                props.uid,
+                props.authResult).then(logId => {
+                    toastr.error('Error logged', `Log ID: ${logId}`)
+                }).catch(err => toastr.error('LOG ERROR',
+                    'Não foi possível criar o log de ERRO. SALVAR um resultado público em DrawResults'))
         })
     }
 
@@ -53,11 +54,11 @@ const DrawResults = props => {
             }).catch(err => {
                 toastr.error('Erro!', 'Ocorreu um erro ao tentar salvar, teste fazer login novamente.')
                 log(`[ERRO] ao tentar SALVAR resultado privado em DrawResults: ${err.message}`,
-                props.uid,
-                props.authResult).then(logId => {
-                    toastr.error('Error logged', `Log ID: ${logId}`)
-                }).catch(err => toastr.error('LOG ERROR',
-                    'Não foi possível criar o log de ERRO. SALVAR um resultado privado em DrawResults'))
+                    props.uid,
+                    props.authResult).then(logId => {
+                        toastr.error('Error logged', `Log ID: ${logId}`)
+                    }).catch(err => toastr.error('LOG ERROR',
+                        'Não foi possível criar o log de ERRO. SALVAR um resultado privado em DrawResults'))
             })
         } else {
             toastr.error('Erro!', 'Você precisa estar logado com um e-mail verificado para salvar resultados de sorteio!')
@@ -70,45 +71,45 @@ const DrawResults = props => {
                 <Redirect to="/" />
             ) : (
                     <>
-                        <div className="row mt-5">
+                        <Row className="mt-5">
                             <div className={props.colClasses || 'col-12'} >
                                 <h1 className={props.titleClasses || 'text-center lobster my-3'}>{props.title || 'Confira os resultados'}</h1>
                             </div >
-                        </div >
-                        <div className="row">
+                        </Row >
+                        <Row>
                             <div className={props.colClasses || 'col-12'}>
                                 {props.children}
                             </div>
-                        </div>
-                        <div className="row mt-5">
+                        </Row>
+                        <Row className="mt-5">
                             <div className={props.colClasses || 'col-12'}>
                                 <h4 className="text-center sofia">Sorteio realizado em: {props.date || new Date().toLocaleString()}</h4>
                             </div>
-                        </div>
+                        </Row>
                         <If c={!props.viewMode}>
-                            <div className="row mt-5">
+                            <Row className="mt-5">
                                 <div className={props.colClasses || 'col-10 offset-1'}>
-                                    <div className="row">
-                                        <div className="col-12">
+                                    <Row>
+                                        <Col>
                                             <Input className="text-center bg-light"
                                                 type="text"
                                                 placeholder="Dê uma descrição para salvar o sorteio (opcional)"
                                                 onChange={e => setDrawDescription(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className={'col-12 col-sm-6 my-1'}>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{ size: 12 }} sm={{ size: 6 }} className="my-1">
                                             <Tooltip placement="bottom" isOpen={isTooltipOpen} target="btn-save-publicly" toggle={() => toggleTooltip(!isTooltipOpen)}>
                                                 O resultado ficará acessível para quem possuir seu número. Isso não pode ser desfeito!
                                             </Tooltip>
-                                            <button id="btn-save-publicly" className="btn btn-block btn-outline-warning" onClick={savePublicly}>Salvar publicamente</button>
-                                        </div>
-                                        <div className={'col-12 col-sm-6 my-1'}>
-                                            <button className="btn btn-block btn-outline-info" onClick={savePrivately}>Salvar apenas para mim</button>
-                                        </div>
-                                    </div>
+                                            <Button id="btn-save-publicly" outline block color="warning" className="" onClick={savePublicly}>Salvar publicamente</Button>
+                                        </Col>
+                                        <Col xs={{ size: 12 }} sm={{ size: 6 }} className="my-1">
+                                            <Button outline block color="info" onClick={savePrivately}>Salvar apenas para mim</Button>
+                                        </Col>
+                                    </Row>
                                 </div>
-                            </div>
+                            </Row>
                         </If>
                     </>
                 )

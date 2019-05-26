@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Container, Col, Row } from 'reactstrap'
 
 const ListItemsCounters = (props) => {
 
@@ -25,16 +26,16 @@ const ListItemsCounters = (props) => {
   useEffect(() => { calculateItems() })
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12 col-sm-5">
+    <Container>
+      <Row>
+        <Col xs={{ size: 12 }} sm={{ size: 5 }}>
           <p className="h4">Total de itens: {totalItems}</p>
-        </div>
-        <div className="col-12 col-sm-7">
+        </Col>
+        <Col xs={{ size: 12 }} sm={{ size: 7 }}>
           <p className="h4">Itens habilitados para o sorteio: {enabledItems}</p>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 

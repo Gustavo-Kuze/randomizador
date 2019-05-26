@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import If from '../../utils/If'
 import DrawResults from '../subcomponents/DrawResults'
 import drawTypes from '../drawUtils/drawTypes'
+import { Container, Row, Col } from 'reactstrap'
 
 class HeadOrTails extends Component {
     constructor(props) {
@@ -47,18 +48,18 @@ class HeadOrTails extends Component {
         return (
             <>
                 <div className="section">
-                    <div className="container">
-                        <div className="row mb-5">
-                            <div className="col">
+                    <Container>
+                        <Row className="mb-5">
+                            <Col>
                                 <h1 className="sofia"><strong>Cara ou Coroa</strong></h1>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
                                 <h1 className="h3 text-center mb-5">Clique na moeda para jogar</h1>
-                            </div>
-                        </div>
-                    </div>
+                            </Col>
+                        </Row>
+                    </Container>
                 </div>
                 <div id="moeda" onClick={this.flip}>
                     <div className="cara">
@@ -69,7 +70,7 @@ class HeadOrTails extends Component {
                     </div>
                 </div>
                 <div className="section mt-5">
-                    <div className="container">
+                    <Container>
                         <If c={this.state.showResult}>
                             <DrawResults title="O resultado foi:"
                                 date={`${new Date().toLocaleString()}`}
@@ -79,7 +80,7 @@ class HeadOrTails extends Component {
                                 <h3 className="display-4 text-center my-5 lobster h2 text-weight-bold">{this.state.headOrTails}</h3>
                             </DrawResults>
                         </If>
-                    </div>
+                    </Container>
                 </div>
             </>
         )

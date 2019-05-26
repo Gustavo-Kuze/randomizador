@@ -8,6 +8,7 @@ import drawTypes from '../drawUtils/drawTypes'
 import DrawResults from '../subcomponents/DrawResults'
 import keycodes from '../../utils/keycodes'
 import NumbersDrawResult from './CommonViewStructures/NumbersDrawResult'
+import { Container, Row, Col, Button } from 'reactstrap'
 
 const Numbers = () => {
 
@@ -67,16 +68,16 @@ const Numbers = () => {
     }
 
     return (
-        <div className="container">
-            <div className="row">
+        <Container>
+            <Row>
                 <div className="col-lg-10 col-12 offset-lg-1">
-                    <div className="row mb-3">
-                        <div className="col-12 col-lg-10 text-center">
+                    <Row className="mb-3">
+                        <Col xs={{ size: 12 }} lg={{ size: 10 }} className="text-center">
                             <p className="h3 text-muted">Sortear números</p>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-2 col-12 text-center">
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={{ size: 12 }} md={{ size: 2 }} className="text-center">
                             <Input className="text-center bg-light"
                                 type="number"
                                 placeholder="quantidade"
@@ -84,8 +85,8 @@ const Numbers = () => {
                                 valid={areInputsTouched && isQuantityInputValid}
                                 onChange={e => setQuantity(parseInt(e.target.value))}
                                 onKeyUp={setTouchedAndDrawOnEnter} />
-                        </div>
-                        <div className="col-md-4 col-12 text-center">
+                        </Col>
+                        <Col xs={{ size: 12 }} md={{ size: 4 }} className="text-center">
                             <Input className="text-center bg-light"
                                 type="number"
                                 placeholder="entre este valor"
@@ -93,11 +94,11 @@ const Numbers = () => {
                                 valid={areInputsTouched && isRandMinInputValid}
                                 onChange={e => setRandMin(parseInt(e.target.value))}
                                 onKeyUp={setTouchedAndDrawOnEnter} />
-                        </div>
-                        <div className="col-md-2 col-12 text-center">
+                        </Col>
+                        <Col xs={{ size: 12 }} md={{ size: 2 }} className="text-center">
                             <p className="h3 text-muted mt-3">e</p>
-                        </div>
-                        <div className="col-md-4 col-12 text-center">
+                        </Col>
+                        <Col xs={{ size: 12 }} md={{ size: 4 }} className="text-center">
                             <Input className="text-center bg-light"
                                 type="number"
                                 placeholder="este outro valor"
@@ -105,15 +106,22 @@ const Numbers = () => {
                                 valid={areInputsTouched && isRandMaxInputValid}
                                 onChange={e => setRandMax(parseInt(e.target.value))}
                                 onKeyUp={setTouchedAndDrawOnEnter} />
-                        </div>
-                    </div>
-                    <div className="row mt-3">
-                        <div className="col-md-4 col-12 offset-md-4 ">
-                            <button onClick={drawNow} type="submit" className={`${randNums.length === 0 && isRandMaxInputValid && isRandMinInputValid && isQuantityInputValid ? 'btn-pulse-warning' : ''} btn btn-warning btn-block btn-lg mt-5`}>Sortear</button>
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
+                    <Row className="mt-3">
+                        <Col xs={{ size: 12 }} md={{ size: 4, offset: 4 }} >
+                            <Button
+                                block
+                                color="warning"
+                                size="lg"
+                                onClick={drawNow}
+                                type="submit"
+                                className={`${randNums.length === 0 && isRandMaxInputValid && isRandMinInputValid && isQuantityInputValid ? 'btn-pulse-warning' : ''} mt-5`}
+                            >Sortear</Button>
+                        </Col>
+                    </Row>
                 </div>
-            </div>
+            </Row>
             <If c={randNums.length > 0}>
                 <DrawResults title="Os números sorteados foram:" colClasses="col-lg-10 col-12 offset-lg-1"
                     date={`${new Date().toLocaleString()}`}
@@ -123,7 +131,7 @@ const Numbers = () => {
                     <NumbersDrawResult items={randNums} />
                 </DrawResults>
             </If>
-        </div>
+        </Container>
     )
 }
 

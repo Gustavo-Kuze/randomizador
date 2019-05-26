@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { editListName, removeList, setAllItemsEnabledState } from "../../../../redux/core/actions/listsActions"
 import keycodes from '../../../utils/keycodes'
 import { toastr } from 'react-redux-toastr'
+import { Container, Col, Row, Button, CardHeader } from 'reactstrap'
 
 const ListHeader = (props) => {
 
@@ -39,29 +40,29 @@ const ListHeader = (props) => {
   }
 
   return <>
-    <div className="card-header" onDoubleClick={() => setEditMode(true)} >
-      <div className="container">
-        <div className="row">
-          <div className="col-10">
+    <CardHeader onDoubleClick={() => setEditMode(true)} >
+      <Container>
+        <Row>
+          <Col xs={{ size: 10 }}>
             <If c={editMode}>
               <input autoFocus={true} id={`input-edit-list-${props.list.id}`} className="form-control" type="text" onBlur={saveOnBlur} onKeyUp={editNameOnEnter} />
             </If>
             <p className="h4 mt-2">{props.list.name || 'Clique 2 vezes para dar um nome'} <span className="text-secondary">{` (${props.list.items.length} ${props.list.items.length === 1 ? 'item' : 'itens'})`}</span></p>
-          </div>
-          <div className="col-2">
-            <button className="btn btn-link text-decoration-none pop-hover" onClick={() => confirmListDeletion()}>
+          </Col>
+          <Col xs={{ size: 2 }}>
+            <Button color="link" className="text-decoration-none pop-hover" onClick={() => confirmListDeletion()}>
               <i className="fa fa-times fa-lg text-danger"></i>
-            </button>
-            <button className="btn btn-link text-decoration-none pop-hover" onClick={() => {
+            </Button>
+            <Button color="link" className="text-decoration-none pop-hover" onClick={() => {
               props.setAllItemsEnabledState(!allEnabled, props.list)
               setAllEnabled(!allEnabled)
             }} >
               <i className={`fas fa-${!allEnabled ? "ban text-warning" : "check text-success"}`}></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+    </CardHeader>
   </>
 }
 
