@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import ToolsSection from './ToolsSection';
 import CheckResultsSection from './CheckResultsSection';
 import { Container, Row, Col, Jumbotron } from 'reactstrap'
+import AdSense from 'react-adsense'
 
 const Home = () => {
     return (
@@ -19,6 +20,17 @@ const Home = () => {
                             </Col>
                         </Row>
                     </Jumbotron>
+                    <Row>
+                        <Col>
+                            <AdSense.Google
+                                client='ca-pub-4739817969139361'
+                                slot='6373703710'
+                                style={{ display: 'block' }}
+                                format='auto'
+                                responsive='true'
+                            />
+                        </Col>
+                    </Row>
                     <Row className="my-3">
                         <Col xs={{ size: 6, offset: 3 }} className="d-flex justify-content-center align-items-center">
                             <img src="/img/randomizador_icon_1024.png" alt="Logo" className="img-fluid" style={{ maxHeight: '200px' }} />
