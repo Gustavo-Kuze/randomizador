@@ -7,6 +7,10 @@ import {
     Modal,
     ModalHeader,
     ModalBody,
+    Container,
+    Col,
+    Row,
+    Button
 } from 'reactstrap'
 
 const Header = props => {
@@ -18,22 +22,23 @@ const Header = props => {
         <>
             <nav className="navbar fixed-top navbar-dark bg-warning ">
                 <div className="mx-auto flex-grow-1">
-                    <div className="container-fluid">
-                        <div className="row">
-                            <div className="col-6 col-sm-10 offset-sm-1 text-center">
+                    <Container fluid>
+                        <Row>
+                            <Col xs={{ size: 6 }} sm={{ size: 10, offset: 1 }} className="text-center">
                                 <Link to="/" className="text-decoration-none">
                                     <h1 className="brand-title sofia">Randomizador</h1>
                                 </Link>
-                            </div>
-                            <div className="col-6 col-sm-1">
-                                <button
+                            </Col>
+                            <Col xs={{ size: 6 }} sm={{ size: 1 }} >
+                                <Button
+                                    color="link"
                                     onClick={callToggleMenu}
-                                    className="btn btn-link text-light bg-warning float-right">
+                                    className="text-light bg-warning float-right">
                                     <span className="navbar-toggler-icon"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Container>
                 </div>
             </nav>
             <Modal isOpen={openMenu} toggle={callToggleMenu} centered size="sm" >

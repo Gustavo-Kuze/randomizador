@@ -1,4 +1,9 @@
 import React, { useEffect } from 'react'
+import {
+    Container,
+    Col,
+    Row,
+} from 'reactstrap'
 
 const Footer = () => {
 
@@ -8,13 +13,13 @@ const Footer = () => {
 
     return (
         <footer className="footer bg-light text-dark fixed-bottom py-3 border border-secondary">
-            <div className="container">
-                <div className="row">
-                    <div className="col-6 offset-3 text-center">
+            <Container>
+                <Row>
+                    <Col xs={{ size: 6, offset: 3 }} className="text-center">
                         <span className="h5 text-muted">Desenvolvido por </span> <a className="text-decoration-none h5" href="https://www.gustavokuze.com" target="_blank" rel="noopener noreferrer">Gustavo Kuze</a>
-                    </div>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+            </Container>
         </footer>
     )
 }
