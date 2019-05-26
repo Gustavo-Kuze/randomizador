@@ -1,4 +1,4 @@
-import '../../../css/List.css'
+import '../../../../../css/components/draw/subcomponents/Lists/List.css'
 import React from 'react'
 import Item from './Item'
 import ListTitle from './ListTitle'

@@ -1,4 +1,4 @@
-import '../../css/Sort.css'
+import '../../../../css/components/draw/pages/ShuffleDraw.css'
 import React, { useState } from 'react'
 import { Input } from 'reactstrap'
 import FilePicker from '../../utils/FilePicker'

@@ -1,4 +1,4 @@
-import '../css/Home.css'
+import '../../../css/components/Home/Home.css'
 import React from 'react'
 import Template from '../Template/'
 import { Link } from 'react-router-dom'

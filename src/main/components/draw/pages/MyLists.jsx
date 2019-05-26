@@ -1,4 +1,4 @@
-import '../../css/MyLists.css'
+import '../../../../css/components/draw/pages/MyLists.css'
 import React, { useState, useEffect } from 'react'
 import { realtimeUpdateLists, stopListsRealtimeListener, createItemFromText } from '../../../services/firebase/lists'
 import Template from '../../Template'

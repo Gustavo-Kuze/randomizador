@@ -1,4 +1,3 @@
-import '../../css/Numbers.css'
 import React, { useState, useEffect } from 'react'
 import If from '../../utils/If'
 import { Input } from 'reactstrap'

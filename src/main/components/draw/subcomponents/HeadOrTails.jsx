@@ -1,4 +1,3 @@
-import '../../css/HeadOrTails.css'
 import React, { Component } from 'react'
 import If from '../../utils/If'
 import DrawResults from '../subcomponents/DrawResults'

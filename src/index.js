@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './main/components/css/bootstrap.min.css'
-import './index.css';
+import './css/bootstrap.min.css'
+import './css/index.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 import App from './main/components/App.jsx';
 import ReduxToastr from 'react-redux-toastr'
