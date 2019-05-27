@@ -44,6 +44,11 @@ const Numbers = () => {
             toastr.warning('Atenção!', 'A quantidade de números sorteados não pode ser maior que o valor máximo!')
             isDrawAllowed = false
         }
+        
+        if (quantity >= (randMax - randMin)) {
+            toastr.warning('Atenção!', 'A quantidade de números sorteados não pode ser maior que o intervalo entre os valores mínimo e máximo!')
+            isDrawAllowed = false
+        }
 
         if (randMin >= randMax) {
             toastr.warning('Atenção!', 'O valor mínimo não pode ser maior ou igual ao valor máximo!')
@@ -76,7 +81,7 @@ const Numbers = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={{ size: 12 }} md={{ size: 2 }} className="text-center">
+                        <Col xs={{ size: 12 }} md={{ size: 3 }} className="text-center">
                             <Input className="text-center bg-light"
                                 type="number"
                                 placeholder="quantidade"
@@ -85,7 +90,7 @@ const Numbers = () => {
                                 onChange={e => setQuantity(parseInt(e.target.value))}
                                 onKeyUp={setTouchedAndDrawOnEnter} />
                         </Col>
-                        <Col xs={{ size: 12 }} md={{ size: 4 }} className="text-center">
+                        <Col xs={{ size: 12 }} md={{ size: 3 }} className="text-center">
                             <Input className="text-center bg-light"
                                 type="number"
                                 placeholder="entre este valor"
