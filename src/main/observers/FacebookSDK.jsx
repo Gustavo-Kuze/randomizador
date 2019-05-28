@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { setFB } from "../redux/core/actions/facebookLoginActions"
 
 export class FacebookSDK extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
-
-        this.observerTimer = setInterval(timer, 100);
+        this.props = props
+        this.observerTimer = setInterval(this.timer, 100);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(this.observerTimer)
     }
 
     timer = () => {
-        
+        if (window.Facebook && !this.props.FB) {
+            this.props.setFB(window.Facebook)
+        }
     }
 
     render() {
@@ -24,11 +27,11 @@ export class FacebookSDK extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    
+    FB: state.facebook.FB
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    
-}, dispatch) 
+    setFB
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(FacebookSDK)

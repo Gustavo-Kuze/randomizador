@@ -38,30 +38,35 @@ const FacebookSteps = (props) => {
   let [nextPostsHref, setNextPostsHref] = useState()
   let [prevPostsHref, setPrevPostsHref] = useState()
 
+  let [isFulfilled, setIsFulfilled] = useState(false)
+
+
   useEffect(() => {
     if (props.login.additionalUserInfo.profile) {
       if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-        fulfillUserPages(
-          props.login.additionalUserInfo.profile.id,
-          props.login.credential.accessToken)
+     if(props.FB && !isFulfilled){
+       fulfillUserPages(
+         props.login.additionalUserInfo.profile.id,
+         props.login.credential.accessToken)
+         setIsFulfilled(true)
+     }
+
+        if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
+          if (!isPickPageEnabled && !isDrawOver)
+            setPickPageEnabled(true)
+          if (props.userPages)
+            if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+              setPickPostEnabled(true)
+          if (props.pagePosts)
+            if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+              setDrawStepEnabled(true)
+        } else {
+          warnAndRedirect()
+        }
+
       } else {
         warnAndRedirect()
       }
-    } else {
-      warnAndRedirect()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-      if (!isPickPageEnabled && !isDrawOver)
-        setPickPageEnabled(true)
-      if (props.userPages)
-        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-          setPickPostEnabled(true)
-      if (props.pagePosts)
-        if (props.pagePosts.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-          setDrawStepEnabled(true)
     } else {
       warnAndRedirect()
     }
@@ -74,7 +79,7 @@ const FacebookSteps = (props) => {
 
   const fulfillUserPages = (userID, accessToken) => {
     setIsLoading(true)
-    getUserPages(userID, accessToken).then(pagesResponse => {
+    getUserPages(props.FB, userID, accessToken).then(pagesResponse => {
       props.setUserPages(pagesResponse.data)
       setIsLoading(false)
     }).catch(err => {
@@ -89,7 +94,7 @@ const FacebookSteps = (props) => {
 
   const paginateTo = (href) => {
     setIsLoading(true)
-    getPaginationResult(href).then(response => {
+    getPaginationResult(props.FB, href).then(response => {
       preparePagePosts(response)
       window.scrollTo(0, 0)
       setIsLoading(false)
@@ -125,7 +130,7 @@ const FacebookSteps = (props) => {
 
   const onPageSelected = page => {
     setIsLoading(true)
-    getPagePosts(page.id, page.access_token)
+    getPagePosts(props.FB, page.id, page.access_token)
       .then(preparePagePosts)
       .catch(err => {
         log(`[ERRO] ao tentar OBTER os posts da página em FacebookSteps: ${err.message}`,
@@ -143,7 +148,7 @@ const FacebookSteps = (props) => {
 
   const onPostSelected = post => {
     setIsLoading(true)
-    getAllComments(`/${post.id}/comments?fields=id,message,permalink_url&access_token=${props.accessToken}`)
+    getAllComments(props.FB, `/${post.id}/comments?fields=id,message,permalink_url&access_token=${props.accessToken}`)
       .then(data => {
         props.setPostComments(data)
         setPickPostStepOpen(false)
@@ -201,7 +206,8 @@ const mapStateToProps = state => ({
   pagePosts: state.facebookComments.pagePosts,
   userPages: state.facebookComments.userPages,
   login: state.login,
-  uid: state.user.uid
+  uid: state.user.uid,
+  FB: state.facebook.FB
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

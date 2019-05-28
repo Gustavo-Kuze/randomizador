@@ -4,15 +4,16 @@ import firebase from '../services/firebase/'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { login, logout } from '../redux/core/actions/userActions'
+import FBObserver from '../observers/FacebookSDK'
 
 class App extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      if(user){
+      if (user) {
         const { displayName, email, uid, photoURL, emailVerified } = firebase.auth().currentUser
         this.props.login({ displayName, email, uid, photoURL, emailVerified })
-      }else{
+      } else {
         this.props.logout()
       }
     })
@@ -21,7 +22,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Routes />
+        <>
+          <FBObserver />
+          <Routes />
+        </>
       </div>
     );
   }

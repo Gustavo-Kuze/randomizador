@@ -34,30 +34,33 @@ const InstagramSteps = (props) => {
   let [nextMediasHref, setNextPostsHref] = useState()
   let [prevMediasHref, setPrevPostsHref] = useState()
 
+  let [isFulfilled, setIsFulfilled] = useState(false)
+
   useEffect(() => {
     if (props.login.additionalUserInfo.profile) {
       if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-        fulfillUserPages(
-          props.login.additionalUserInfo.profile.id,
-          props.login.credential.accessToken)
+        if (props.FB && !isFulfilled) {
+          fulfillUserPages(
+            props.login.additionalUserInfo.profile.id,
+            props.login.credential.accessToken)
+            setIsFulfilled(true)
+        }
+        if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
+          if (!isPickPageEnabled && !isDrawOver)
+            setPickPageEnabled(true)
+          if (props.userPages)
+            if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+              setPickPostEnabled(true)
+          if (props.medias)
+            if (props.medias.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
+              setDrawStepEnabled(true)
+        } else {
+          warnAndRedirect()
+        }
+
       } else {
         warnAndRedirect()
       }
-    } else {
-      warnAndRedirect()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-      if (!isPickPageEnabled && !isDrawOver)
-        setPickPageEnabled(true)
-      if (props.userPages)
-        if (props.userPages.length > 0 && !isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-          setPickPostEnabled(true)
-      if (props.medias)
-        if (props.medias.length > 0 && !isDrawStepEnabled && isPickPostEnabled && isPickPageEnabled && !isDrawOver)
-          setDrawStepEnabled(true)
     } else {
       warnAndRedirect()
     }
@@ -70,7 +73,7 @@ const InstagramSteps = (props) => {
 
   const paginateTo = (href) => {
     setIsLoading(true)
-    getPaginationResult(href).then(response => {
+    getPaginationResult(props.FB, href).then(response => {
       preparePagePosts(response)
       window.scrollTo(0, 0)
       setIsLoading(false)
@@ -104,7 +107,7 @@ const InstagramSteps = (props) => {
 
   const fulfillUserPages = (userID, accessToken) => {
     setIsLoading(true)
-    getUserPages(userID, accessToken).then(pagesResponse => {
+    getUserPages(props.FB, userID, accessToken).then(pagesResponse => {
       props.setUserPages(pagesResponse.data)
       setIsLoading(false)
     }).catch(err => {
@@ -119,7 +122,7 @@ const InstagramSteps = (props) => {
 
   const fulfillMedias = (businessId, accessToken) => {
     setIsLoading(true)
-    getMedia(businessId, accessToken).then(response => {
+    getMedia(props.FB, businessId, accessToken).then(response => {
       preparePagePosts(response)
       setIsLoading(false)
     }).catch(err => {
@@ -136,7 +139,7 @@ const InstagramSteps = (props) => {
 
   const onPageSelected = page => {
     setIsLoading(true)
-    getBusinessAccountId(page.id, page.access_token).then((id) => {
+    getBusinessAccountId(props.FB, page.id, page.access_token).then((id) => {
       if (id) {
         fulfillMedias(id, page.access_token)
         props.setBusinessId(id)
@@ -164,7 +167,7 @@ const InstagramSteps = (props) => {
 
   const onMediaSelected = media => {
     setIsLoading(true)
-    getAllComments(`/${media.id}/comments?fields=username,text&access_token=${props.accessToken}`)
+    getAllComments(props.FB, `/${media.id}/comments?fields=username,text&access_token=${props.accessToken}`)
       .then(data => {
         props.setComments(data.map(comment => ({ ...comment, permalink: media.permalink })))
         setPickPostStepOpen(false)
@@ -224,7 +227,8 @@ const mapStateToProps = state => ({
   userPages: state.facebookComments.userPages,
   medias: state.instagramComments.medias,
   login: state.login,
-  uid: state.user.uid
+  uid: state.user.uid,
+  FB: state.facebook.FB
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

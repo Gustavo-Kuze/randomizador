@@ -15,19 +15,19 @@ const FacebookDraw = (props) => {
     let [shouldRedirect, setRedirect] = useState(false)
 
     useEffect(() => {
-        if (window.Facebook) {
-            face = window.Facebook
-            face.getLoginStatus((loginStatusResponse) => {
+        if (props.FB) {
+            props.FB.getLoginStatus((loginStatusResponse) => {
                 props.setStatus(loginStatusResponse.status)
-                props.setAuthResponse(face.getAuthResponse())
+                props.setAuthResponse(props.FB.getAuthResponse())
             })
-        } else {
-            toastr.error('Erro interno', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue a página.')
-            setRedirect(true)
-        }
+        } 
+        // else {
+        //     toastr.error('Erro interno', 'Não foi possível carregar as ferramentas do Facebook, por favor recarregue a página.')
+        //     setRedirect(true)
+        // }
 
         return () => props.resetFacebookComments()
-    }, [])
+    })
 
     return (
         <>
@@ -56,8 +56,12 @@ const FacebookDraw = (props) => {
     )
 }
 
+const mapStateToProps = state => ({
+    FB: state.facebook.FB
+})
+
 const mapDispatchToProps = dispatch => bindActionCreators({
     setAuthResponse, setStatus, resetFacebookComments
 }, dispatch)
 
-export default connect(null, mapDispatchToProps)(FacebookDraw)
+export default connect(mapStateToProps, mapDispatchToProps)(FacebookDraw)

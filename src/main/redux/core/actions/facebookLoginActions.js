@@ -13,3 +13,10 @@ export const setAuthResponse = authResponse => {
         payload: authResponse
     }
 }
+
+export const setFB = fb => {
+    return {
+        type: types.SET_FB,
+        payload: fb
+    }
+}

@@ -2,7 +2,8 @@ import types from '../actions/types/facebookLoginTypes'
 
 const STATE = {
     status: 'unknown',
-    authResponse: null
+    authResponse: null,
+    FB: undefined
 }
 
 export default (state = STATE, action) => {
@@ -11,6 +12,8 @@ export default (state = STATE, action) => {
             return {...state, status: action.payload}
         case types.SET_AUTH_RESULT:
             return {...state, authResponse: action.payload}
+        case types.SET_FB:
+            return {...state, FB: action.payload}
         default:
             return state
     }
