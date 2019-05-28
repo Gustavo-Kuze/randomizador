@@ -4,7 +4,6 @@ import firebase from '../services/firebase/'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { login, logout } from '../redux/core/actions/userActions'
-import FBObserver from '../observers/FacebookSDK'
 
 class App extends Component {
 
@@ -22,10 +21,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <>
-          <FBObserver />
-          <Routes />
-        </>
+        <Routes />
       </div>
     );
   }

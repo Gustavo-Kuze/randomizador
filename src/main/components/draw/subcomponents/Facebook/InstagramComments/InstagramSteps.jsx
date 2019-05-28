@@ -43,7 +43,7 @@ const InstagramSteps = (props) => {
           fulfillUserPages(
             props.login.additionalUserInfo.profile.id,
             props.login.credential.accessToken)
-            setIsFulfilled(true)
+          setIsFulfilled(true)
         }
         if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
           if (!isPickPageEnabled && !isDrawOver)
@@ -146,12 +146,12 @@ const InstagramSteps = (props) => {
       } else {
         toastr.error('Erro', 'Essa página não tem uma conta do Instagram associada à ela, ou você não deu as permissões de login necessárias para o app.')
         setIsLoading(false)
-        log(`[WARNING] A conta não possui businessID ou o ID enviado não tem permissões; ao tentar OBTER o business ID em InstagramSteps`,
-          props.uid,
-          props.login).then(logId => {
-            toastr.error('Error logged', `Log ID: ${logId}`)
-          }).catch(err => toastr.error('LOG ERROR',
-            'Não foi possível criar o log de WARNING. OBTER o business ID em InstagramSteps'))
+        // log(`[WARNING] A conta não possui businessID ou o ID enviado não tem permissões; ao tentar OBTER o business ID em InstagramSteps`,
+        //   props.uid,
+        //   props.login).then(logId => {
+        //     toastr.error('Error logged', `Log ID: ${logId}`)
+        //   }).catch(err => toastr.error('LOG ERROR',
+        //     'Não foi possível criar o log de WARNING. OBTER o business ID em InstagramSteps'))
       }
     }).catch(err => {
       log(`[ERRO] ao tentar OBTER o business ID em InstagramSteps: ${err.message}`,

@@ -44,12 +44,12 @@ const FacebookSteps = (props) => {
   useEffect(() => {
     if (props.login.additionalUserInfo.profile) {
       if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
-     if(props.FB && !isFulfilled){
-       fulfillUserPages(
-         props.login.additionalUserInfo.profile.id,
-         props.login.credential.accessToken)
-         setIsFulfilled(true)
-     }
+        if (props.FB && !isFulfilled) {
+          fulfillUserPages(
+            props.login.additionalUserInfo.profile.id,
+            props.login.credential.accessToken)
+          setIsFulfilled(true)
+        }
 
         if (props.login.additionalUserInfo.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID) {
           if (!isPickPageEnabled && !isDrawOver)
