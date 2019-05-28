@@ -22,7 +22,7 @@ const getUserPages = async (FB, userId, accessToken) =>
 const getPaginationResult = async (FB, url) => await apiAsync(FB, url)
 
 const getAllComments = async (FB, url, all = []) => {
-    let result = await apiAsync(url)
+    let result = await apiAsync(FB, url)
     if (result.data) {
         if (result.paging)
             if (result.paging.next)

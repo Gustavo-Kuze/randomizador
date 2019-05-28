@@ -17,7 +17,8 @@ export class FacebookSDK extends Component {
 
     timer = () => {
         if (window.Facebook && !this.props.FB) {
-            this.props.setFB(window.Facebook)
+            console.log('setou FB no estado')
+            this.props.setFB({...window.Facebook})
         }
     }
 
