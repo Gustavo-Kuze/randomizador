@@ -44,7 +44,6 @@ const ToolsSection = () => {
                 <Col>
                     <CardDeck>
                         <Card link="facebook" icon="fab fa-facebook-square fa-5x" alt="Sorteio de comentários do Facebook" description="Facebook" style={{ height: '190px' }} className="d-flex justify-content-center align-items-center" />
-                        <Card link="instagram" icon="fab fa-instagram fa-5x text-info" alt="Sorteio de comentários do Instagram" description="Instagram" style={{ height: '190px' }} className="d-flex justify-content-center align-items-center" />
                     </CardDeck>
                 </Col>
             </Row>

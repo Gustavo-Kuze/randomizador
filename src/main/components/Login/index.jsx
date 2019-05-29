@@ -63,8 +63,6 @@ const Login = (props) => {
                     scopes: [
                         'email',
                         'public_profile',
-                        'instagram_manage_comments',
-                        'instagram_basic',
                         'pages_show_list',
                         'manage_pages'
                     ]
