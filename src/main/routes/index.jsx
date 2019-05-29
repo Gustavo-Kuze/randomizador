@@ -13,8 +13,6 @@ import HeadOrTailsDraw from '../components/draw/pages/HeadOrTailsDraw'
 import ShuffleDraw from '../components/draw/pages/ShuffleDraw'
 import Login from '../components/Login/'
 import Logout from '../components/Login/Logout'
-import Facebook from '../components/draw/pages/FacebookDraw'
-import Instagram from '../components/draw/pages/InstagramDraw'
 
 export default () =>
     <BrowserRouter>
@@ -25,8 +23,6 @@ export default () =>
             <Route exact path='/shuffle' component={ShuffleDraw} />
             <Route exact path='/about' component={About} />
             <Route exact path='/verifyemail' component={VerifyEmail} />
-            <ProtectedRoute exact path='/facebook' component={Facebook} />
-            <ProtectedRoute exact path='/instagram' component={Instagram} />
             <Route exact path='/drawn/:id?' component={ViewSavedDraw} />
             <ProtectedRoute exact path='/myresults' component={MyResults} />
             <ProtectedRoute exact path='/user/lists' component={MyLists} />

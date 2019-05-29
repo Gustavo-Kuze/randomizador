@@ -35,19 +35,6 @@ const Card = cardProps => {
 const ToolsSection = () => {
     return (
         <Container>
-            <Row>
-                <Col>
-                    <p className="h2 text-center my-5 sofia"><strong>Faça sorteios de comentários</strong>!</p>
-                </Col>
-            </Row>
-            <Row className="mb-5">
-                <Col>
-                    <CardDeck>
-                        <Card link="facebook" icon="fab fa-facebook-square fa-5x" alt="Sorteio de comentários do Facebook" description="Facebook" style={{ height: '190px' }} className="d-flex justify-content-center align-items-center" />
-                        <Card link="instagram" icon="fab fa-instagram fa-5x text-info" alt="Sorteio de comentários do Instagram" description="Instagram" style={{ height: '190px' }} className="d-flex justify-content-center align-items-center" />
-                    </CardDeck>
-                </Col>
-            </Row>
             <Row className="my-3">
                 <Col>
                     <p className="h3 text-center my-5">Seja qual for a ferramenta de sorteio que você esteja procurando, aqui você encontra!</p>
