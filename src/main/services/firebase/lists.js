@@ -38,9 +38,9 @@ const editListName = async (list, name) => {
     return Promise.reject(new Error('Não foi possível obter a instância da collection lists. listsRef era null'))
 }
 
-const addItem = async (list) => {
+const addItem = async (list, itemText = '') => {
     if (listsRef) {
-        let newItem = { id: chance.android_id(), text: '', enabled: true }
+        let newItem = { id: chance.android_id(), text: itemText, enabled: true }
         return await listsRef.doc(list.id).update({
             name: list.name,
             items: list.items ? [...list.items, newItem] : []

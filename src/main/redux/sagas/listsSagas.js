@@ -27,7 +27,7 @@ function* setListsSaga(action) {
 }
 
 function* addItemSaga(action) {
-    yield call(addItem, action.payload)
+    yield call(addItem, action.payload.list, action.payload.itemText)
 }
 
 function* removeItemSaga(action) {

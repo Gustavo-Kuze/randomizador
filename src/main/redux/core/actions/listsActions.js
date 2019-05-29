@@ -28,10 +28,10 @@ export const editListName = (list, name) => {
     }
 }
 
-export const addItem = (list) => {
+export const addItem = (list, itemText = '') => {
     return {
         type: types.ADD_ITEM_SAGA,
-        payload: list
+        payload: { itemText, list }
     }
 }
 

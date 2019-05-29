@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { editItemText, removeItem, setItemEnabledState } from '../../../../redux/core/actions/listsActions'
 import { toastr } from 'react-redux-toastr'
 import { Container, Col, Row, Button, ListGroupItem } from 'reactstrap'
-
+import { Draggable } from 'react-drag-and-drop'
 
 const Item = (props) => {
 
@@ -62,30 +62,32 @@ const Item = (props) => {
     }
 
     return (
-        <ListGroupItem className="d-flex align-items-center" onClick={setEditModeIfNoText} onDoubleClick={() => setEditModeAndPrepareInput(props.item.text)}>
-            <Container>
-                <Row>
-                    <Col xs={{ size: 8 }}>
-                        <If c={editMode}>
-                            <input autoFocus={true} id={`input-edit-item-${props.item.id}`} onBlur={saveOnBlur} className="form-control" type="text" onKeyUp={saveOnEnterCancelOnEsc} />
-                        </If>
-                        <p className="lead">
-                            <If c={props.item.enabled}>{props.item.text}</If>
-                            <If c={!props.item.enabled}><del>{props.item.text}</del></If>
-                        </p>
-                    </Col>
-                    <Col xs={{ size: 4 }}>
+        <Draggable type="listitem" data={JSON.stringify({ item: props.item, list: props.list })}>
+            <ListGroupItem className="d-flex align-items-center" onClick={setEditModeIfNoText} onDoubleClick={() => setEditModeAndPrepareInput(props.item.text)}>
+                <Container>
+                    <Row>
+                        <Col xs={{ size: 8 }}>
+                            <If c={editMode}>
+                                <input autoFocus={true} id={`input-edit-item-${props.item.id}`} onBlur={saveOnBlur} className="form-control" type="text" onKeyUp={saveOnEnterCancelOnEsc} />
+                            </If>
+                            <p className="lead">
+                                <If c={props.item.enabled}>{props.item.text}</If>
+                                <If c={!props.item.enabled}><del>{props.item.text}</del></If>
+                            </p>
+                        </Col>
+                        <Col xs={{ size: 4 }}>
 
-                        <Button color="link" className="text-decoration-none float-right pop-hover" onClick={setEnabledState}>
-                            <i className={`fas fa-${!props.item.enabled ? "ban text-warning" : "check text-success"}`}></i>
-                        </Button>
-                        <Button color="link" className="text-decoration-none float-right pop-hover" onClick={() => confirmItemDeletion()}>
-                            <i className="fa fa-trash text-danger"></i>
-                        </Button>
-                    </Col>
-                </Row>
-            </Container>
-        </ListGroupItem>
+                            <Button color="link" className="text-decoration-none float-right pop-hover" onClick={setEnabledState}>
+                                <i className={`fas fa-${!props.item.enabled ? "ban text-warning" : "check text-success"}`}></i>
+                            </Button>
+                            <Button color="link" className="text-decoration-none float-right pop-hover" onClick={() => confirmItemDeletion()}>
+                                <i className="fa fa-trash text-danger"></i>
+                            </Button>
+                        </Col>
+                    </Row>
+                </Container>
+            </ListGroupItem>
+        </Draggable>
     )
 }
 
