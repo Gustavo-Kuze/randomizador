@@ -6,6 +6,13 @@
   <link rel="shortcut icon" href="%PUBLIC_URL%/img/randomizador_icon_64.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="theme-color" content="#ff9800" />
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#ff9800" />
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#ff9800" />
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="#ff9800" />
+
   <meta name="description"
     content="Sorteio de comentários do Facebook e Instagram, Sorteio de listas, frases e números, Cara ou Coroa, e muitas outras ferramentas seguras e confiáveis, totalmente online!">
   </meta>
@@ -40,7 +47,7 @@
         version: 'v3.3'
       });
       FB.getLoginStatus(() => {
-          window.Facebook = FB
+        window.Facebook = FB
       })
     };
   </script>
@@ -49,7 +56,7 @@
     src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.3&appId=873486139706321&autoLogAppEvents=1"></script>
   <noscript>Você precisa habilitar o JavaScript em seu navegador para utilizar este site.</noscript>
   <div id="root"></div>
-  
+
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <!-- <ins class="adsbygoogle"
        style="display:block"
