@@ -38,7 +38,7 @@ const ToolsSection = () => {
             <Row className="my-5">
                 <Col>
                     <p className="h2 text-center sofia"><strong>Faça sorteios de comentários</strong>!</p>
-                    <p className="h3 text-center mt-2 lead">Você precisa entrar com sua conta do Facebook <span role="img" aria-label="Atenção!">📲</span></p>
+                    <p className="h3 text-center mt-2 lead">Você precisa entrar com sua conta do Facebook <span ><i className="text-primary fas fa-sign-in-alt fa-lg"></i></span></p>
                 </Col>
             </Row>
             <Row className="mb-5">

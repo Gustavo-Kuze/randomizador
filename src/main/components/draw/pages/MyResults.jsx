@@ -110,9 +110,11 @@ const MyResults = (props) => {
                 <Container>
                     <Row>
                         <Col xs={{ size: 10, offset: 1 }}>
+                            <If c={results.length > 0}>
+                                <Button className="mb-5" color="danger" onClick={deleteAllResults}>Excluir todos os resultados</Button>
+                            </If>
                             <Card>
                                 <If c={results.length > 0}>
-                                    <Button color="danger" onClick={deleteAllResults}>Excluir todos os resultados</Button>
                                     <ListGroup>
                                         {
                                             results.map(result => (
@@ -122,6 +124,7 @@ const MyResults = (props) => {
                                                             <Col xs={{ size: 10 }} onClick={() => setResultOnStateAndRedirect(result)} style={{ cursor: 'pointer' }}>
                                                                 <DrawType type={result.drawType} />
                                                                 <p>{result.date}</p>
+                                                                <p>{result.description}</p>
                                                             </Col>
                                                             <Col xs={{ size: 2 }}>
                                                                 <Button color="link" className="text-decoration-none float-right pop-hover"
