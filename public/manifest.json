@@ -1,15 +1,25 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Randomizador",
+  "name": "Randomizador - Sorteios Online",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "/img/randomizador_icon_64.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
+    },
+    {
+      "src": "/img/randomizador_icon_128.png",
+      "sizes": "192x192 128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/randomizador_icon_1024.png",
+      "sizes": "512x512 1024x1024",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#ff9800",
   "background_color": "#ffffff"
 }
