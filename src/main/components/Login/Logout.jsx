@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logout } from '../../redux/core/actions/userActions'
-import { Spinner } from 'reactstrap'
+import { Spinner, Container, Col, Row } from 'reactstrap'
 import firebase from '../../services/firebase/'
 import { toastr } from 'react-redux-toastr'
 import { log } from '../../services/logger/'
@@ -32,7 +32,13 @@ const Logout = (props) => {
             {
                 isLogoutComplete ? (
                     <Redirect to="/" />
-                ) : <><Spinner className="mx-0 px-0" color="warning" /> <span>Saindo...</span></>
+                ) : <Container fluid className="mt-5">
+                        <Row>
+                            <Col xs={{ size: 2, offset: 5 }} className="d-flex justify-content-center align-items-center flex-column">
+                                <Spinner className="mx-0 px-0" color="warning" /> <span>Saindo...</span>
+                            </Col>
+                        </Row >
+                    </Container >
             }
         </>
     )
