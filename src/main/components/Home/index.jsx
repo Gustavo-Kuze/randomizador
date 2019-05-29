@@ -39,12 +39,12 @@ const Home = () => {
                     <Row>
                         <Col xs={{ size: 12 }} md={{ size: 8, offset: 2 }} className="text-center">
                             <h1>Bem-vindo ao <span className="sofia font-weight-bold">Randomizador</span> !</h1>
-                            <h2 className="text-muted my-4 h3">Entre com sua conta para começar a criar listas de sorteio</h2>
+                            <h2 className="text-muted my-4 h3">Entre com sua conta, ou crie uma <strong>gratuitamente</strong>, para começar a criar listas personalizadas e salvar os resultados dos sorteios</h2>
                         </Col>
                     </Row>
                     <Row>
                         <Col xs={{ size: 6, offset: 3 }} className="d-flex justify-content-center align-items-center">
-                            <Link to="/user/lists" className="btn btn-primary btn-block">Minhas Listas</Link>
+                            <Link to="/user/lists" className="btn btn-primary btn-block">Vamos lá!</Link>
                         </Col>
                     </Row>
                 </Container>

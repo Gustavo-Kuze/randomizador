@@ -27,7 +27,7 @@ const CheckResultsSection = () => {
                         <h1>Quer verificar o resultado de um sorteio?</h1>
                         <Row>
                             <Col xs={{ size: 10, offset: 1 }} md={{ size: 6, offset: 3 }} className="text-center">
-                                <Input id="input-check-result" type="number" onKeyUp={drawKeyup} onChange={e => setDrawNumber(e.target.value)} placeholder="Informe o número do sorteio aqui" style={{ fontSize: '1.4em' }} />
+                                <Input id="input-check-result" type="number" onKeyUp={drawKeyup} onChange={e => setDrawNumber(e.target.value)} placeholder="Informe o número do sorteio aqui" style={{ fontSize: '1.4em' }} min="1" />
                             </Col>
                         </Row>
                     </Col>

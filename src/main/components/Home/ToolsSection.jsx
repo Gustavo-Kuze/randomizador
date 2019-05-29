@@ -35,13 +35,14 @@ const Card = cardProps => {
 const ToolsSection = () => {
     return (
         <Container>
-            <Row>
+            <Row className="my-5">
                 <Col>
-                    <p className="h2 text-center my-5 sofia"><strong>Faça sorteios de comentários</strong>!</p>
+                    <p className="h2 text-center sofia"><strong>Faça sorteios de comentários</strong>!</p>
+                    <p className="h3 text-center mt-2 lead">Você precisa entrar com sua conta do Facebook <span role="img" aria-label="Atenção!">📲</span></p>
                 </Col>
             </Row>
             <Row className="mb-5">
-                <Col>
+                <Col md={{ size: 6, offset: 3 }}>
                     <CardDeck>
                         <Card link="facebook" icon="fab fa-facebook-square fa-5x" alt="Sorteio de comentários do Facebook" description="Facebook" style={{ height: '190px' }} className="d-flex justify-content-center align-items-center" />
                     </CardDeck>
