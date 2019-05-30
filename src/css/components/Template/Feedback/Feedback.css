@@ -1,0 +1,40 @@
+.feedback-open-container {
+    z-index: 99999;
+    bottom: 60px;
+    left: -1px;
+    position: fixed;
+    width: 145px;
+    height: 60px;
+    background-color: rgb(255, 152, 0);
+    border: 1px solid #FAFAFA;
+    transition: all 120ms linear;
+}
+
+.feedback-closed-container {
+    z-index: 99999;
+    bottom: 60px;
+    left: -85px;
+    position: fixed;
+    width: 145px;
+    height: 60px;
+    background-color: rgb(255, 152, 0);
+    border: 1px solid #FAFAFA;
+    transition: all 100ms linear;
+}
+
+.feedback-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-flow: row;
+    height: 58px;
+}
+
+.feedback-label{
+    z-index: 99999;
+    bottom: 120px;
+    left: 0px;
+    position: fixed;
+    text-shadow: 3px 3px 10px #AAA;
+}
