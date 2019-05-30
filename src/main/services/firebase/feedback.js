@@ -30,14 +30,18 @@ const saveFeedbackImage = (id, imgFile) => {
     })
 }
 
-const like = async () => {
+const getLikesCount = async () => {
     let counter = await likesRef.get()
-    let likes = counter.data().likes
+    return counter.data().likes
+}
+
+const like = async () => {
+    let likes = await getLikesCount()
     return await likesRef.set({
         likes: likes + 1
     })
 }
 
 export {
-    saveFeedback, saveFeedbackImage, like
+    saveFeedback, saveFeedbackImage, like, getLikesCount
 }

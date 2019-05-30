@@ -1,6 +1,5 @@
 .feedback-open-container {
-    z-index: 99999;
-    bottom: 60px;
+    z-index: 99950;
     left: -1px;
     position: fixed;
     width: 145px;
@@ -11,8 +10,7 @@
 }
 
 .feedback-closed-container {
-    z-index: 99999;
-    bottom: 60px;
+    z-index: 99950;
     left: -85px;
     position: fixed;
     width: 145px;
@@ -22,7 +20,8 @@
     transition: all 100ms linear;
 }
 
-.feedback-buttons{
+.feedback-buttons {
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -31,10 +30,27 @@
     height: 58px;
 }
 
-.feedback-label{
+.feedback-label {
     z-index: 99999;
-    bottom: 120px;
     left: 0px;
     position: fixed;
     text-shadow: 3px 3px 10px #AAA;
+}
+
+@media only screen and (max-width: 552px) {
+    .feedback-open-container, .feedback-closed-container {
+        bottom: 10px;
+    }
+    .feedback-label {
+        bottom: 65px;
+    }
+}
+
+@media only screen and (min-width: 553px) {
+    .feedback-open-container, .feedback-closed-container {
+        bottom: 60px;
+    }
+    .feedback-label {
+        bottom: 125px;
+    }
 }

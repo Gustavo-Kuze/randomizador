@@ -11,7 +11,7 @@ import { toastr } from "react-redux-toastr"
 
 const Feedback = (props) => {
 
-    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const [description, setDescription] = useState()
@@ -19,24 +19,46 @@ const Feedback = (props) => {
 
     const renderButtons = () => {
         return <Row className="feedback-buttons">
-            <Col>
-                <Button
-                    onClick={() => setIsModalOpen(true)}
-                    outline block color="danger" className="text-light"><i className="far fa-thumbs-down fa-md"></i></Button>
-            </Col>
-            <Col>
-                <Button
-                    onClick={() => {
-                        if (!props.userLiked) {
-                            like().then(success => {
-                                toastr.success('Obrigado!', 'Seu feedback é muito importante para nós!')
-                                props.setUserLiked()
-                            })
-                        }
-                        setIsFeedbackOpen(false)
-                    }}
-                    outline block color="success" className="text-light"><i className="far fa-thumbs-up fa-md"></i></Button>
-            </Col>
+            <If c={isFeedbackOpen}>
+                <Col>
+                    <Button
+                        onClick={() => {
+                            setIsModalOpen(true)
+                            setIsFeedbackOpen(false)
+                        }}
+                        outline block color="danger" className="text-light"><i className="far fa-thumbs-down fa-md"></i></Button>
+                </Col>
+                <Col>
+                    <Button
+                        onClick={() => {
+                            if (isFeedbackOpen) {
+                                if (!props.userLiked) {
+                                    like().then(success => {
+                                        toastr.success('Obrigado!', 'Seu feedback é muito importante para nós!')
+                                        props.setUserLiked()
+                                    })
+                                }
+                                setIsFeedbackOpen(false)
+                            } else {
+                                setIsFeedbackOpen(true)
+                            }
+                        }}
+                        outline block color="success" className="text-light"><i className="far fa-thumbs-up fa-md"></i></Button>
+                </Col>
+            </If>
+            <If c={!isFeedbackOpen}>
+                <Col>
+                    <Button outline block color="danger" className="text-light"><i className="far fa-thumbs-down fa-md"></i></Button>
+                </Col>
+                <Col>
+                    <Button
+                        onClick={() => {
+                            setIsFeedbackOpen(true)
+                        }}
+                        outline block color="success" className="text-light"><i className="far fa-comment-alt"></i></Button>
+                </Col>
+            </If>
+
         </Row>
     }
 
@@ -69,7 +91,11 @@ const Feedback = (props) => {
 
     return <>
         <Container className={`feedback-${isFeedbackOpen ? 'open' : 'closed'}-container`}
-            onMouseEnter={() => setIsFeedbackOpen(true)}
+            onMouseEnter={() => {
+                setTimeout(() => {
+                    setIsFeedbackOpen(true)
+                }, 20);
+            }}
             onMouseLeave={() => setIsFeedbackOpen(false)}>
             <If c={isFeedbackOpen}>
                 <Row>
