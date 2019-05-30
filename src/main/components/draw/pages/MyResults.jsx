@@ -104,18 +104,23 @@ const MyResults = (props) => {
     }
 
     const deleteResult = result => {
-        deletePrivateResult(result.id).then(sucess => {
-            toastr.success('Sucesso!', 'O resultado foi excluído.')
-            window.location.reload()
-        }).catch(error => {
-            toastr.error('Erro', 'Ocorreu um erro ao tentar excluir o resultado')
-            log(`[ERRO] ao tentar EXCLUIR UM resultado privado em MyResults: ${error.message}`,
-                props.uid,
-                props.authResult).then(logId => {
-                    toastr.error('Error logged', `Log ID: ${logId}`)
-                }).catch(err => toastr.error('LOG ERROR',
-                    'Não foi possível criar o log de ERRO. EXCLUIR UM resultado privado em MyResults'))
-        })
+
+        const toastrConfirmOptions = {
+            onCancel: () => { },
+            onOk: () => deletePrivateResult(result.id).then(sucess => {
+                toastr.success('Sucesso!', 'O resultado foi excluído.')
+                window.location.reload()
+            }).catch(error => {
+                toastr.error('Erro', 'Ocorreu um erro ao tentar excluir o resultado')
+                log(`[ERRO] ao tentar EXCLUIR UM resultado privado em MyResults: ${error.message}`,
+                    props.uid,
+                    props.authResult).then(logId => {
+                        toastr.error('Error logged', `Log ID: ${logId}`)
+                    }).catch(err => toastr.error('LOG ERROR',
+                        'Não foi possível criar o log de ERRO. EXCLUIR UM resultado privado em MyResults'))
+            })
+        }
+        toastr.confirm(`Tem certeza de que deseja excluir esse resultado de sorteio? Isso não pode ser desfeito!`, toastrConfirmOptions)
     }
 
     const deleteAllResults = () => {
@@ -175,10 +180,10 @@ const MyResults = (props) => {
                                         }
                                     </ListGroup>
                                     <If c={!hideLoadMore}>
-                                        <Button color="link" className="text-decoration-none float-right pop-hover"
+                                        <Button color="link" className="text-decoration-none float-right"
                                             onClick={() => loadResults(lastResult)}>
                                             Carregar mais
-                                    </Button>
+                                        </Button>
                                     </If>
                                 </If>
                                 <If c={results.length === 0}>
