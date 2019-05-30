@@ -3,8 +3,11 @@ import React, { useState } from 'react'
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, Input } from "reactstrap"
 import If from '../../utils/If'
 import FilePicker from '../../utils/FilePicker'
+import { saveFeedback, saveFeedbackImage, like } from "../../../services/firebase/feedback"
+import { connect } from "react-redux"
+import { toastr } from "react-redux-toastr"
 
-const Feedback = () => {
+const Feedback = (props) => {
 
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -21,10 +24,40 @@ const Feedback = () => {
             </Col>
             <Col>
                 <Button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => {
+                        like().then(success => toastr.success('Obrigado!', 'Seu feedback é muito importante para nós!'))
+                        setIsFeedbackOpen(false)
+                    }}
                     outline block color="success" className="text-light"><i className="far fa-thumbs-up fa-md"></i></Button>
             </Col>
         </Row>
+    }
+
+    const sendFeedback = () => {
+        if (description) {
+            let feedback = {
+                description: description,
+                hasFile: file ? true : false,
+                email: props.email || '',
+            }
+            saveFeedback(feedback).then(feedbackId => {
+                console.log('Feedback salvo com o id ' + feedbackId)
+                toastr.success('Sucesso!', 'Recebemos seu feedback e tentaremos resolver assim que possível. Agradecemos sua colaboração!')
+                if (file) {
+                    saveFeedbackImage(feedbackId, file).then(result => {
+                        toastr.success('Sucesso!', 'A captura de tela foi enviada')
+                    }).catch(err => {
+                        console.log(`O seguinte erro ocorreu ao tentar salvar a imagem do feedback: ${err.message}`)
+                    })
+                }
+            }).catch(err => {
+                console.log(`O seguinte erro ocorreu ao tentar enviar o feedback: ${err.message}`)
+            })
+        } else {
+            toastr.warning('Atenção!', 'Você precisa fornecer uma descrição para relatar um problema!')
+        }
+        setIsFeedbackOpen(false)
+        setIsModalOpen(false)
     }
 
     return <>
@@ -63,7 +96,12 @@ const Feedback = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <FilePicker onPicked={(file) => {setFile(file)}} accept=",.jpg" isPictureUpload/>
+                                <FilePicker onPicked={(file) => { setFile(file) }} accept=",.jpg" isPictureUpload />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button block color="success" onClick={() => sendFeedback()}>Enviar</Button>
                             </Col>
                         </Row>
                     </Container>
@@ -74,4 +112,8 @@ const Feedback = () => {
     </>
 }
 
-export default Feedback
+const mapStateToProps = state => ({
+    email: state.user.email
+})
+
+export default connect(mapStateToProps)(Feedback)

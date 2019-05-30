@@ -7,13 +7,14 @@ const FilePicker = (props) => {
     const filePicked = () => {
         try {
             const input = document.getElementById(props.id || 'file-upload')
-            let reader = new FileReader()
             if (props.isPictureUpload) {
-                reader.readAsDataURL(input.files[0])
+                // reader.readAsDataURL(input.files[0])
+                props.onPicked(input.files[0])
             } else {
+                let reader = new FileReader()
                 reader.readAsText(input.files[0], 'ISO-8859-4')
+                reader.onload = e => props.onPicked(e.target.result)
             }
-            reader.onload = e => props.onPicked(e.target.result)
         } catch (err) { }
     }
 
