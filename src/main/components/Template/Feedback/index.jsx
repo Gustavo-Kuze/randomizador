@@ -4,7 +4,9 @@ import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, Input } fro
 import If from '../../utils/If'
 import FilePicker from '../../utils/FilePicker'
 import { saveFeedback, saveFeedbackImage, like } from "../../../services/firebase/feedback"
+import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
+import { setUserLiked } from "../../../redux/core/actions/feedbacksActions"
 import { toastr } from "react-redux-toastr"
 
 const Feedback = (props) => {
@@ -25,7 +27,12 @@ const Feedback = (props) => {
             <Col>
                 <Button
                     onClick={() => {
-                        like().then(success => toastr.success('Obrigado!', 'Seu feedback é muito importante para nós!'))
+                        if (!props.userLiked) {
+                            like().then(success => {
+                                toastr.success('Obrigado!', 'Seu feedback é muito importante para nós!')
+                                props.setUserLiked()
+                            })
+                        }
                         setIsFeedbackOpen(false)
                     }}
                     outline block color="success" className="text-light"><i className="far fa-thumbs-up fa-md"></i></Button>
@@ -81,17 +88,17 @@ const Feedback = (props) => {
                     <Container>
                         <Row>
                             <Col>
-                                <p className="h3">Use o campo abaixo para descrever seu problema</p>
+                                <p className="h4">Use o campo abaixo para descrever seu problema</p>
                             </Col>
                         </Row>
                         <Row>
                             <Col>
-                                <Input type="textarea" className="" rows="3" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Descreva seu problema aqui" />
+                                <Input type="textarea" className="mb-3" rows="3" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Descreva seu problema aqui" />
                             </Col>
                         </Row>
                         <Row>
                             <Col>
-                                <p className="h3">Envie uma captura de tela (opcional)</p>
+                                <p className="h4">Envie uma captura de tela (opcional)</p>
                             </Col>
                         </Row>
                         <Row>
@@ -99,6 +106,13 @@ const Feedback = (props) => {
                                 <FilePicker onPicked={(file) => { setFile(file) }} accept=",.jpg" isPictureUpload />
                             </Col>
                         </Row>
+                        <If c={file}>
+                            <Row>
+                                <Col>
+                                    <p className="text-success lead"><span>O arquivo foi selecionado </span><span><i className="fas fa-check"></i></span></p>
+                                </Col>
+                            </Row>
+                        </If>
                         <Row>
                             <Col>
                                 <Button block color="success" onClick={() => sendFeedback()}>Enviar</Button>
@@ -113,7 +127,12 @@ const Feedback = (props) => {
 }
 
 const mapStateToProps = state => ({
-    email: state.user.email
+    email: state.user.email,
+    userLiked: state.feedbacks.userLiked,
 })
 
-export default connect(mapStateToProps)(Feedback)
+const mapDispatchToProps = dispatch => bindActionCreators({
+    setUserLiked
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback)

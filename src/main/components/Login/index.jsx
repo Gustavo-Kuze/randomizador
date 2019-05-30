@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { setAuthResult } from "../../redux/core/actions/loginActions"
 import { log } from '../../services/logger/'
+import { setUserChanged } from "../../redux/core/actions/feedbacksActions"
 
 const Login = (props) => {
 
@@ -29,16 +30,17 @@ const Login = (props) => {
         // }
         props.setAuthResult(authResult)
         setSigningAsDone(true)
+        props.setUserChanged()
         return false
     }
 
     function signInFailure(err) {
         log(`[ERRO] ao tentar fazer LOGIN em Login index: ${err.message}`,
-        props.uid,
-        props.login).then(logId => {
-            toastr.error('Error logged', `Log ID: ${logId}`)
-        }).catch(err => toastr.error('LOG ERROR',
-            'Não foi possível criar o logde ERRO. Erro ao tentar fazer LOGIN em Login index'))
+            props.uid,
+            props.login).then(logId => {
+                toastr.error('Error logged', `Log ID: ${logId}`)
+            }).catch(err => toastr.error('LOG ERROR',
+                'Não foi possível criar o logde ERRO. Erro ao tentar fazer LOGIN em Login index'))
     }
 
     // const signInSuccessful = (authResult, resirectUrl) => {
@@ -115,7 +117,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    setAuthResult
+    setAuthResult, setUserChanged
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

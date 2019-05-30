@@ -14,6 +14,7 @@ store.subscribe(() => {
     saveState({
         user: store.getState().user,
         login: store.getState().login,
+        feedbacks: store.getState().feedbacks,
     })
 })
 

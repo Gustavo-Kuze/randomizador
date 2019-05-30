@@ -6,6 +6,7 @@ import facebookReducer from './reducers/facebookLoginReducer'
 import loginReducer from './reducers/loginReducer'
 import facebookCommentsReducer from './reducers/facebookCommentsReducer'
 import instagramCommentsReducer from './reducers/instagramCommentsReducer'
+import feedbacksReducer from './reducers/feedbacksReducer'
 import { reducer as toastrReducer } from 'react-redux-toastr'
 
 export default combineReducers({
@@ -17,4 +18,5 @@ export default combineReducers({
     facebook: facebookReducer,
     facebookComments: facebookCommentsReducer,
     instagramComments: instagramCommentsReducer,
+    feedbacks: feedbacksReducer,
 })

@@ -7,6 +7,7 @@ import { Spinner, Container, Col, Row } from 'reactstrap'
 import firebase from '../../services/firebase/'
 import { toastr } from 'react-redux-toastr'
 import { log } from '../../services/logger/'
+import { setUserChanged } from '../../redux/core/actions/feedbacksActions'
 
 const Logout = (props) => {
 
@@ -17,6 +18,7 @@ const Logout = (props) => {
             toastr.success('Sucesso', 'Você saiu de sua conta. Clique no botão login, no menu, para entrar novamente!')
             props.logout()
             setLogoutComplete(true)
+            props.setUserChanged()
         }).catch(err => {
             log(`[ERRO] ao tentar fazer LOGOUT em Logout: ${err.message}`,
                 props.uid,
@@ -50,7 +52,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    logout
+    logout, setUserChanged
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logout)
