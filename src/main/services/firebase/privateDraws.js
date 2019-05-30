@@ -1,4 +1,6 @@
 import firebase from './index'
+import constants from '../../components/draw/drawUtils/constants'
+
 import Chance from 'chance'
 let chance = new Chance()
 
@@ -22,7 +24,14 @@ const savePrivateResult = async (drawResults) => {
 
 const getPrivateResults = async () => {
     if (drawsRef) {
-        return await drawsRef.orderBy('date', 'desc').get()
+        return await drawsRef.orderBy('date', 'desc').limit(constants.PRIVATE_RESULTS_GET_LIMIT).get()
+    }
+    return Promise.reject(new Error('Não foi possível obter a instância da collection draws. drawsRef era null'))
+}
+
+const getNextPrivateResults = async (lastVisible) => {
+    if (drawsRef) {
+        return await drawsRef.orderBy('date', 'desc').limit(constants.PRIVATE_RESULTS_GET_LIMIT).startAfter(lastVisible).get()
     }
     return Promise.reject(new Error('Não foi possível obter a instância da collection draws. drawsRef era null'))
 }
@@ -45,5 +54,6 @@ const deleteAllPrivateResults = async () => {
 }
 
 export {
-    savePrivateResult, getPrivateResults, deletePrivateResult, deleteAllPrivateResults
+    savePrivateResult, getPrivateResults, getNextPrivateResults,
+    deletePrivateResult, deleteAllPrivateResults
 }

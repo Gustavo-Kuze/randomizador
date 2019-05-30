@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Template from '../../Template/'
 import { Redirect } from 'react-router-dom'
 import {
-    getPrivateResults, deletePrivateResult, deleteAllPrivateResults
+    getPrivateResults, getNextPrivateResults, deletePrivateResult,
+    deleteAllPrivateResults
 } from '../../../services/firebase/privateDraws'
 import drawTypes from '../drawUtils/drawTypes'
 import { setPrivateResultOnState } from '../../../redux/core/actions/privateResults'
@@ -13,35 +14,70 @@ import If from '../../utils/If'
 import { toastr } from 'react-redux-toastr'
 import { log } from '../../../services/logger/'
 import { Container, Row, Col, Card, Button, ListGroup, ListGroupItem } from 'reactstrap'
+import constants from '../drawUtils/constants'
 
 const MyResults = (props) => {
 
     let [results, setResults] = useState([])
     let [shouldRedirect, setShouldRedirect] = useState(false)
 
+    let [lastResult, setLastResult] = useState()
+    let [hideLoadMore, setHideLoadMore] = useState(false)
+
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                getPrivateResults().then(snap => {
-                    let resultsFromFirestore = []
-                    if (snap) {
-                        snap.forEach(doc => {
-                            resultsFromFirestore.push({ id: doc.id, ...doc.data() })
-                        })
-                    }
-                    setResults(resultsFromFirestore)
-                }).catch(error => {
-                    log(`[ERRO] ao tentar OBTER os resultados privados em MyResults: ${error.message}`,
-                        props.uid,
-                        props.authResult).then(logId => {
-                            toastr.error('Error logged', `Log ID: ${logId}`)
-                        }).catch(err => toastr.error('LOG ERROR',
-                            'Não foi possível criar o log. OBTER os resultados privados em MyResults'))
-                })
+                loadResults()
             }
         })
 
     }, [])
+
+    const prepareSnapAndSetOnState = (snap, loadMore = false) => {
+        let resultsFromFirestore = []
+        if (snap) {
+            snap.forEach(doc => {
+                resultsFromFirestore.push({ id: doc.id, ...doc.data() })
+            })
+        }
+
+        if (loadMore) {
+            setResults([...results, ...resultsFromFirestore])
+        } else {
+            setResults(resultsFromFirestore)
+        }
+        if (resultsFromFirestore.length === 0 || resultsFromFirestore.length < constants.PRIVATE_RESULTS_GET_LIMIT) {
+            setHideLoadMore(true)
+        }
+        setLastResult(snap.docs[snap.docs.length - 1])
+    }
+
+    const loadResults = (lastVisible = false) => {
+        if (lastVisible) {
+            getNextPrivateResults(lastVisible).then(snap => {
+                prepareSnapAndSetOnState(snap, true)
+            }).catch(error => {
+                log(`[ERRO] ao tentar OBTER os resultados privados em MyResults (CARREGAR MAIS): ${error.message}`,
+                    props.uid,
+                    props.authResult).then(logId => {
+                        toastr.error('Error logged', `Log ID: ${logId}`)
+                    }).catch(err => toastr.error('LOG ERROR',
+                        'Não foi possível criar o log. OBTER os resultados privados em MyResults'))
+            })
+        } else {
+            getPrivateResults().then(snap => {
+                prepareSnapAndSetOnState(snap)
+            }).catch(error => {
+                log(`[ERRO] ao tentar OBTER os resultados privados em MyResults: ${error.message}`,
+                    props.uid,
+                    props.authResult).then(logId => {
+                        toastr.error('Error logged', `Log ID: ${logId}`)
+                    }).catch(err => toastr.error('LOG ERROR',
+                        'Não foi possível criar o log. OBTER os resultados privados em MyResults'))
+            })
+        }
+    }
 
     const DrawType = ({ type }) => {
         switch (type) {
@@ -138,6 +174,12 @@ const MyResults = (props) => {
                                             ))
                                         }
                                     </ListGroup>
+                                    <If c={!hideLoadMore}>
+                                        <Button color="link" className="text-decoration-none float-right pop-hover"
+                                            onClick={() => loadResults(lastResult)}>
+                                            Carregar mais
+                                    </Button>
+                                    </If>
                                 </If>
                                 <If c={results.length === 0}>
                                     <h3 className="text-center p-5">Você não tem nenhum resultado de sorteio salvo...</h3>
