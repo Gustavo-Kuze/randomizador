@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import ToolsSection from './ToolsSection';
 import CheckResultsSection from './CheckResultsSection';
 import { Container, Row, Col } from 'reactstrap'
-import AdSense from 'react-adsense'
 import { getLikesCount } from "../../services/firebase/feedback"
 
 const Home = () => {
@@ -35,19 +34,6 @@ const Home = () => {
                     <Row>
                         <Col xs={{ size: 6, offset: 3 }} className="d-flex justify-content-center align-items-center">
                             <Link to="/user/lists" className="btn btn-primary btn-block">Vamos lá!</Link>
-                        </Col>
-                    </Row>
-                </Container>
-                <Container>
-                    <Row>
-                        <Col>
-                            <AdSense.Google
-                                client='ca-pub-4739817969139361'
-                                slot='6373703710'
-                                style={{ display: 'block' }}
-                                format='auto'
-                                responsive='true'
-                            />
                         </Col>
                     </Row>
                 </Container>

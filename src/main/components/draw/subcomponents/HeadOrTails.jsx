@@ -3,6 +3,7 @@ import If from '../../utils/If'
 import DrawResults from '../subcomponents/DrawResults'
 import drawTypes from '../drawUtils/drawTypes'
 import { Container, Row, Col } from 'reactstrap'
+import AdSense from 'react-adsense'
 
 class HeadOrTails extends Component {
     constructor(props) {
@@ -51,6 +52,17 @@ class HeadOrTails extends Component {
                         <Row className="mb-5">
                             <Col>
                                 <h1 className="sofia"><strong>Cara ou Coroa</strong></h1>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <AdSense.Google
+                                    client='ca-pub-4739817969139361'
+                                    slot='6373703710'
+                                    style={{ display: 'block' }}
+                                    format='auto'
+                                    responsive='true'
+                                />
                             </Col>
                         </Row>
                         <Row>

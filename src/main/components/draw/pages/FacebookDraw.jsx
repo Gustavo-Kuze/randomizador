@@ -7,6 +7,7 @@ import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebook
 import { resetFacebookComments } from '../../../redux/core/actions/facebookCommentsActions'
 import { Container, Row, Col } from "reactstrap"
 import FacebookObserver from '../../../observers/FacebookSDK'
+import AdSense from 'react-adsense'
 
 const FacebookDraw = (props) => {
 
@@ -28,6 +29,17 @@ const FacebookDraw = (props) => {
                 <Row className="mb-5">
                     <Col>
                         <h1 className="sofia"><strong>Sorteio de Comentários do Facebook</strong></h1>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <AdSense.Google
+                            client='ca-pub-4739817969139361'
+                            slot='6373703710'
+                            style={{ display: 'block' }}
+                            format='auto'
+                            responsive='true'
+                        />
                     </Col>
                 </Row>
                 <Row className="mt-5">
