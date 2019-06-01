@@ -23,11 +23,11 @@ const Login = (props) => {
     }, [])
 
     function signInSuccessful(authResult, resirectUrl) {
-        // if (!authResult.user.emailVerified) {
-        //     firebase.auth().currentUser.sendEmailVerification().then(() => {
-        //         toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
-        //     })
-        // }
+        if (!authResult.user.emailVerified) {
+            firebase.auth().currentUser.sendEmailVerification().then(() => {
+                toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
+            })
+        }
         props.setAuthResult(authResult)
         setSigningAsDone(true)
         props.setUserChanged()
@@ -42,16 +42,6 @@ const Login = (props) => {
             }).catch(err => toastr.error('LOG ERROR',
                 'Não foi possível criar o logde ERRO. Erro ao tentar fazer LOGIN em Login index'))
     }
-
-    // const signInSuccessful = (authResult, resirectUrl) => {
-    //     // if (!authResult.user.emailVerified) {
-    //     //     firebase.auth().currentUser.sendEmailVerification().then(() => {
-    //     //         toastr.success('E-mail enviado', 'Verificação de e-mail enviada com sucesso')
-    //     //     })
-    //     // }
-    //     props.setAuthResult(authResult)
-    //     setSigningAsDone(true)
-    // }
 
     const initializeFirebaseUi = () => {
         var ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth())
