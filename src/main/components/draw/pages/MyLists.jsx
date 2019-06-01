@@ -19,7 +19,6 @@ import drawTypes from '../drawUtils/drawTypes'
 import keyCodes from '../../utils/keycodes'
 import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult'
 import { Container, Row, Col, Card, CardBody, Button } from 'reactstrap'
-import AdSense from 'react-adsense'
 
 let chance = new Chance()
 
@@ -117,17 +116,6 @@ const MyLists = (props) => {
                 <Row className="mt-3">
                     <Col>
                         <h1 className="sofia"><strong>Minhas listas</strong></h1>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <AdSense.Google
-                            client='ca-pub-4739817969139361'
-                            slot='6373703710'
-                            style={{ display: 'block' }}
-                            format='auto'
-                            responsive='true'
-                        />
                     </Col>
                 </Row>
                 <Row>

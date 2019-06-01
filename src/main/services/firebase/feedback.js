@@ -4,7 +4,7 @@ let feedbacksRef = firebase.firestore()
     .collection('feedbacks')
 
 let likesRef = firebase.firestore()
-.collection('positiveFeedbacks').doc('counter')
+    .collection('positiveFeedbacks').doc('counter')
 
 const _getFeedbackssCount = async () => {
     let snap = await feedbacksRef.get()
@@ -23,7 +23,7 @@ const saveFeedbackImage = (id, imgFile) => {
             let feedbacksRef = firebase.storage().ref().child(`feedbacks/${id}`)
             feedbacksRef.put(imgFile).then(snapshot => {
                 res(snapshot)
-            })
+            }).catch(error => console.log(error.message))
         } catch (error) {
             rej(error)
         }

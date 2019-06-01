@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
 import { setUserLiked } from "../../../redux/core/actions/feedbacksActions"
 import { toastr } from "react-redux-toastr"
+import { log } from '../../../services/logger/'
 
 const Feedback = (props) => {
 
@@ -76,7 +77,12 @@ const Feedback = (props) => {
                     saveFeedbackImage(feedbackId, file).then(result => {
                         toastr.success('Sucesso!', 'A captura de tela foi enviada')
                     }).catch(err => {
-                        console.log(`O seguinte erro ocorreu ao tentar salvar a imagem do feedback: ${err.message}`)
+                        log(`[ERRO] SALVAR uma imagem de feedback em Feedback: ${err.message}`,
+                            props.uid,
+                            props.authResult).then(logId => {
+                                toastr.error('Error logged', `Log ID: ${logId}`)
+                            }).catch(err => toastr.error('LOG ERROR',
+                                `O seguinte erro ocorreu ao tentar salvar a imagem do feedback: ${err.message}`))
                     })
                 }
             }).catch(err => {
