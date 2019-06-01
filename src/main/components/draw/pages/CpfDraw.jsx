@@ -43,16 +43,16 @@ const CpfDraw = () => {
                             <CardBody>
                                 <Container>
                                     <Row>
-                                        <Col xs={{ size: 9 }}>
-                                            <Input type="text" className="mb-md-3 mb-5 text-center" rows="3"
+                                        <Col xs={{ size: 12 }} md={{size: 9}}>
+                                            <Input type="text" className="mb-md-3 text-center" rows="3"
                                                 value={cpf}
                                                 onChange={e => setCpf(e.target.value)}
                                                 placeholder="Clique no botão abaixo para gerar um CPF"
                                                 style={{ fontSize: '1.8em' }}
                                                 id="input-resultado" />
                                         </Col>
-                                        <Col xs={{ size: 3 }}>
-                                            <Button outline color="success" className={`mt-3 ${shouldCopyPulse ? 'btn-pulse-success' : ''}`} onClick={copyResult}>
+                                        <Col xs={{ size: 12 }} md={{size: 3}}>
+                                            <Button outline color="success" className={`my-3 my-md-0 mt-md-3 ${shouldCopyPulse ? 'btn-pulse-success' : ''}`} onClick={copyResult}>
                                                 {resultCopied && !shouldCopyPulse ? 'Copiado' : 'Copiar'} <i className={`${resultCopied && !shouldCopyPulse ? 'fas fa-clipboard-check' : 'far fa-clipboard'} fa-lg`}></i>
                                             </Button>
                                         </Col>
