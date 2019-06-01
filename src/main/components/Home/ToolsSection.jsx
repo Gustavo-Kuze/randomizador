@@ -66,6 +66,7 @@ const ToolsSection = () => {
                 <Col>
                     <CardDeck>
                         <Card link="user/lists" icon="fas fa-list-ol fa-5x" alt="Listas de sorteio" description="Listas de sorteio" style={{ height: '190px' }} className="d-flex justify-content-center align-items-center" />
+                        <Card link="cpf" icon="fas fa-id-card fa-5x" alt="Gerador de CPF" description="Gerador de CPF" style={{ height: '190px' }} className="d-flex justify-content-center align-items-center" />
                     </CardDeck>
                 </Col>
             </Row>

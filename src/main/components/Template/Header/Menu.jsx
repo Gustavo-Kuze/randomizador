@@ -26,6 +26,7 @@ const Menu = () => {
             <Link to="/shuffle" className="list-group-item list-group-item-action" >Embaralhador de frases</Link>
             <Link to="/headortails" className="list-group-item list-group-item-action" >Cara ou Coroa</Link>
             <Link to="/facebook" className="list-group-item list-group-item-action" >Comentários do Facebook</Link>
+            <Link to="/cpf" className="list-group-item list-group-item-action" >Gerador de CPF</Link>
             <p className="text-secondary mt-3">Resultados de sorteio</p>
             <Link to="/myresults" className="list-group-item list-group-item-action" >Meus sorteios</Link>
             <hr />

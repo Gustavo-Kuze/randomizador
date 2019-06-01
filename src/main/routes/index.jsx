@@ -11,6 +11,7 @@ import MyResults from '../components/draw/pages/MyResults'
 import NumberDraw from '../components/draw/pages/NumberDraw'
 import HeadOrTailsDraw from '../components/draw/pages/HeadOrTailsDraw'
 import ShuffleDraw from '../components/draw/pages/ShuffleDraw'
+import CpfDraw from '../components/draw/pages/CpfDraw'
 import Login from '../components/Login/'
 import Logout from '../components/Login/Logout'
 import Facebook from '../components/draw/pages/FacebookDraw'
@@ -22,6 +23,7 @@ export default () =>
             <Route exact path='/numbers' component={NumberDraw} />
             <Route exact path='/headortails' component={HeadOrTailsDraw} />
             <Route exact path='/shuffle' component={ShuffleDraw} />
+            <Route exact path='/cpf' component={CpfDraw} />
             <Route exact path='/about' component={About} />
             <Route exact path='/verifyemail' component={VerifyEmail} />
             <ProtectedRoute exact path='/facebook' component={Facebook} />
