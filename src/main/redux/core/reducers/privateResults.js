@@ -1,4 +1,4 @@
-import types from '../actions/types/privateResultsTypes'
+import types from '../actions/types/privateResults'
 
 const STATE = {
     currentPrivateResult: {}

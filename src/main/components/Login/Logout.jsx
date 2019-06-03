@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { logout } from '../../redux/core/actions/userActions'
+import { logout } from '../../redux/core/actions/user'
 import { Spinner, Container, Col, Row } from 'reactstrap'
 import firebase from '../../services/firebase/'
 import { toastr } from 'react-redux-toastr'
 import { log } from '../../services/logger/'
-import { setUserChanged } from '../../redux/core/actions/feedbacksActions'
+import { setUserChanged } from '../../redux/core/actions/feedbacks'
 
 const Logout = (props) => {
 

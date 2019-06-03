@@ -3,7 +3,7 @@ import Routes from '../routes/index'
 import firebase from '../services/firebase/'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { login, logout } from '../redux/core/actions/userActions'
+import { login, logout } from '../redux/core/actions/user'
 
 class App extends Component {
 

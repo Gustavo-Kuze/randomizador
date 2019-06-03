@@ -1,4 +1,4 @@
-import types from '../actions/types/facebookLoginTypes'
+import types from '../actions/types/facebookLogin'
 
 const STATE = {
     status: 'unknown',

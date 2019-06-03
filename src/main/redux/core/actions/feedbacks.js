@@ -1,4 +1,4 @@
-import types from './types/feedbacksTypes'
+import types from './types/feedbacks'
 
 export const setUserLiked = () => {
     return {

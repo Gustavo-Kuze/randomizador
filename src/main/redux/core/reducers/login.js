@@ -1,4 +1,4 @@
-import types from '../actions/types/loginTypes'
+import types from '../actions/types/login'
 
 const STATE = {
 }

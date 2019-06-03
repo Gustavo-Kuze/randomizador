@@ -1,4 +1,4 @@
-import types from './types/listsTypes'
+import types from './types/lists'
 
 export const addList = (list = null) => {
     return {

@@ -1,4 +1,4 @@
-import types from './types/privateResultsTypes'
+import types from './types/privateResults'
 
 export const setPrivateResultOnState = result => {
     return {

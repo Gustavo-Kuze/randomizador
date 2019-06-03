@@ -1,4 +1,4 @@
-import types from './types/instagramCommentsTypes'
+import types from './types/instagramComments'
 
 export const setBusinessId = (id) => {
     return {

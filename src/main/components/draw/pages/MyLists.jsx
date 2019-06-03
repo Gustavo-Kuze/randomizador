@@ -5,7 +5,7 @@ import Template from '../../Template'
 import List from '../subcomponents/Lists/'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { addList, setLists } from '../../../redux/core/actions/listsActions'
+import { addList, setLists } from '../../../redux/core/actions/lists'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Input } from 'reactstrap'
 import If from '../../utils/If'

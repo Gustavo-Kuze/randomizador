@@ -9,9 +9,9 @@ import { Spinner, Container, Row, Col } from 'reactstrap'
 import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { setAuthResult } from "../../redux/core/actions/loginActions"
+import { setAuthResult } from "../../redux/core/actions/login"
 import { log } from '../../services/logger/'
-import { setUserChanged } from "../../redux/core/actions/feedbacksActions"
+import { setUserChanged } from "../../redux/core/actions/feedbacks"
 
 const Login = (props) => {
 

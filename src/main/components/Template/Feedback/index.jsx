@@ -6,7 +6,7 @@ import FilePicker from '../../utils/FilePicker'
 import { saveFeedback, saveFeedbackImage, like } from "../../../services/firebase/feedback"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
-import { setUserLiked } from "../../../redux/core/actions/feedbacksActions"
+import { setUserLiked } from "../../../redux/core/actions/feedbacks"
 import { toastr } from "react-redux-toastr"
 import { log } from '../../../services/logger/'
 

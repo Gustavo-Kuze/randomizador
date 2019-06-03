@@ -1,4 +1,4 @@
-import types from './types/facebookCommentsTypes'
+import types from './types/facebookComments'
 
 export const setUserPages = (pages) => {
     return {

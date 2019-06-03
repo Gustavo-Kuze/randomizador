@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import If from '../../../utils/If'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { editListName, removeList, setAllItemsEnabledState } from "../../../../redux/core/actions/listsActions"
+import { editListName, removeList, setAllItemsEnabledState } from "../../../../redux/core/actions/lists"
 import keycodes from '../../../utils/keycodes'
 import { toastr } from 'react-redux-toastr'
 import { Container, Col, Row, Button, CardHeader } from 'reactstrap'

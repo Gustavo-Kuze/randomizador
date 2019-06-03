@@ -1,4 +1,4 @@
-import types from './types/facebookLoginTypes'
+import types from './types/facebookLogin'
 
 export const setStatus = status => {
     return {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setFB } from "../redux/core/actions/facebookLoginActions"
+import { setFB } from "../redux/core/actions/facebookLogin"
 
 export class FacebookSDK extends Component {
 
@@ -28,7 +28,7 @@ export class FacebookSDK extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    FB: state.facebook.FB
+    FB: state.facebookLogin.FB
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

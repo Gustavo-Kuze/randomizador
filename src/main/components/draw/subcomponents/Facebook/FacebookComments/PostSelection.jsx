@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { Collapse } from 'reactstrap'
-import { setSelectedPost } from "../../../../../redux/core/actions/facebookCommentsActions";
+import { setSelectedPost } from "../../../../../redux/core/actions/facebookComments";
 import If from '../../../../utils/If'
 import { Container, Row, Col, Card, Button } from 'reactstrap'
 

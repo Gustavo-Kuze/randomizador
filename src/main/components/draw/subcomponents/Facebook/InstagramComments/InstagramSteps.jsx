@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { toastr } from 'react-redux-toastr'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
-import { setBusinessId, setComments, setMedias, setSelectedMedia } from '../../../../../redux/core/actions/instagramCommentsActions'
+import { setBusinessId, setComments, setMedias, setSelectedMedia } from '../../../../../redux/core/actions/instagramComments'
 import { getUserPages, getPaginationResult, getAllComments } from '../../../../../services/facebook/'
 import { getBusinessAccountId, getMedia } from '../../../../../services/facebook/instagram'
-import { setUserPages } from "../../../../../redux/core/actions/facebookCommentsActions";
+import { setUserPages } from "../../../../../redux/core/actions/facebookComments";
 import firebase from '../../../../../services/firebase/'
 import PageSelection from '../FacebookComments/PageSelection'
 import InstaCommentsDraw from "./InstaCommentsDraw";
@@ -228,7 +228,7 @@ const mapStateToProps = state => ({
   medias: state.instagramComments.medias,
   login: state.login,
   uid: state.user.uid,
-  FB: state.facebook.FB
+  FB: state.facebookLogin.FB
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

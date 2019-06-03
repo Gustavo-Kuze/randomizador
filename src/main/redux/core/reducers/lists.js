@@ -1,4 +1,4 @@
-import types from '../actions/types/listsTypes'
+import types from '../actions/types/lists'
 
 const STATE = []
 

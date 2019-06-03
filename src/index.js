@@ -8,7 +8,7 @@ import ReduxToastr from 'react-redux-toastr'
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import { saveState } from './main/redux/storage/localStorage'
-import store from './main/redux/core/store'
+import store from './main/redux/store'
 
 store.subscribe(() => {
     saveState({

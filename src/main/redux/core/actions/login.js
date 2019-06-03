@@ -1,4 +1,4 @@
-import types from './types/loginTypes'
+import types from './types/login'
 
 export const setAuthResult = authResult => {
     return {

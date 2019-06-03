@@ -1,4 +1,4 @@
-import types from '../../redux/core/actions/types/listsTypes'
+import types from '../core/actions/types/lists'
 import { put, call } from 'redux-saga/effects'
 import {
     addList, deleteList, editListName,

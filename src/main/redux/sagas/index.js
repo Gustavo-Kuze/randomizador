@@ -1,4 +1,4 @@
-import listsTypes from '../core/actions/types/listsTypes'
+import listsTypes from '../core/actions/types/lists'
 import { takeLatest, all } from 'redux-saga/effects'
 
 import {

@@ -4,7 +4,7 @@ import Item from './Item'
 import ListTitle from './ListTitle'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { addItem, editListName, removeList, removeItem } from "../../../../redux/core/actions/listsActions"
+import { addItem, editListName, removeList, removeItem } from "../../../../redux/core/actions/lists"
 import { Button, Card, CardBody, ListGroup, ListGroupItem } from "reactstrap"
 import { Droppable } from "react-drag-and-drop"
 

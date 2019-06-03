@@ -1,9 +1,9 @@
 import React from 'react'
 import { Collapse } from 'reactstrap'
-import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions'
+import { setAuthResponse } from '../../../../../redux/core/actions/facebookLogin'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
-import { setSelectedPage } from "../../../../../redux/core/actions/facebookCommentsActions";
+import { setSelectedPage } from "../../../../../redux/core/actions/facebookComments";
 import If from '../../../../utils/If'
 import { Card } from "reactstrap"
 

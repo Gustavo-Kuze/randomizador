@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import {
   setPagePosts, setUserPages, setPostComments
-} from "../../../../../redux/core/actions/facebookCommentsActions";
+} from "../../../../../redux/core/actions/facebookComments";
 
 import {
   getUserPages, getPagePosts, getPaginationResult, getAllComments
@@ -207,7 +207,7 @@ const mapStateToProps = state => ({
   userPages: state.facebookComments.userPages,
   login: state.login,
   uid: state.user.uid,
-  FB: state.facebook.FB
+  FB: state.facebookLogin.FB
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

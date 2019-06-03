@@ -1,4 +1,4 @@
-import types from '../actions/types/instagramCommentsTypes'
+import types from '../actions/types/instagramComments'
 
 const STATE = {
     id: '',

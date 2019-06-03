@@ -1,4 +1,4 @@
-import types from '../actions/types/userTypes'
+import types from '../actions/types/user'
 
 const STATE = {
     displayName: '',

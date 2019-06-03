@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import { Collapse } from 'reactstrap'
-import { setSelectedMedia } from "../../../../../redux/core/actions/instagramCommentsActions";
+import { setSelectedMedia } from "../../../../../redux/core/actions/instagramComments";
 import If from '../../../../utils/If'
 import { Container, Col, Row, Button, Card } from 'reactstrap'
 

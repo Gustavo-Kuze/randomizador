@@ -3,8 +3,8 @@ import Template from '../../Template'
 import InstagramSteps from "../subcomponents/Facebook/InstagramComments/InstagramSteps";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
-import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLoginActions'
-import { resetInstagramComments } from '../../../redux/core/actions/instagramCommentsActions'
+import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLogin'
+import { resetInstagramComments } from '../../../redux/core/actions/instagramComments'
 import { Container, Row, Col } from "reactstrap"
 import FacebookObserver from '../../../observers/FacebookSDK'
 
@@ -43,7 +43,7 @@ const InstagramDraw = (props) => {
 }
 
 const mapStateToProps = state => ({
-    FB: state.facebook.FB
+    FB: state.facebookLogin.FB
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

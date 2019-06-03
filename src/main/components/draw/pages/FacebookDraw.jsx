@@ -3,8 +3,8 @@ import Template from '../../Template/'
 import FacebookSteps from "../subcomponents/Facebook/FacebookComments/FacebookSteps";
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
-import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLoginActions'
-import { resetFacebookComments } from '../../../redux/core/actions/facebookCommentsActions'
+import { setAuthResponse, setStatus } from '../../../redux/core/actions/facebookLogin'
+import { resetFacebookComments } from '../../../redux/core/actions/facebookComments'
 import { Container, Row, Col } from "reactstrap"
 import FacebookObserver from '../../../observers/FacebookSDK'
 
@@ -42,7 +42,7 @@ const FacebookDraw = (props) => {
 }
 
 const mapStateToProps = state => ({
-    FB: state.facebook.FB
+    FB: state.facebookLogin.FB
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -1,4 +1,4 @@
-import types from '../actions/types/facebookCommentsTypes'
+import types from '../actions/types/facebookComments'
 
 const STATE = {
     userPages: [],

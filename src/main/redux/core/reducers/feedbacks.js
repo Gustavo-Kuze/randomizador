@@ -1,4 +1,4 @@
-import types from '../actions/types/feedbacksTypes'
+import types from '../actions/types/feedbacks'
 
 const STATE = {
     userLiked: false
