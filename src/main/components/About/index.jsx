@@ -1,3 +1,4 @@
+import randomizadorIcon from '../../../img/randomizador_icon_1024.svg';
 import React from 'react'
 import Template from '../Template/'
 import { Container, Row, Col } from 'reactstrap'
@@ -14,7 +15,7 @@ const About = () => {
                     </Row>
                     <Row className="mt-3">
                         <Col className="d-flex justify-content-center align-items-center" xs={{ size: 6, offset: 3 }}>
-                            <img src="/img/randomizador_icon_1024.png" alt="Logo" className="img-fluid" style={{ maxHeight: '200px' }} />
+                            <img src={randomizadorIcon} alt="Logo" className="img-fluid" style={{ maxHeight: '200px' }} />
                         </Col>
                     </Row>
                     <Row className="mt-5">

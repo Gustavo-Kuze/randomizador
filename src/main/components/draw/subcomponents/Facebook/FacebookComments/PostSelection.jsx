@@ -1,3 +1,4 @@
+import randomizadorIconSvg from '../../../../../../img/randomizador_icon_64.svg';
 import React from 'react'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
@@ -21,7 +22,7 @@ const PostSelection = (props) => {
                 checked={props.selectedPost ? props.selectedPost.id === post.id : false}
                 onChange={e => setPostAndCallback(post)} />
             <label className="custom-control-label" htmlFor={id}>
-                <img className="img-thumbnail mt-4" src={post.full_picture || '/img/randomizador_icon_64.png'} alt="Post sem imagem" style={{ maxWidth: '160px' }} />
+                <img className="img-thumbnail mt-4" src={post.full_picture || randomizadorIconSvg} alt="Post sem imagem" style={{ maxWidth: '160px' }} />
                 <span className={`text-truncate d-block mt-2 mb-5 ${post.message ? 'lead' : 'text-secondary'}`} style={{ maxWidth: 'calc(50vw)' }}>{post.message || 'Post sem mensagem'}</span>
             </label>
         </>

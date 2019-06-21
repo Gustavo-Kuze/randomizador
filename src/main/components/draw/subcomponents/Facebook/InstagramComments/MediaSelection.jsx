@@ -1,3 +1,4 @@
+import randomizadorIconSvg from '../../../../../../img/randomizador_icon_64.svg';
 import React from 'react'
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
@@ -21,7 +22,7 @@ const MediaSelection = (props) => {
                 checked={props.selectedMedia ? props.selectedMedia.id === media.id : false}
                 onChange={e => setMediaAndCallback(media)} />
             <label className="custom-control-label" htmlFor={id}>
-                <img className="img-thumbnail mt-4" src={media.media_url || '/img/randomizador_icon_64.png'} alt="Post sem imagem" style={{ maxWidth: '160px' }} />
+                <img className="img-thumbnail mt-4" src={media.media_url || randomizadorIconSvg} alt="Post sem imagem" style={{ maxWidth: '160px' }} />
                 <span className={`text-truncate d-block mt-2 mb-5 ${media.caption ? 'lead' : 'text-secondary'}`} style={{ maxWidth: 'calc(50vw)' }}>{media.caption || 'Post sem mensagem'}</span>
             </label>
         </>

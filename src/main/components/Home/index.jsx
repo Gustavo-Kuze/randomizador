@@ -1,3 +1,4 @@
+import randomizadorIconSvg from '../../../img/randomizador_icon_1024.svg';
 import '../../../css/components/Home/Home.css'
 import React, { useState, useEffect } from 'react'
 import Template from '../Template/'
@@ -22,7 +23,7 @@ const Home = () => {
                 <Container fluid className="mb-5">
                     <Row className="my-3">
                         <Col xs={{ size: 6, offset: 3 }} className="d-flex justify-content-center align-items-center">
-                            <img src="/img/randomizador_icon_1024.png" alt="Logo" className="img-fluid" style={{ maxHeight: '200px' }} />
+                            <img src={randomizadorIconSvg} alt="Logo" className="img-fluid" style={{ maxHeight: '200px' }} />
                         </Col>
                     </Row>
                     <Row>

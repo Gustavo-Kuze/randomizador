@@ -1,3 +1,6 @@
+import drawCoinSvg from '../../../img/draw_coin.svg';
+import drawMixSvg from '../../../img/draw_mix.svg';
+import drawNumbersSvg from '../../../img/draw_numbers.svg';
 import '../../../css/components/Home/ToolsSection.css'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -56,9 +59,9 @@ const ToolsSection = () => {
             <Row>
                 <Col>
                     <CardDeck>
-                        <Card link="numbers" src="/img/draw_numbers.png" alt="Sorteio de números" description="Sorteio de números" />
-                        <Card link="shuffle" src="/img/draw_mix.png" alt="Embaralhador de frases" description="Embaralhador de frases" />
-                        <Card link="headortails" src="/img/draw_coin.png" alt="Cara ou coroa" description="Cara ou coroa" />
+                        <Card link="numbers" src={drawNumbersSvg} alt="Sorteio de números" description="Sorteio de números" />
+                        <Card link="shuffle" src={drawMixSvg} alt="Embaralhador de frases" description="Embaralhador de frases" />
+                        <Card link="headortails" src={drawCoinSvg} alt="Cara ou coroa" description="Cara ou coroa" />
                     </CardDeck>
                 </Col>
             </Row>

@@ -1,3 +1,5 @@
+import caraSvg from '../../../../img/cara.svg';
+import coroaSvg from '../../../../img/coroa.svg';
 import React, { useState, useEffect } from 'react'
 import Template from '../../Template/'
 import DrawResults from '../subcomponents/DrawResults'
@@ -72,12 +74,12 @@ const ViewSavedDraw = (props) => {
                                                     <div id="moeda">
                                                         <If c={drawResult.result === 'Cara!'}>
                                                             <div>
-                                                                <img src="/img/cara.png" alt="Cara" />
+                                                                <img src={caraSvg} alt="Cara" />
                                                             </div>
                                                         </If>
                                                         <If c={drawResult.result === 'Coroa!'}>
                                                             <div >
-                                                                <img src="/img/coroa.png" alt="Coroa" />
+                                                                <img src={coroaSvg} alt="Coroa" />
                                                             </div>
                                                         </If>
                                                     </div>

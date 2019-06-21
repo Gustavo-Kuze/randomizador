@@ -1,3 +1,5 @@
+import caraSvg from '../../../../img/cara.svg';
+import coroaSvg from '../../../../img/coroa.svg';
 import React, { Component } from 'react'
 import If from '../../utils/If'
 import DrawResults from '../subcomponents/DrawResults'
@@ -62,10 +64,10 @@ class HeadOrTails extends Component {
                 </div>
                 <div id="moeda" onClick={this.flip}>
                     <div className="cara">
-                        <img src="/img/cara.png" alt="Cara" />
+                        <img src={caraSvg} alt="Cara" />
                     </div>
                     <div className="coroa">
-                        <img src="/img/coroa.png" alt="Coroa" />
+                        <img src={coroaSvg} alt="Coroa" />
                     </div>
                 </div>
                 <div className="section mt-5">
