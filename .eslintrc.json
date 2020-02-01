@@ -16,7 +16,8 @@
     "import/prefer-default-export": "off",
     "no-plusplus":"off",
     "import/extensions": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "no-console":"off"
   },
   "env": {
     "browser": true

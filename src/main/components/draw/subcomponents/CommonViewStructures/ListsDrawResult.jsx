@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyListsResult = props => {
+const MyListsResult = ({ items }) => {
   return (
     <table className="table table-striped table-borderless text-center">
       <thead>
@@ -10,7 +10,7 @@ const MyListsResult = props => {
         </tr>
       </thead>
       <tbody>
-        {props.items.map((di, i) => (
+        {items.map((di, i) => (
           <tr key={`${di}--${i}`}>
             <td>{i + 1}</td>
             <td>{di}</td>

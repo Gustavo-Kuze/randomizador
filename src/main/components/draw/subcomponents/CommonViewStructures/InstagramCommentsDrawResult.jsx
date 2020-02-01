@@ -1,22 +1,22 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'reactstrap';
 
-const FacebookCommentsDrawResult = props => {
+const FacebookCommentsDrawResult = ({ items }) => {
   return (
     <Container>
       <Row className="my-5">
         <Col>
           <h5>Link do post</h5>
           <a
-            href={props.items[0].permalink}
+            href={items[0].permalink}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {props.items[0].permalink}
+            {items[0].permalink}
           </a>
         </Col>
       </Row>
-      {props.items.map((c, i) => (
+      {items.map((c, i) => (
         <Row className="my-5" key={c.id}>
           <Col>
             <Card className="p-4">
