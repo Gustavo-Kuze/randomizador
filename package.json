@@ -12,7 +12,7 @@
     "react-redux": "7.0.2",
     "react-redux-toastr": "7.4.8",
     "react-router-dom": "5.0.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "3.0.1",
     "reactstrap": "8.0.0",
     "redux": "4.0.1",
     "redux-saga": "1.0.2"
@@ -29,7 +29,8 @@
     "net-b": "npm run build && netlify deploy --dir=build",
     "net-p": "netlify deploy --dir=build --prod",
     "net-bp": "netlify deploy --dir=build --prod",
-    "lint": "eslint src -c .eslintrc.json --ext js,jsx"
+    "lint": "eslint src -c .eslintrc.json --ext js,jsx",
+    "prettify-all": "prettier --write \"./**/*.{js,jsx,json,css}\"" 
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,6 +42,14 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "netlify-cli": "2.11.11"
+    "netlify-cli": "2.11.11",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "prettier": "^1.19.1"
   }
 }
