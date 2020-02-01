@@ -40,12 +40,13 @@ const ViewSavedDraw = props => {
             .then(logId => {
               toastr.error('Error logged', `Log ID: ${logId}`);
             })
-            .catch(err =>
+            .catch(err => {
+              console.error(err);
               toastr.error(
                 'LOG ERROR',
                 'Não foi possível criar o log de ERRO. OBTER resultados públicos em ViewSavedDraw',
-              ),
-            );
+              );
+            });
         });
     } else {
       setDrawResult(props.resultOnState);

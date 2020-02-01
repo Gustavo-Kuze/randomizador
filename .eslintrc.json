@@ -10,12 +10,13 @@
       }
     ],
     "prettier/prettier": "error",
-    "max-len": ["error", 80],
+    "max-len": "off",
     "react/prop-types": 0,
     "no-param-reassign": 0,
     "import/prefer-default-export": "off",
     "no-plusplus":"off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "react/no-array-index-key": "off"
   },
   "env": {
     "browser": true

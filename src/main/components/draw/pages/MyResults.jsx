@@ -33,14 +33,6 @@ const MyResults = props => {
   const [lastResult, setLastResult] = useState();
   const [hideLoadMore, setHideLoadMore] = useState(false);
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        loadResults();
-      }
-    });
-  }, []);
-
   const prepareSnapAndSetOnState = (snap, loadMore = false) => {
     const resultsFromFirestore = [];
     if (snap) {
@@ -78,12 +70,13 @@ const MyResults = props => {
             .then(logId => {
               toastr.error('Error logged', `Log ID: ${logId}`);
             })
-            .catch(err =>
+            .catch(err => {
+              console.error(err);
               toastr.error(
                 'LOG ERROR',
                 'Não foi possível criar o log. OBTER os resultados privados em MyResults',
-              ),
-            );
+              );
+            });
         });
     } else {
       getPrivateResults()
@@ -99,15 +92,24 @@ const MyResults = props => {
             .then(logId => {
               toastr.error('Error logged', `Log ID: ${logId}`);
             })
-            .catch(err =>
+            .catch(err => {
+              console.error(err);
               toastr.error(
                 'LOG ERROR',
                 'Não foi possível criar o log. OBTER os resultados privados em MyResults',
-              ),
-            );
+              );
+            });
         });
     }
   };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        loadResults();
+      }
+    });
+  }, []);
 
   const DrawType = ({ type }) => {
     switch (type) {
@@ -138,7 +140,7 @@ const MyResults = props => {
       onCancel: () => {},
       onOk: () =>
         deletePrivateResult(result.id)
-          .then(sucess => {
+          .then(() => {
             toastr.success('Sucesso!', 'O resultado foi excluído.');
             window.location.reload();
           })
@@ -155,12 +157,13 @@ const MyResults = props => {
               .then(logId => {
                 toastr.error('Error logged', `Log ID: ${logId}`);
               })
-              .catch(err =>
+              .catch(err => {
+                console.error(err);
                 toastr.error(
                   'LOG ERROR',
                   'Não foi possível criar o log de ERRO. EXCLUIR UM resultado privado em MyResults',
-                ),
-              );
+                );
+              });
           }),
     };
     toastr.confirm(
@@ -186,12 +189,13 @@ const MyResults = props => {
               .then(logId => {
                 toastr.error('Error logged', `Log ID: ${logId}`);
               })
-              .catch(err =>
+              .catch(err => {
+                console.error(err);
                 toastr.error(
                   'LOG ERROR',
                   'Não foi possível criar o log de ERRO. EXCLUIR TODOS os resultados privados em MyResults',
-                ),
-              );
+                );
+              });
           });
       },
     };

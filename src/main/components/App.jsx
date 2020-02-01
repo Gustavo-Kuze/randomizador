@@ -39,8 +39,8 @@ class App extends Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loginAction,
-      logoutAction,
+      login: loginAction,
+      logout: logoutAction,
     },
     dispatch,
   );
