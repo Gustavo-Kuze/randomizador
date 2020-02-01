@@ -1,9 +1,9 @@
 .tools-section-card {
-    box-shadow: 0px 3px 6px #BBB;
-    transition: box-shadow 200ms ease-in-out;
+  box-shadow: 0px 3px 6px #bbb;
+  transition: box-shadow 200ms ease-in-out;
 }
 
 .tools-section-card:hover {
-    box-shadow: 0px 3px 25px #BBB;
-    cursor: pointer;
+  box-shadow: 0px 3px 25px #bbb;
+  cursor: pointer;
 }

@@ -1,14 +1,14 @@
-import types from '../actions/types/privateResultsTypes'
+import types from '../actions/types/privateResultsTypes';
 
 const STATE = {
-    currentPrivateResult: {}
-}
+  currentPrivateResult: {},
+};
 
 export default (state = STATE, action) => {
-    switch (action.type) {
-        case types.SET_PRIVATE_RESULT:
-            return { ...state, currentPrivateResult: action.payload }
-        default:
-            return state
-    }
-}
+  switch (action.type) {
+    case types.SET_PRIVATE_RESULT:
+      return { ...state, currentPrivateResult: action.payload };
+    default:
+      return state;
+  }
+};
