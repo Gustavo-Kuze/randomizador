@@ -99,9 +99,9 @@ const About = () => {
                 <Row className="my-3">
                   <Col>
                     <p className="text-dark lead">
-                      O nome "Randomizador" é uma referência à palavra da língua
-                      Inglesa "Random", que significa <strong>aleatório</strong>
-                      . Muito criativo, eu sei!{' '}
+                      O nome &quot;Randomizador&quot; é uma referência à palavra
+                      da língua Inglesa &quot;Random&quot;, que significa{' '}
+                      <strong>aleatório</strong>. Muito criativo, eu sei!{' '}
                       <span role="img" aria-label="Rosto sorridente">
                         😆
                       </span>

@@ -1,22 +1,25 @@
+/* eslint-disable max-len */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React, { Component } from 'react';
+import { Container, Row, Col } from 'reactstrap';
 import caraSvg from '../../../../img/cara.svg';
 import coroaSvg from '../../../../img/coroa.svg';
-import React, { Component } from 'react';
 import If from '../../utils/If';
-import DrawResults from '../subcomponents/DrawResults';
+import DrawResults from './DrawResults';
 import drawTypes from '../drawUtils/drawTypes';
-import { Container, Row, Col } from 'reactstrap';
 
 class HeadOrTails extends Component {
   constructor(props) {
     super(props);
     this.drawTimeOut = null;
     this.resultsTimeOut = null;
-  }
 
-  state = {
-    showResult: false,
-    headOrTails: '',
-  };
+    this.state = {
+      showResult: false,
+      headOrTails: '',
+    };
+  }
 
   componentWillUnmount = () => {
     clearTimeout(this.drawTimeOut);
@@ -25,26 +28,28 @@ class HeadOrTails extends Component {
 
   flip = () => {
     const moeda = document.getElementById('moeda');
-    this.setState({ ...this.state, showResult: false });
-    let result = Math.random();
+    this.setState({ showResult: false });
+    const result = Math.random();
     moeda.className = '';
 
     this.drawTimeOut = setTimeout(() => {
       if (result <= 0.5) {
         moeda.classList.add('gira-cara');
-        this.setState({ ...this.state, headOrTails: 'Cara!' });
+        this.setState({ headOrTails: 'Cara!' });
       } else {
         moeda.classList.add('gira-coroa');
-        this.setState({ ...this.state, headOrTails: 'Coroa!' });
+        this.setState({ headOrTails: 'Coroa!' });
       }
     }, 15);
 
     this.resultsTimeOut = setTimeout(() => {
-      this.setState({ ...this.state, showResult: true });
+      this.setState({ showResult: true });
     }, 3000);
   };
 
   render() {
+    const { headOrTails, showResult } = this.state;
+
     return (
       <>
         <div className="section">
@@ -75,15 +80,15 @@ class HeadOrTails extends Component {
         </div>
         <div className="section mt-5">
           <Container>
-            <If c={this.state.showResult}>
+            <If c={showResult}>
               <DrawResults
                 title="O resultado foi:"
                 date={`${new Date().toLocaleString()}`}
                 drawType={drawTypes.HEAD_OR_TAILS}
-                result={this.state.headOrTails}
+                result={headOrTails}
               >
                 <h3 className="display-4 text-center my-5 lobster h2 text-weight-bold">
-                  {this.state.headOrTails}
+                  {headOrTails}
                 </h3>
               </DrawResults>
             </If>

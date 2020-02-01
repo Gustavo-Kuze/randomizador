@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Routes from '../routes/index';
 import firebase from '../services/firebase';
-import { login, logout } from '../redux/core/actions/userActions';
+import {
+  login as loginAction,
+  logout as logoutAction,
+} from '../redux/core/actions/userActions';
 
 class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
+      const { login, logout } = this.props;
       if (user) {
         const {
           displayName,
@@ -16,9 +20,9 @@ class App extends Component {
           photoURL,
           emailVerified,
         } = firebase.auth().currentUser;
-        this.props.login({ displayName, email, uid, photoURL, emailVerified });
+        login({ displayName, email, uid, photoURL, emailVerified });
       } else {
-        this.props.logout();
+        logout();
       }
     });
   }
@@ -35,8 +39,8 @@ class App extends Component {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      login,
-      logout,
+      loginAction,
+      logoutAction,
     },
     dispatch,
   );
