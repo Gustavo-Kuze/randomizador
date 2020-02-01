@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   return (
@@ -14,8 +14,8 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
                 to={{
                   pathname: '/verifyemail',
                   state: {
-                    from: props.location
-                  }
+                    from: props.location,
+                  },
                 }}
               />
             );
@@ -28,8 +28,8 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
               to={{
                 pathname: '/login',
                 state: {
-                  from: props.location
-                }
+                  from: props.location,
+                },
               }}
             />
           );
@@ -41,9 +41,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 
 const mapStateToRest = state => ({
   email: state.user.email,
-  emailVerified: state.user.emailVerified
-})
+  emailVerified: state.user.emailVerified,
+});
 
-export default connect(
-  mapStateToRest
-)(ProtectedRoute)
+export default connect(mapStateToRest)(ProtectedRoute);

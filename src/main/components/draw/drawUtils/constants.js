@@ -1,3 +1,3 @@
 export default {
-    PRIVATE_RESULTS_GET_LIMIT: 10,
-}
+  PRIVATE_RESULTS_GET_LIMIT: 10,
+};

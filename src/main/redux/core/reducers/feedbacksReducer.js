@@ -1,16 +1,16 @@
-import types from '../actions/types/feedbacksTypes'
+import types from '../actions/types/feedbacksTypes';
 
 const STATE = {
-    userLiked: false
-}
+  userLiked: false,
+};
 
 export default (state = STATE, action) => {
-    switch (action.type) {
-        case types.USER_LIKED:
-            return { ...state, userLiked: true }
-        case types.USER_CHANGED:
-            return { ...state, userLiked: false }
-        default:
-            return state
-    }
-}
+  switch (action.type) {
+    case types.USER_LIKED:
+      return { ...state, userLiked: true };
+    case types.USER_CHANGED:
+      return { ...state, userLiked: false };
+    default:
+      return state;
+  }
+};

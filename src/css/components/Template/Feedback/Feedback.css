@@ -1,56 +1,58 @@
 .feedback-open-container {
-    z-index: 99950;
-    left: -1px;
-    position: fixed;
-    width: 145px;
-    height: 60px;
-    background-color: rgb(255, 152, 0);
-    border: 1px solid #FAFAFA;
-    transition: all 120ms linear;
+  z-index: 99950;
+  left: -1px;
+  position: fixed;
+  width: 145px;
+  height: 60px;
+  background-color: rgb(255, 152, 0);
+  border: 1px solid #fafafa;
+  transition: all 120ms linear;
 }
 
 .feedback-closed-container {
-    z-index: 99950;
-    left: -85px;
-    position: fixed;
-    width: 145px;
-    height: 60px;
-    background-color: rgb(255, 152, 0);
-    border: 1px solid #FAFAFA;
-    transition: all 100ms linear;
+  z-index: 99950;
+  left: -85px;
+  position: fixed;
+  width: 145px;
+  height: 60px;
+  background-color: rgb(255, 152, 0);
+  border: 1px solid #fafafa;
+  transition: all 100ms linear;
 }
 
 .feedback-buttons {
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-    flex-flow: row;
-    height: 58px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-flow: row;
+  height: 58px;
 }
 
 .feedback-label {
-    z-index: 99999;
-    left: 0px;
-    position: fixed;
-    text-shadow: 3px 3px 10px #AAA;
+  z-index: 99999;
+  left: 0px;
+  position: fixed;
+  text-shadow: 3px 3px 10px #aaa;
 }
 
 @media only screen and (max-width: 552px) {
-    .feedback-open-container, .feedback-closed-container {
-        bottom: 10px;
-    }
-    .feedback-label {
-        bottom: 65px;
-    }
+  .feedback-open-container,
+  .feedback-closed-container {
+    bottom: 10px;
+  }
+  .feedback-label {
+    bottom: 65px;
+  }
 }
 
 @media only screen and (min-width: 553px) {
-    .feedback-open-container, .feedback-closed-container {
-        bottom: 60px;
-    }
-    .feedback-label {
-        bottom: 125px;
-    }
+  .feedback-open-container,
+  .feedback-closed-container {
+    bottom: 60px;
+  }
+  .feedback-label {
+    bottom: 125px;
+  }
 }

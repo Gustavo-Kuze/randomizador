@@ -1,13 +1,12 @@
-import types from '../actions/types/loginTypes'
+import types from '../actions/types/loginTypes';
 
-const STATE = {
-}
+const STATE = {};
 
 export default (state = STATE, action) => {
-    switch (action.type) {
-        case types.SET_AUTH_RESULT:
-            return action.payload
-        default:
-            return state
-    }
-}
+  switch (action.type) {
+    case types.SET_AUTH_RESULT:
+      return action.payload;
+    default:
+      return state;
+  }
+};

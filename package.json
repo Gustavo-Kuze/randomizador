@@ -28,7 +28,8 @@
     "net-d": "netlify deploy --dir=build",
     "net-b": "npm run build && netlify deploy --dir=build",
     "net-p": "netlify deploy --dir=build --prod",
-    "net-bp": "netlify deploy --dir=build --prod"
+    "net-bp": "netlify deploy --dir=build --prod",
+    "lint": "eslint src -c .eslintrc.json --ext js,jsx"
   },
   "eslintConfig": {
     "extends": "react-app"

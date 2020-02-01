@@ -1,29 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { Container, Col, Row } from 'reactstrap'
+import React, { useState, useEffect } from 'react';
+import { Container, Col, Row } from 'reactstrap';
 
-const ListItemsCounters = (props) => {
-
-  let [enabledItems, setEnabledItems] = useState(0)
-  let [totalItems, setTotalItems] = useState(0)
+const ListItemsCounters = props => {
+  let [enabledItems, setEnabledItems] = useState(0);
+  let [totalItems, setTotalItems] = useState(0);
 
   const calculateItems = () => {
-    let itensCount = 0
-    let enabledCount = 0
+    let itensCount = 0;
+    let enabledCount = 0;
 
     props.lists.forEach(list => {
-      itensCount += list.items.length
+      itensCount += list.items.length;
       list.items.forEach(item => {
         if (item.enabled) {
-          enabledCount += 1
+          enabledCount += 1;
         }
-      })
-    })
+      });
+    });
 
-    setTotalItems(itensCount)
-    setEnabledItems(enabledCount)
-  }
+    setTotalItems(itensCount);
+    setEnabledItems(enabledCount);
+  };
 
-  useEffect(() => { calculateItems() })
+  useEffect(() => {
+    calculateItems();
+  });
 
   return (
     <Container>
@@ -36,7 +37,7 @@ const ListItemsCounters = (props) => {
         </Col>
       </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default ListItemsCounters
+export default ListItemsCounters;
