@@ -1,8 +1,6 @@
 import '../../../../css/components/Template/Header/Header.css';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Menu from './Menu';
-
 import {
   Modal,
   ModalHeader,
@@ -12,6 +10,7 @@ import {
   Row,
   Button,
 } from 'reactstrap';
+import Menu from './Menu';
 
 const Header = props => {
   const [openMenu, toggleMenu] = useState(false);
@@ -39,7 +38,7 @@ const Header = props => {
                   onClick={callToggleMenu}
                   className="text-light bg-warning float-right"
                 >
-                  <span className="navbar-toggler-icon"></span>
+                  <span className="navbar-toggler-icon" />
                 </Button>
               </Col>
             </Row>

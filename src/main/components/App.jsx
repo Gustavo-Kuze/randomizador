@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Routes from '../routes/index';
-import firebase from '../services/firebase/';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Routes from '../routes/index';
+import firebase from '../services/firebase';
 import { login, logout } from '../redux/core/actions/userActions';
 
 class App extends Component {

@@ -30,7 +30,8 @@
     "net-p": "netlify deploy --dir=build --prod",
     "net-bp": "netlify deploy --dir=build --prod",
     "lint": "eslint src -c .eslintrc.json --ext js,jsx",
-    "prettify-all": "prettier --write \"./**/*.{js,jsx,json,css}\"" 
+    "lint-fix": "eslint src -c .eslintrc.json --ext js,jsx --fix",
+    "prettify-all": "prettier --write \"./**/*.{js,jsx,json,css}\""
   },
   "eslintConfig": {
     "extends": "react-app"

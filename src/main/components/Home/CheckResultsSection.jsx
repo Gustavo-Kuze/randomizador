@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { Input } from 'reactstrap';
+import { Input, Container, Row, Col } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import keycodes from '../utils/keycodes';
 import If from '../utils/If';
-import { Redirect } from 'react-router-dom';
-import { Container, Row, Col } from 'reactstrap';
 
 const CheckResultsSection = () => {
-  let [drawNumber, setDrawNumber] = useState();
-  let [redirect, setRedirect] = useState(false);
+  const [drawNumber, setDrawNumber] = useState();
+  const [redirect, setRedirect] = useState(false);
 
   const drawKeyup = e => {
-    let code = e.keyCode || e.which;
+    const code = e.keyCode || e.which;
     if (code === keycodes.ENTER) {
       setRedirect(true);
     }

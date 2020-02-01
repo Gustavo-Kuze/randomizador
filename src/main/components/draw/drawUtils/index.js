@@ -3,12 +3,11 @@ function getRndInteger(min, max) {
 }
 
 const _pickExclusiveOne = (min, max, picked) => {
-  let temp = getRndInteger(min, max);
+  const temp = getRndInteger(min, max);
   if (!picked.includes(temp)) {
     return temp;
-  } else {
-    return _pickExclusiveOne(min, max, picked);
   }
+  return _pickExclusiveOne(min, max, picked);
 };
 
 /**
@@ -22,7 +21,7 @@ const drawIntegers = (min, max, count = 0) => {
   if (count === 0) return _pickExclusiveOne(min, max);
   let returnArr = [];
   for (let index = 0; index < count; index++) {
-    let num = _pickExclusiveOne(min, max, returnArr);
+    const num = _pickExclusiveOne(min, max, returnArr);
     returnArr = [...returnArr, num];
   }
   return returnArr;

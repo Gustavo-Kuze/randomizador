@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import If from '../../../utils/If';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toastr } from 'react-redux-toastr';
+import { Container, Col, Row, Button, CardHeader } from 'reactstrap';
 import {
   editListName,
   removeList,
   setAllItemsEnabledState,
 } from '../../../../redux/core/actions/listsActions';
 import keycodes from '../../../utils/keycodes';
-import { toastr } from 'react-redux-toastr';
-import { Container, Col, Row, Button, CardHeader } from 'reactstrap';
+import If from '../../../utils/If';
 
 const ListHeader = props => {
-  let [editMode, setEditMode] = useState(false);
-  let [allEnabled, setAllEnabled] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [allEnabled, setAllEnabled] = useState(true);
 
   const editNameOnEnter = e => {
-    let code = e.keyCode || e.which;
+    const code = e.keyCode || e.which;
     if (code === keycodes.ENTER) {
       props.editListName(
         { ...props.list, name: e.target.value || '' },
@@ -59,7 +59,7 @@ const ListHeader = props => {
             <Col xs={{ size: 10 }}>
               <If c={editMode}>
                 <input
-                  autoFocus={true}
+                  autoFocus
                   id={`input-edit-list-${props.list.id}`}
                   className="form-control"
                   type="text"
@@ -80,7 +80,7 @@ const ListHeader = props => {
                 className="text-decoration-none pop-hover"
                 onClick={() => confirmListDeletion()}
               >
-                <i className="fa fa-times fa-lg text-danger"></i>
+                <i className="fa fa-times fa-lg text-danger" />
               </Button>
               <Button
                 color="link"
@@ -94,7 +94,7 @@ const ListHeader = props => {
                   className={`fas fa-${
                     !allEnabled ? 'ban text-warning' : 'check text-success'
                   }`}
-                ></i>
+                />
               </Button>
             </Col>
           </Row>

@@ -1,5 +1,4 @@
 import React from 'react';
-import Template from '../Template/';
 import {
   Container,
   Col,
@@ -9,6 +8,7 @@ import {
   CardText,
   CardImg,
 } from 'reactstrap';
+import Template from '../Template';
 
 const index = () => {
   return (

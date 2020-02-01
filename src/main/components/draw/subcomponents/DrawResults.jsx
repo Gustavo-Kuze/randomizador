@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { Tooltip } from 'reactstrap';
-import { savePublicResult } from '../../../services/firebase/publicDraws';
-import { savePrivateResult } from '../../../services/firebase/privateDraws';
-import If from '../../utils/If';
-import { Input } from 'reactstrap';
+import { Tooltip, Input, Row, Col, Button } from 'reactstrap';
 import { toastr } from 'react-redux-toastr';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { log } from '../../../services/logger/';
-import { Row, Col, Button } from 'reactstrap';
+import { savePublicResult } from '../../../services/firebase/publicDraws';
+import { savePrivateResult } from '../../../services/firebase/privateDraws';
+import If from '../../utils/If';
+
+import { log } from '../../../services/logger';
 
 const DrawResults = props => {
-  let [shouldRedirect, setRedirect] = useState(false);
+  const [shouldRedirect, setRedirect] = useState(false);
   const [isTooltipOpen, toggleTooltip] = useState();
-  let [drawDescription, setDrawDescription] = useState('');
+  const [drawDescription, setDrawDescription] = useState('');
 
   const savePublicly = () => {
     savePublicResult({

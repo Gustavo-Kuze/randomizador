@@ -1,5 +1,5 @@
-import listsTypes from '../core/actions/types/listsTypes';
 import { takeLatest, all } from 'redux-saga/effects';
+import listsTypes from '../core/actions/types/listsTypes';
 
 import {
   addItemSaga,

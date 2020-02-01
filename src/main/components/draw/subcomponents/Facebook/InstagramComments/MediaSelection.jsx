@@ -1,21 +1,21 @@
-import randomizadorIconSvg from '../../../../../../img/randomizador_icon_64.svg';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Collapse } from 'reactstrap';
+import { Collapse, Container, Col, Row, Button, Card } from 'reactstrap';
 import { setSelectedMedia } from '../../../../../redux/core/actions/instagramCommentsActions';
 import If from '../../../../utils/If';
-import { Container, Col, Row, Button, Card } from 'reactstrap';
+
+import randomizadorIconSvg from '../../../../../../img/randomizador_icon_64.svg';
 
 const MediaSelection = props => {
   const setMediaAndCallback = media => {
-    let postCopy = { ...media };
+    const postCopy = { ...media };
     props.setSelectedMedia(postCopy);
     props.onMediaSelected(media);
   };
 
   const renderMediaRadio = media => {
-    let id = `media-radio--${media.id}`;
+    const id = `media-radio--${media.id}`;
     return (
       <>
         <input

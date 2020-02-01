@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import firebase from '../../../services/firebase';
 import { Link } from 'react-router-dom';
 
 import { ListGroup } from 'reactstrap';
+import firebase from '../../../services/firebase';
 
 const Menu = () => {
   const [userName, setUserName] = useState('Convidado');

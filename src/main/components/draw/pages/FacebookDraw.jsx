@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import Template from '../../Template/';
-import FacebookSteps from '../subcomponents/Facebook/FacebookComments/FacebookSteps';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Container, Row, Col } from 'reactstrap';
+import Template from '../../Template';
+import FacebookSteps from '../subcomponents/Facebook/FacebookComments/FacebookSteps';
 import {
   setAuthResponse,
   setStatus,
 } from '../../../redux/core/actions/facebookLoginActions';
 import { resetFacebookComments } from '../../../redux/core/actions/facebookCommentsActions';
-import { Container, Row, Col } from 'reactstrap';
 import FacebookObserver from '../../../observers/FacebookSDK';
 
 const FacebookDraw = props => {

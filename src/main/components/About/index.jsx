@@ -1,7 +1,7 @@
-import randomizadorIcon from '../../../img/randomizador_icon_1024.svg';
 import React from 'react';
-import Template from '../Template/';
 import { Container, Row, Col } from 'reactstrap';
+import randomizadorIcon from '../../../img/randomizador_icon_1024.svg';
+import Template from '../Template';
 
 const About = () => {
   return (

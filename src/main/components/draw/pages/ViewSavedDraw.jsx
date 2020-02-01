@@ -1,25 +1,24 @@
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { toastr } from 'react-redux-toastr';
+import { Input, Container, Row, Col } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import caraSvg from '../../../../img/cara.svg';
 import coroaSvg from '../../../../img/coroa.svg';
-import React, { useState, useEffect } from 'react';
-import Template from '../../Template/';
+import Template from '../../Template';
 import DrawResults from '../subcomponents/DrawResults';
 import drawTypes from '../drawUtils/drawTypes';
 import { getPublicResult } from '../../../services/firebase/publicDraws';
-import { connect } from 'react-redux';
-import { toastr } from 'react-redux-toastr';
 import If from '../../utils/If';
-import { Input } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
 import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult';
 import NumbersDrawResult from '../subcomponents/CommonViewStructures/NumbersDrawResult';
 import FacebookCommentsDrawResult from '../subcomponents/CommonViewStructures/FacebookCommentsDrawResult';
 import InstagramCommentsDrawResult from '../subcomponents/CommonViewStructures/InstagramCommentsDrawResult';
-import { log } from '../../../services/logger/';
-import { Container, Row, Col } from 'reactstrap';
+import { log } from '../../../services/logger';
 
 const ViewSavedDraw = props => {
-  let [drawResult, setDrawResult] = useState({});
-  let [shouldRedirect, setShouldRedirect] = useState(false);
+  const [drawResult, setDrawResult] = useState({});
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
     if (props.match.params.id > 0) {
@@ -76,7 +75,7 @@ const ViewSavedDraw = props => {
                         date={drawResult.date}
                         drawType={drawResult.drawType}
                         result={drawResult.result}
-                        viewMode={true}
+                        viewMode
                       >
                         <If c={drawResult.drawType === drawTypes.NUMBERS}>
                           <NumbersDrawResult items={drawResult.result} />

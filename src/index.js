@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import './css/bootstrap.min.css';
 import './css/index.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
-import App from './main/components/App.jsx';
 import ReduxToastr from 'react-redux-toastr';
-import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
+import App from './main/components/App.jsx';
+import * as serviceWorker from './serviceWorker';
 import { saveState } from './main/redux/storage/localStorage';
 import store from './main/redux/core/store';
 

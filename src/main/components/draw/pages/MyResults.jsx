@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Template from '../../Template/';
 import { Redirect } from 'react-router-dom';
-import {
-  getPrivateResults,
-  getNextPrivateResults,
-  deletePrivateResult,
-  deleteAllPrivateResults,
-} from '../../../services/firebase/privateDraws';
-import drawTypes from '../drawUtils/drawTypes';
-import { setPrivateResultOnState } from '../../../redux/core/actions/privateResults';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import firebase from '../../../services/firebase/';
-import If from '../../utils/If';
 import { toastr } from 'react-redux-toastr';
-import { log } from '../../../services/logger/';
 import {
   Container,
   Row,
@@ -24,14 +12,26 @@ import {
   ListGroup,
   ListGroupItem,
 } from 'reactstrap';
+import Template from '../../Template';
+import {
+  getPrivateResults,
+  getNextPrivateResults,
+  deletePrivateResult,
+  deleteAllPrivateResults,
+} from '../../../services/firebase/privateDraws';
+import drawTypes from '../drawUtils/drawTypes';
+import { setPrivateResultOnState } from '../../../redux/core/actions/privateResults';
+import firebase from '../../../services/firebase';
+import If from '../../utils/If';
+import { log } from '../../../services/logger';
 import constants from '../drawUtils/constants';
 
 const MyResults = props => {
-  let [results, setResults] = useState([]);
-  let [shouldRedirect, setShouldRedirect] = useState(false);
+  const [results, setResults] = useState([]);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  let [lastResult, setLastResult] = useState();
-  let [hideLoadMore, setHideLoadMore] = useState(false);
+  const [lastResult, setLastResult] = useState();
+  const [hideLoadMore, setHideLoadMore] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
@@ -42,7 +42,7 @@ const MyResults = props => {
   }, []);
 
   const prepareSnapAndSetOnState = (snap, loadMore = false) => {
-    let resultsFromFirestore = [];
+    const resultsFromFirestore = [];
     if (snap) {
       snap.forEach(doc => {
         resultsFromFirestore.push({ id: doc.id, ...doc.data() });
@@ -244,7 +244,7 @@ const MyResults = props => {
                                   className="text-decoration-none float-right pop-hover"
                                   onClick={() => deleteResult(result)}
                                 >
-                                  <i className="fa fa-trash text-danger"></i>
+                                  <i className="fa fa-trash text-danger" />
                                 </Button>
                               </Col>
                             </Row>

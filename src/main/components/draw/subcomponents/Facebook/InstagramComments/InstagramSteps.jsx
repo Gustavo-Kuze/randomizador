@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { toastr } from 'react-redux-toastr';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Spinner } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import {
   setBusinessId,
   setComments,
@@ -12,40 +14,38 @@ import {
   getUserPages,
   getPaginationResult,
   getAllComments,
-} from '../../../../../services/facebook/';
+} from '../../../../../services/facebook';
 import {
   getBusinessAccountId,
   getMedia,
 } from '../../../../../services/facebook/instagram';
 import { setUserPages } from '../../../../../redux/core/actions/facebookCommentsActions';
-import firebase from '../../../../../services/firebase/';
+import firebase from '../../../../../services/firebase';
 import PageSelection from '../FacebookComments/PageSelection';
 import InstaCommentsDraw from './InstaCommentsDraw';
 import MediaSelection from './MediaSelection';
-import { Spinner } from 'reactstrap';
 import If from '../../../../utils/If';
-import { Redirect } from 'react-router-dom';
-import { log } from '../../../../../services/logger/';
+import { log } from '../../../../../services/logger';
 
 const InstagramSteps = props => {
-  let [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  let [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  let [isPickPageStepOpen, setPickPageStepOpen] = useState(true);
-  let [isPickPostStepOpen, setPickPostStepOpen] = useState(false);
-  let [isDrawStepOpen, setDrawStepOpen] = useState(false);
+  const [isPickPageStepOpen, setPickPageStepOpen] = useState(true);
+  const [isPickPostStepOpen, setPickPostStepOpen] = useState(false);
+  const [isDrawStepOpen, setDrawStepOpen] = useState(false);
 
-  let [isPickPageEnabled, setPickPageEnabled] = useState(true);
-  let [isPickPostEnabled, setPickPostEnabled] = useState(false);
-  let [isDrawStepEnabled, setDrawStepEnabled] = useState(false);
+  const [isPickPageEnabled, setPickPageEnabled] = useState(true);
+  const [isPickPostEnabled, setPickPostEnabled] = useState(false);
+  const [isDrawStepEnabled, setDrawStepEnabled] = useState(false);
 
-  let [isDrawOver, setDrawOver] = useState(false);
+  const [isDrawOver, setDrawOver] = useState(false);
 
-  let [nextMediasHref, setNextPostsHref] = useState();
-  let [prevMediasHref, setPrevPostsHref] = useState();
+  const [nextMediasHref, setNextPostsHref] = useState();
+  const [prevMediasHref, setPrevPostsHref] = useState();
 
-  let [isFulfilled, setIsFulfilled] = useState(false);
+  const [isFulfilled, setIsFulfilled] = useState(false);
 
   useEffect(() => {
     if (props.login.additionalUserInfo.profile) {
@@ -305,7 +305,7 @@ const InstagramSteps = props => {
             enabled={isPickPageEnabled}
             isOpen={isPickPageStepOpen}
             setIsOpen={setPickPageStepOpen}
-            isInstagram={true}
+            isInstagram
           />
           <MediaSelection
             paginateTo={paginateTo}

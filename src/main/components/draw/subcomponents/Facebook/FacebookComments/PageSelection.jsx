@@ -1,11 +1,10 @@
 import React from 'react';
-import { Collapse } from 'reactstrap';
-import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions';
+import { Collapse, Card } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions';
 import { setSelectedPage } from '../../../../../redux/core/actions/facebookCommentsActions';
 import If from '../../../../utils/If';
-import { Card } from 'reactstrap';
 
 const PageSelection = props => {
   const setPageAndCallback = page => {

@@ -1,16 +1,16 @@
 import 'firebaseui/dist/firebaseui.css';
 import React, { useEffect, useState } from 'react';
-import firebase from '../../services/firebase/';
 import * as firebaseui from 'firebaseui';
-import Template from '../../components/Template/';
-import If from '../utils/If';
 import { Redirect } from 'react-router-dom';
 import { Spinner, Container, Row, Col } from 'reactstrap';
 import { toastr } from 'react-redux-toastr';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import If from '../utils/If';
+import Template from '../Template';
+import firebase from '../../services/firebase';
 import { setAuthResult } from '../../redux/core/actions/loginActions';
-import { log } from '../../services/logger/';
+import { log } from '../../services/logger';
 import { setUserChanged } from '../../redux/core/actions/feedbacksActions';
 
 const Login = props => {
@@ -57,10 +57,10 @@ const Login = props => {
   }
 
   const initializeFirebaseUi = () => {
-    var ui =
+    const ui =
       firebaseui.auth.AuthUI.getInstance() ||
       new firebaseui.auth.AuthUI(firebase.auth());
-    var uiConfig = {
+    const uiConfig = {
       signInSuccessUrl: '/',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -78,7 +78,7 @@ const Login = props => {
       callbacks: {
         uiShown: () => setIsLoadingUi(false),
         signInSuccessWithAuthResult: signInSuccessful,
-        signInFailure: signInFailure,
+        signInFailure,
       },
     };
 
@@ -98,7 +98,7 @@ const Login = props => {
           <div
             id="firebaseui-auth-container"
             className={isLoadingUi ? 'invisible' : ''}
-          ></div>
+          />
           <If c={isLoadingUi}>
             <div className="row">
               <div className="col-8 offset-2 d-flex justify-content-center align-items-center">

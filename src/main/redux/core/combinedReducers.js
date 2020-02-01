@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as toastrReducer } from 'react-redux-toastr';
 import userReducer from './reducers/userReducer';
 import listsReducer from './reducers/listsReducer';
 import privateResultsReducer from './reducers/privateResultsReducer';
@@ -7,7 +8,6 @@ import loginReducer from './reducers/loginReducer';
 import facebookCommentsReducer from './reducers/facebookCommentsReducer';
 import instagramCommentsReducer from './reducers/instagramCommentsReducer';
 import feedbacksReducer from './reducers/feedbacksReducer';
-import { reducer as toastrReducer } from 'react-redux-toastr';
 
 export default combineReducers({
   toastr: toastrReducer,

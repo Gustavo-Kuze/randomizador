@@ -10,6 +10,9 @@ import {
   ModalBody,
   Input,
 } from 'reactstrap';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { toastr } from 'react-redux-toastr';
 import If from '../../utils/If';
 import FilePicker from '../../utils/FilePicker';
 import {
@@ -17,11 +20,8 @@ import {
   saveFeedbackImage,
   like,
 } from '../../../services/firebase/feedback';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { setUserLiked } from '../../../redux/core/actions/feedbacksActions';
-import { toastr } from 'react-redux-toastr';
-import { log } from '../../../services/logger/';
+import { log } from '../../../services/logger';
 
 const Feedback = props => {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState();
@@ -45,7 +45,7 @@ const Feedback = props => {
               color="danger"
               className="text-light"
             >
-              <i className="far fa-thumbs-down fa-md"></i>
+              <i className="far fa-thumbs-down fa-md" />
             </Button>
           </Col>
           <Col>
@@ -71,14 +71,14 @@ const Feedback = props => {
               color="success"
               className="text-light"
             >
-              <i className="far fa-thumbs-up fa-md"></i>
+              <i className="far fa-thumbs-up fa-md" />
             </Button>
           </Col>
         </If>
         <If c={!isFeedbackOpen}>
           <Col>
             <Button outline block color="danger" className="text-light">
-              <i className="far fa-thumbs-down fa-md"></i>
+              <i className="far fa-thumbs-down fa-md" />
             </Button>
           </Col>
           <Col>
@@ -91,7 +91,7 @@ const Feedback = props => {
               color="success"
               className="text-light"
             >
-              <i className="far fa-comment-alt"></i>
+              <i className="far fa-comment-alt" />
             </Button>
           </Col>
         </If>
@@ -101,14 +101,14 @@ const Feedback = props => {
 
   const sendFeedback = () => {
     if (description) {
-      let feedback = {
-        description: description,
-        hasFile: file ? true : false,
+      const feedback = {
+        description,
+        hasFile: !!file,
         email: props.email || '',
       };
       saveFeedback(feedback)
         .then(feedbackId => {
-          console.log('Feedback salvo com o id ' + feedbackId);
+          console.log(`Feedback salvo com o id ${feedbackId}`);
           toastr.success(
             'Sucesso!',
             'Recebemos seu feedback e tentaremos resolver assim que possível. Agradecemos sua colaboração!',
@@ -228,7 +228,7 @@ const Feedback = props => {
                     <p className="text-success lead">
                       <span>O arquivo foi selecionado </span>
                       <span>
-                        <i className="fas fa-check"></i>
+                        <i className="fas fa-check" />
                       </span>
                     </p>
                   </Col>

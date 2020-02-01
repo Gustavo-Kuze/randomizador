@@ -1,21 +1,21 @@
-import randomizadorIconSvg from '../../../../../../img/randomizador_icon_64.svg';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Collapse } from 'reactstrap';
+import { Collapse, Container, Row, Col, Card, Button } from 'reactstrap';
 import { setSelectedPost } from '../../../../../redux/core/actions/facebookCommentsActions';
 import If from '../../../../utils/If';
-import { Container, Row, Col, Card, Button } from 'reactstrap';
+
+import randomizadorIconSvg from '../../../../../../img/randomizador_icon_64.svg';
 
 const PostSelection = props => {
   const setPostAndCallback = post => {
-    let postCopy = { ...post };
+    const postCopy = { ...post };
     props.setSelectedPost(postCopy);
     props.onPostSelected(post);
   };
 
   const renderPostRadio = post => {
-    let id = `post-radio--${post.id}`;
+    const id = `post-radio--${post.id}`;
     return (
       <>
         <input

@@ -1,45 +1,51 @@
 import '../../../../css/components/draw/pages/MyLists.css';
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Input,
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  Button,
+} from 'reactstrap';
+import Chance from 'chance';
+import { toastr } from 'react-redux-toastr';
 import {
   realtimeUpdateLists,
   stopListsRealtimeListener,
   createItemFromText,
 } from '../../../services/firebase/lists';
 import Template from '../../Template';
-import List from '../subcomponents/Lists/';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import List from '../subcomponents/Lists';
 import { addList, setLists } from '../../../redux/core/actions/listsActions';
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap';
-import { Input } from 'reactstrap';
+
 import If from '../../utils/If';
 import MyListsControlsSub from '../subcomponents/Lists/MyListsControlsSub';
 import ListItemsCounters from '../subcomponents/Lists/ListItemsCounters';
-import Chance from 'chance';
-import { toastr } from 'react-redux-toastr';
 import FilePicker from '../../utils/FilePicker';
 import DrawResults from '../subcomponents/DrawResults';
 import drawTypes from '../drawUtils/drawTypes';
 import keyCodes from '../../utils/keycodes';
 import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult';
-import { Container, Row, Col, Card, CardBody, Button } from 'reactstrap';
 
-let chance = new Chance();
+const chance = new Chance();
 
 const MyLists = props => {
-  let [colsSize, setColsSize] = useState(6);
-  let [isDropdownOpen, toggleDropDown] = useState(false);
+  const [colsSize, setColsSize] = useState(6);
+  const [isDropdownOpen, toggleDropDown] = useState(false);
 
-  let [quantity, setQuantity] = useState();
-  let [isQuantityInputTouched, setIsQuantityInputTouched] = useState(false);
-  let [isQuantityInputValid, setIsQuantityInputValid] = useState(false);
+  const [quantity, setQuantity] = useState();
+  const [isQuantityInputTouched, setIsQuantityInputTouched] = useState(false);
+  const [isQuantityInputValid, setIsQuantityInputValid] = useState(false);
 
-  let [drawnItems, setDrawnItems] = useState([]);
+  const [drawnItems, setDrawnItems] = useState([]);
 
   useEffect(() => {
     startListsObserver();
@@ -104,7 +110,7 @@ const MyLists = props => {
   };
 
   const loadListFromFile = content => {
-    let lines = content.split('\n').filter(p => p !== '');
+    const lines = content.split('\n').filter(p => p !== '');
     if (lines.length > 0) {
       props.addList({ name: '', items: lines.map(i => createItemFromText(i)) });
     }
@@ -125,7 +131,7 @@ const MyLists = props => {
   };
 
   const setInputTouchedAndDrawOnEnter = e => {
-    let code = e.keyCode || e.which;
+    const code = e.keyCode || e.which;
     if (code === keyCodes.ENTER) {
       draw();
     }

@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Collapse } from 'reactstrap';
+import { Collapse, Input, Button, Card } from 'reactstrap';
+import { toastr } from 'react-redux-toastr';
+import Chance from 'chance';
 import If from '../../../../utils/If';
 import DrawResults from '../../DrawResults';
 import drawTypes from '../../../drawUtils/drawTypes';
-import { Input } from 'reactstrap';
+
 import InstagramCommentsDrawResult from '../../CommonViewStructures/InstagramCommentsDrawResult';
 import keycodes from '../../../../utils/keycodes';
-import { toastr } from 'react-redux-toastr';
-import { Button, Card } from 'reactstrap';
 
-import Chance from 'chance';
-let chance = new Chance();
+const chance = new Chance();
 
 const FbCommentsDraw = props => {
-  let [isQuantityInputValid, setQuantityInputValid] = useState(true);
-  let [quantity, setQuantity] = useState(1);
-  let [drawnComments, setDrawnComments] = useState([]);
+  const [isQuantityInputValid, setQuantityInputValid] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+  const [drawnComments, setDrawnComments] = useState([]);
 
   const drawComments = () => {
     if (isQuantityInputValid) {
-      let drawn = chance.pickset(props.comments, quantity);
+      const drawn = chance.pickset(props.comments, quantity);
       setDrawnComments(drawn);
       props.onCommentsDrawn();
     } else {
@@ -33,7 +32,7 @@ const FbCommentsDraw = props => {
   };
 
   const setQuantityInputValidAndDrawOnEnter = e => {
-    let code = e.keyCode || e.which;
+    const code = e.keyCode || e.which;
     if (code === keycodes.ENTER) {
       drawComments();
     }

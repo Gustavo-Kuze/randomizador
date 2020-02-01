@@ -1,6 +1,6 @@
-import firebase from '../firebase/';
+import firebase from '../firebase';
 
-let logsRef = firebase.firestore().collection('logs');
+const logsRef = firebase.firestore().collection('logs');
 
 const _prepareAuthResultForLog = authResult => {
   return {
@@ -34,17 +34,17 @@ const _prepareAuthResultForLog = authResult => {
 };
 
 const _getLogsCount = async () => {
-  let span = await logsRef.get();
+  const span = await logsRef.get();
   return span.size;
 };
 
 const log = async (msg, userId, authResult) => {
   try {
-    let date = new Date();
-    let preparedAuthResult = authResult
+    const date = new Date();
+    const preparedAuthResult = authResult
       ? _prepareAuthResultForLog(authResult)
       : {};
-    let logObject = {
+    const logObject = {
       msg,
       loggedAt: {
         date: date.toLocaleString(),
@@ -62,7 +62,7 @@ const log = async (msg, userId, authResult) => {
       authResult: preparedAuthResult,
     };
 
-    let logId = ((await _getLogsCount()) || 0) + 1;
+    const logId = ((await _getLogsCount()) || 0) + 1;
     await logsRef.doc(`${logId}`).set(logObject);
     return logId;
   } catch (err) {

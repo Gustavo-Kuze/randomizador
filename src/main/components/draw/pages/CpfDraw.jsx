@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import Template from '../../Template/';
 import { Container, Row, Col, Card, CardBody, Input, Button } from 'reactstrap';
 
 import Chance from 'chance';
-let chance = new Chance();
+import Template from '../../Template';
+
+const chance = new Chance();
 
 const CpfDraw = () => {
-  let [cpf, setCpf] = useState();
-  let [shouldGeneratePulse, setShouleGeneratePulse] = useState(true);
-  let [shouldCopyPulse, setShouleCopyPulse] = useState(false);
+  const [cpf, setCpf] = useState();
+  const [shouldGeneratePulse, setShouleGeneratePulse] = useState(true);
+  const [shouldCopyPulse, setShouleCopyPulse] = useState(false);
   const [resultCopied, setResultCopied] = useState(false);
 
   const generateCpf = () => {
@@ -18,7 +19,7 @@ const CpfDraw = () => {
   };
 
   const copyResult = () => {
-    let input = document.getElementById('input-resultado');
+    const input = document.getElementById('input-resultado');
     input.select();
     document.execCommand('copy');
     setResultCopied(true);
@@ -71,7 +72,7 @@ const CpfDraw = () => {
                               ? 'fas fa-clipboard-check'
                               : 'far fa-clipboard'
                           } fa-lg`}
-                        ></i>
+                        />
                       </Button>
                     </Col>
                   </Row>

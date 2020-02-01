@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Collapse, CardBody, Card } from 'reactstrap';
 
 const MyListsControlsSub = () => {
-  let [isCollapseOpen, toggleCollapse] = useState(false);
+  const [isCollapseOpen, toggleCollapse] = useState(false);
 
   return (
     <div>
@@ -10,7 +10,7 @@ const MyListsControlsSub = () => {
         className="btn btn-outline-info btn-sm mb-3"
         onClick={() => toggleCollapse(!isCollapseOpen)}
       >
-        <i className="far fa-question-circle fa-2x"></i>
+        <i className="far fa-question-circle fa-2x" />
       </button>
       <Collapse isOpen={isCollapseOpen}>
         <Card>
@@ -26,7 +26,7 @@ const MyListsControlsSub = () => {
                 <tr>
                   <td>
                     <span>
-                      <i className="fa fa-plus text-success"></i>
+                      <i className="fa fa-plus text-success" />
                     </span>
                   </td>
                   <td>
@@ -35,7 +35,7 @@ const MyListsControlsSub = () => {
                 </tr>
                 <tr>
                   <td>
-                    <i className="fa fa-trash text-danger"></i>
+                    <i className="fa fa-trash text-danger" />
                   </td>
                   <td>
                     <span>Excluir um item</span>
@@ -43,7 +43,7 @@ const MyListsControlsSub = () => {
                 </tr>
                 <tr>
                   <td>
-                    <i className="fa fa-times text-danger"></i>
+                    <i className="fa fa-times text-danger" />
                   </td>
                   <td>
                     <span>Excluir lista</span>
@@ -52,7 +52,7 @@ const MyListsControlsSub = () => {
                 <tr>
                   <td>
                     <span>
-                      <i className="fas fa-check text-success"></i>
+                      <i className="fas fa-check text-success" />
                     </span>
                   </td>
                   <td>
@@ -62,7 +62,7 @@ const MyListsControlsSub = () => {
                 <tr>
                   <td>
                     <span>
-                      <i className="fas fa-ban text-warning"></i>
+                      <i className="fas fa-ban text-warning" />
                     </span>
                   </td>
                   <td>

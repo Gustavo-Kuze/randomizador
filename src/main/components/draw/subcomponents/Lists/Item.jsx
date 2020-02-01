@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import If from '../../../utils/If';
-import keycodes from '../../../utils/keycodes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toastr } from 'react-redux-toastr';
+import { Container, Col, Row, Button, ListGroupItem } from 'reactstrap';
+import { Draggable } from 'react-drag-and-drop';
 import {
   editItemText,
   removeItem,
   setItemEnabledState,
 } from '../../../../redux/core/actions/listsActions';
-import { toastr } from 'react-redux-toastr';
-import { Container, Col, Row, Button, ListGroupItem } from 'reactstrap';
-import { Draggable } from 'react-drag-and-drop';
+import keycodes from '../../../utils/keycodes';
+import If from '../../../utils/If';
 
 const Item = props => {
-  let [editMode, setEditMode] = useState(!props.item.text);
+  const [editMode, setEditMode] = useState(!props.item.text);
 
   const setEditModeAndPrepareInput = fillText => {
     setEditMode(true);
@@ -33,7 +33,7 @@ const Item = props => {
   };
 
   const saveOnEnterCancelOnEsc = e => {
-    let code = e.keyCode || e.which;
+    const code = e.keyCode || e.which;
     if (code === keycodes.ENTER) {
       props.editItemText({ ...props.item, text: e.target.value }, props.list);
       setEditMode(false);
@@ -43,7 +43,7 @@ const Item = props => {
   };
 
   const setEnabledState = () => {
-    let toggledEnabled = !props.item.enabled;
+    const toggledEnabled = !props.item.enabled;
     props.setItemEnabledState(
       { ...props.item, enabled: toggledEnabled },
       props.list,
@@ -85,7 +85,7 @@ const Item = props => {
             <Col xs={{ size: 8 }}>
               <If c={editMode}>
                 <input
-                  autoFocus={true}
+                  autoFocus
                   id={`input-edit-item-${props.item.id}`}
                   onBlur={saveOnBlur}
                   className="form-control"
@@ -112,14 +112,14 @@ const Item = props => {
                       ? 'ban text-warning'
                       : 'check text-success'
                   }`}
-                ></i>
+                />
               </Button>
               <Button
                 color="link"
                 className="text-decoration-none float-right pop-hover"
                 onClick={() => confirmItemDeletion()}
               >
-                <i className="fa fa-trash text-danger"></i>
+                <i className="fa fa-trash text-danger" />
               </Button>
             </Col>
           </Row>

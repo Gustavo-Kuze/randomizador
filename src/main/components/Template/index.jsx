@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './Header/';
+import Header from './Header';
 import Footer from './Footer';
-import Feedback from './Feedback/';
+import Feedback from './Feedback';
 
 const Template = props => {
   return (

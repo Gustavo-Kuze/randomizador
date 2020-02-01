@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Col, Row } from 'reactstrap';
 
 const ListItemsCounters = props => {
-  let [enabledItems, setEnabledItems] = useState(0);
-  let [totalItems, setTotalItems] = useState(0);
+  const [enabledItems, setEnabledItems] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
 
   const calculateItems = () => {
     let itensCount = 0;

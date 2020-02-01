@@ -1,7 +1,7 @@
 import React from 'react';
-import Numbers from '../subcomponents/Numbers';
-import Template from '../../Template/';
 import { Container, Row, Col, Card, CardBody } from 'reactstrap';
+import Numbers from '../subcomponents/Numbers';
+import Template from '../../Template';
 
 const NumberDraw = () => {
   return (
