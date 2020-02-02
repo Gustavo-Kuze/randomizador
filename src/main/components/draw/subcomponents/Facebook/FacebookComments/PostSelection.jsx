@@ -2,16 +2,27 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Collapse, Container, Row, Col, Card, Button } from 'reactstrap';
-import { setSelectedPost } from '../../../../../redux/core/actions/facebookCommentsActions';
+import { setSelectedPost as setSelectedPostAction } from '../../../../../redux/core/actions/facebookCommentsActions';
 import If from '../../../../utils/If';
 
 import randomizadorIconSvg from '../../../../../../img/randomizador_icon_64.svg';
 
-const PostSelection = props => {
+const PostSelection = ({
+  setSelectedPost,
+  onPostSelected,
+  selectedPost,
+  enabled,
+  isOpen,
+  pagePosts,
+  previous,
+  paginateTo,
+  next,
+  setIsOpen,
+}) => {
   const setPostAndCallback = post => {
     const postCopy = { ...post };
-    props.setSelectedPost(postCopy);
-    props.onPostSelected(post);
+    setSelectedPost(postCopy);
+    onPostSelected(post);
   };
 
   const renderPostRadio = post => {
@@ -22,10 +33,8 @@ const PostSelection = props => {
           type="radio"
           id={id}
           className="custom-control-input"
-          checked={
-            props.selectedPost ? props.selectedPost.id === post.id : false
-          }
-          onChange={e => setPostAndCallback(post)}
+          checked={selectedPost ? selectedPost.id === post.id : false}
+          onChange={() => setPostAndCallback(post)}
         />
         <label className="custom-control-label" htmlFor={id}>
           <img
@@ -53,20 +62,20 @@ const PostSelection = props => {
         color="primary"
         outline
         block
-        className={`text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
-        disabled={!props.enabled}
-        onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}
+        className={`text-left mt-3 ${enabled ? '' : 'disabled'}`}
+        disabled={!enabled}
+        onClick={() => setIsOpen(enabled && !isOpen)}
       >
         2- Escolher o post
       </Button>
-      <Collapse isOpen={props.enabled && props.isOpen}>
+      <Collapse isOpen={enabled && isOpen}>
         <Card className="p-5 my-3">
-          {props.pagePosts ? (
+          {pagePosts ? (
             <>
-              <If c={props.pagePosts.length > 0}>
+              <If c={pagePosts.length > 0}>
                 <p className="lead text-center">Escolha o post para sortear!</p>
-                {props.pagePosts
-                  ? props.pagePosts.map((p, i) => (
+                {pagePosts
+                  ? pagePosts.map((p, i) => (
                       <div
                         key={`page-posts-radio-key--${i}`}
                         className="custom-control custom-radio"
@@ -78,11 +87,11 @@ const PostSelection = props => {
                 <Container>
                   <Row>
                     <Col xs={{ size: 6 }}>
-                      <If c={props.previous}>
+                      <If c={previous}>
                         <Button
                           outline
                           color="success"
-                          onClick={() => props.paginateTo(props.previous)}
+                          onClick={() => paginateTo(previous)}
                           className=" float-right"
                         >
                           Anteriores
@@ -90,11 +99,11 @@ const PostSelection = props => {
                       </If>
                     </Col>
                     <Col xs={{ size: 6 }}>
-                      <If c={props.next}>
+                      <If c={next}>
                         <Button
                           outline
                           color="success"
-                          onClick={() => props.paginateTo(props.next)}
+                          onClick={() => paginateTo(next)}
                           className=""
                         >
                           Próximos
@@ -104,7 +113,7 @@ const PostSelection = props => {
                   </Row>
                 </Container>
               </If>
-              <If c={!props.pagePosts.length > 0}>Você não tem nenhum post</If>
+              <If c={!pagePosts.length > 0}>Você não tem nenhum post</If>
             </>
           ) : (
             <p>
@@ -126,7 +135,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setSelectedPost,
+      setSelectedPost: setSelectedPostAction,
     },
     dispatch,
   );
