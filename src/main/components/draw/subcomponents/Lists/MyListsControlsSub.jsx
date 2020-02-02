@@ -9,6 +9,7 @@ const MyListsControlsSub = () => {
       <button
         className="btn btn-outline-info btn-sm mb-3"
         onClick={() => toggleCollapse(!isCollapseOpen)}
+        type="button"
       >
         <i className="far fa-question-circle fa-2x" />
       </button>

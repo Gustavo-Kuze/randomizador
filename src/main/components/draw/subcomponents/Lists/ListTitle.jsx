@@ -1,25 +1,31 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toastr } from 'react-redux-toastr';
 import { Container, Col, Row, Button, CardHeader } from 'reactstrap';
 import {
-  editListName,
-  removeList,
-  setAllItemsEnabledState,
+  editListName as editListNameAction,
+  removeList as removeListAction,
+  setAllItemsEnabledState as setAllItemsEnabledStateAction,
 } from '../../../../redux/core/actions/listsActions';
 import keycodes from '../../../utils/keycodes';
 import If from '../../../utils/If';
 
-const ListHeader = props => {
+const ListHeader = ({
+  list,
+  editListName,
+  removeList,
+  setAllItemsEnabledState,
+}) => {
   const [editMode, setEditMode] = useState(false);
   const [allEnabled, setAllEnabled] = useState(true);
 
   const editNameOnEnter = e => {
     const code = e.keyCode || e.which;
     if (code === keycodes.ENTER) {
-      props.editListName(
-        { ...props.list, name: e.target.value || '' },
+      editListName(
+        { ...list, name: e.target.value || '' },
         e.target.value || '',
       );
       setEditMode(false);
@@ -29,17 +35,14 @@ const ListHeader = props => {
   };
 
   const saveOnBlur = e => {
-    props.editListName(
-      { ...props.list, name: e.target.value || '' },
-      e.target.value || '',
-    );
+    editListName({ ...list, name: e.target.value || '' }, e.target.value || '');
     setEditMode(false);
   };
 
   const confirmListDeletion = () => {
-    if (props.list.items.length > 0) {
+    if (list.items.length > 0) {
       const toastrConfirmOptions = {
-        onOk: () => props.removeList(props.list.id),
+        onOk: () => removeList(list.id),
         onCancel: () => {},
       };
       toastr.confirm(
@@ -47,7 +50,7 @@ const ListHeader = props => {
         toastrConfirmOptions,
       );
     } else {
-      props.removeList(props.list.id);
+      removeList(list.id);
     }
   };
 
@@ -60,7 +63,7 @@ const ListHeader = props => {
               <If c={editMode}>
                 <input
                   autoFocus
-                  id={`input-edit-list-${props.list.id}`}
+                  id={`input-edit-list-${list.id}`}
                   className="form-control"
                   type="text"
                   onBlur={saveOnBlur}
@@ -68,10 +71,10 @@ const ListHeader = props => {
                 />
               </If>
               <p className="h4 mt-2">
-                {props.list.name || 'Clique 2 vezes para dar um nome'}{' '}
-                <span className="text-secondary">{` (${
-                  props.list.items.length
-                } ${props.list.items.length === 1 ? 'item' : 'itens'})`}</span>
+                {list.name || 'Clique 2 vezes para dar um nome'}{' '}
+                <span className="text-secondary">{` (${list.items.length} ${
+                  list.items.length === 1 ? 'item' : 'itens'
+                })`}</span>
               </p>
             </Col>
             <Col xs={{ size: 2 }}>
@@ -86,7 +89,7 @@ const ListHeader = props => {
                 color="link"
                 className="text-decoration-none pop-hover"
                 onClick={() => {
-                  props.setAllItemsEnabledState(!allEnabled, props.list);
+                  setAllItemsEnabledState(!allEnabled, list);
                   setAllEnabled(!allEnabled);
                 }}
               >
@@ -107,9 +110,9 @@ const ListHeader = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      editListName,
-      removeList,
-      setAllItemsEnabledState,
+      editListName: editListNameAction,
+      removeList: removeListAction,
+      setAllItemsEnabledState: setAllItemsEnabledStateAction,
     },
     dispatch,
   );
