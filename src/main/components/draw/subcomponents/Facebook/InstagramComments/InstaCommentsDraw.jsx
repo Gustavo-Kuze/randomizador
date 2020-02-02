@@ -13,16 +13,23 @@ import keycodes from '../../../../utils/keycodes';
 
 const chance = new Chance();
 
-const FbCommentsDraw = props => {
+const FbCommentsDraw = ({
+  onCommentsDrawn,
+  comments,
+  enabled,
+  isOpen,
+  setIsOpen,
+  selectedPost,
+}) => {
   const [isQuantityInputValid, setQuantityInputValid] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [drawnComments, setDrawnComments] = useState([]);
 
   const drawComments = () => {
     if (isQuantityInputValid) {
-      const drawn = chance.pickset(props.comments, quantity);
+      const drawn = chance.pickset(comments, quantity);
       setDrawnComments(drawn);
-      props.onCommentsDrawn();
+      onCommentsDrawn();
     } else {
       toastr.warning(
         'Atenção!',
@@ -40,9 +47,7 @@ const FbCommentsDraw = props => {
 
   const setQuantityAndValidate = value => {
     setQuantity(value);
-    setQuantityInputValid(
-      value > 0 && value <= props.comments.length && value <= 10,
-    );
+    setQuantityInputValid(value > 0 && value <= comments.length && value <= 10);
   };
 
   return (
@@ -51,21 +56,21 @@ const FbCommentsDraw = props => {
         color="info"
         outline
         block
-        className={`text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
-        disabled={!props.enabled}
-        onClick={() => props.setIsOpen(!props.isOpen)}
+        className={`text-left mt-3 ${enabled ? '' : 'disabled'}`}
+        disabled={!enabled}
+        onClick={() => setIsOpen(!isOpen)}
       >
         3- Sorteie!
       </Button>
-      <Collapse isOpen={props.isOpen}>
+      <Collapse isOpen={isOpen}>
         <Card className="p-5 my-3">
-          <If c={!props.comments}>
+          <If c={!comments}>
             <p className="lead">
               Ocorreu um erro ao listar os comentários deste post.
             </p>
           </If>
-          <If c={props.comments}>
-            <If c={props.comments.length > 0}>
+          <If c={comments}>
+            <If c={comments.length > 0}>
               <If c={drawnComments.length === 0}>
                 <p className="lead text-center">
                   Finalmente, você já pode sortear!{' '}
@@ -84,7 +89,7 @@ const FbCommentsDraw = props => {
                   valid={isQuantityInputValid}
                   value={quantity}
                   onChange={e =>
-                    setQuantityAndValidate(parseInt(e.target.value))
+                    setQuantityAndValidate(parseInt(e.target.value, 10))
                   }
                   onKeyUp={setQuantityInputValidAndDrawOnEnter}
                   max="10"
@@ -110,14 +115,12 @@ const FbCommentsDraw = props => {
                 >
                   <InstagramCommentsDrawResult
                     items={drawnComments}
-                    link={
-                      props.selectedPost ? props.selectedPost.permalink : ''
-                    }
+                    link={selectedPost ? selectedPost.permalink : ''}
                   />
                 </DrawResults>
               </If>
             </If>
-            <If c={props.comments.length === 0}>
+            <If c={comments.length === 0}>
               <p className="lead">Este post não tem comentários</p>
             </If>
           </If>

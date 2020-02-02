@@ -2,45 +2,54 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Collapse, Container, Col, Row, Button, Card } from 'reactstrap';
-import { setSelectedMedia } from '../../../../../redux/core/actions/instagramCommentsActions';
+import { setSelectedMedia as setSelectedMediaAction } from '../../../../../redux/core/actions/instagramCommentsActions';
 import If from '../../../../utils/If';
 
 import randomizadorIconSvg from '../../../../../../img/randomizador_icon_64.svg';
 
-const MediaSelection = props => {
-  const setMediaAndCallback = media => {
-    const postCopy = { ...media };
-    props.setSelectedMedia(postCopy);
-    props.onMediaSelected(media);
+const MediaSelection = ({
+  enabled,
+  medias,
+  setSelectedMedia,
+  onMediaSelected,
+  selectedMedia,
+  isOpen,
+  setIsOpen,
+  previous,
+  paginateTo,
+  next,
+}) => {
+  const setMediaAndCallback = mediaItem => {
+    const postCopy = { ...mediaItem };
+    setSelectedMedia(postCopy);
+    onMediaSelected(mediaItem);
   };
 
-  const renderMediaRadio = media => {
-    const id = `media-radio--${media.id}`;
+  const renderMediaRadio = mediaItem => {
+    const id = `media-radio--${mediaItem.id}`;
     return (
       <>
         <input
           type="radio"
           id={id}
           className="custom-control-input"
-          checked={
-            props.selectedMedia ? props.selectedMedia.id === media.id : false
-          }
-          onChange={e => setMediaAndCallback(media)}
+          checked={selectedMedia ? selectedMedia.id === mediaItem.id : false}
+          onChange={() => setMediaAndCallback(mediaItem)}
         />
         <label className="custom-control-label" htmlFor={id}>
           <img
             className="img-thumbnail mt-4"
-            src={media.media_url || randomizadorIconSvg}
+            src={mediaItem.media_url || randomizadorIconSvg}
             alt="Post sem imagem"
             style={{ maxWidth: '160px' }}
           />
           <span
             className={`text-truncate d-block mt-2 mb-5 ${
-              media.caption ? 'lead' : 'text-secondary'
+              mediaItem.caption ? 'lead' : 'text-secondary'
             }`}
             style={{ maxWidth: 'calc(50vw)' }}
           >
-            {media.caption || 'Post sem mensagem'}
+            {mediaItem.caption || 'Post sem mensagem'}
           </span>
         </label>
       </>
@@ -53,20 +62,20 @@ const MediaSelection = props => {
         color="info"
         outline
         block
-        className={`text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
-        disabled={!props.enabled}
-        onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}
+        className={`text-left mt-3 ${enabled ? '' : 'disabled'}`}
+        disabled={!enabled}
+        onClick={() => setIsOpen(enabled && !isOpen)}
       >
         2- Escolher o post
       </Button>
-      <Collapse isOpen={props.enabled && props.isOpen}>
+      <Collapse isOpen={enabled && isOpen}>
         <Card className="p-5 my-3">
-          {props.medias ? (
+          {medias ? (
             <>
-              <If c={props.medias.length > 0}>
+              <If c={medias.length > 0}>
                 <p className="lead text-center">Escolha o post para sortear!</p>
-                {props.medias
-                  ? props.medias.map((p, i) => (
+                {medias
+                  ? medias.map((p, i) => (
                       <div
                         key={`page-posts-radio-key--${i}`}
                         className="custom-control custom-radio"
@@ -78,11 +87,11 @@ const MediaSelection = props => {
                 <Container>
                   <Row>
                     <Col xs={{ size: 6 }}>
-                      <If c={props.previous}>
+                      <If c={previous}>
                         <Button
                           color="success"
                           outline
-                          onClick={() => props.paginateTo(props.previous)}
+                          onClick={() => paginateTo(previous)}
                           className="float-right"
                         >
                           Anteriores
@@ -90,11 +99,11 @@ const MediaSelection = props => {
                       </If>
                     </Col>
                     <Col xs={{ size: 6 }}>
-                      <If c={props.next}>
+                      <If c={next}>
                         <Button
                           color="success"
                           outline
-                          onClick={() => props.paginateTo(props.next)}
+                          onClick={() => paginateTo(next)}
                           className=""
                         >
                           Próximos
@@ -104,7 +113,7 @@ const MediaSelection = props => {
                   </Row>
                 </Container>
               </If>
-              <If c={!props.medias.length > 0}>Você não tem nenhum post</If>
+              <If c={!medias.length > 0}>Você não tem nenhum post</If>
             </>
           ) : (
             <p>
@@ -126,7 +135,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setSelectedMedia,
+      setSelectedMedia: setSelectedMediaAction,
     },
     dispatch,
   );
