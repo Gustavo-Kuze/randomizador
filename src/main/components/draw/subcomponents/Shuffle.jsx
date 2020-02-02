@@ -28,7 +28,9 @@ const Shuffle = () => {
   const onFilePicked = fileContent => {
     try {
       setPhrases(fileContent);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const copyResult = () => {

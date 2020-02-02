@@ -106,7 +106,7 @@ const Numbers = () => {
                 placeholder="quantidade"
                 invalid={areInputsTouched && !isQuantityInputValid}
                 valid={areInputsTouched && isQuantityInputValid}
-                onChange={e => setQuantity(parseInt(e.target.value))}
+                onChange={e => setQuantity(parseInt(e.target.value, 10))}
                 onKeyUp={setTouchedAndDrawOnEnter}
               />
             </Col>
@@ -117,7 +117,7 @@ const Numbers = () => {
                 placeholder="entre este valor"
                 invalid={areInputsTouched && !isRandMinInputValid}
                 valid={areInputsTouched && isRandMinInputValid}
-                onChange={e => setRandMin(parseInt(e.target.value))}
+                onChange={e => setRandMin(parseInt(e.target.value, 10))}
                 onKeyUp={setTouchedAndDrawOnEnter}
               />
             </Col>
@@ -131,7 +131,7 @@ const Numbers = () => {
                 placeholder="este outro valor"
                 invalid={areInputsTouched && !isRandMaxInputValid}
                 valid={areInputsTouched && isRandMaxInputValid}
-                onChange={e => setRandMax(parseInt(e.target.value))}
+                onChange={e => setRandMax(parseInt(e.target.value, 10))}
                 onKeyUp={setTouchedAndDrawOnEnter}
               />
             </Col>
