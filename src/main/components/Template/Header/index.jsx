@@ -12,7 +12,7 @@ import {
 } from 'reactstrap';
 import Menu from './Menu';
 
-const Header = props => {
+const Header = () => {
   const [openMenu, toggleMenu] = useState(false);
 
   const callToggleMenu = () => toggleMenu(!openMenu);

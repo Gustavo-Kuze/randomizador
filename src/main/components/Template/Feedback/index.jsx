@@ -20,10 +20,10 @@ import {
   saveFeedbackImage,
   like,
 } from '../../../services/firebase/feedback';
-import { setUserLiked } from '../../../redux/core/actions/feedbacksActions';
+import { setUserLiked as setUserLikedAction } from '../../../redux/core/actions/feedbacksActions';
 import { log } from '../../../services/logger';
 
-const Feedback = props => {
+const Feedback = ({ setUserLiked, userLiked, email, uid, authResult }) => {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,13 +52,13 @@ const Feedback = props => {
             <Button
               onClick={() => {
                 if (isFeedbackOpen) {
-                  if (!props.userLiked) {
-                    like().then(success => {
+                  if (!userLiked) {
+                    like().then(() => {
                       toastr.success(
                         'Obrigado!',
                         'Seu feedback é muito importante para nós!',
                       );
-                      props.setUserLiked();
+                      setUserLiked();
                     });
                   }
                   setIsFeedbackOpen(false);
@@ -104,7 +104,7 @@ const Feedback = props => {
       const feedback = {
         description,
         hasFile: !!file,
-        email: props.email || '',
+        email,
       };
       saveFeedback(feedback)
         .then(feedbackId => {
@@ -115,24 +115,25 @@ const Feedback = props => {
           );
           if (file) {
             saveFeedbackImage(feedbackId, file)
-              .then(result => {
+              .then(() => {
                 toastr.success('Sucesso!', 'A captura de tela foi enviada');
               })
               .catch(err => {
                 log(
                   `[ERRO] SALVAR uma imagem de feedback em Feedback: ${err.message}`,
-                  props.uid,
-                  props.authResult,
+                  uid,
+                  authResult,
                 )
                   .then(logId => {
                     toastr.error('Error logged', `Log ID: ${logId}`);
                   })
-                  .catch(err =>
+                  .catch(logErr => {
+                    console.error(logErr);
                     toastr.error(
                       'LOG ERROR',
                       `O seguinte erro ocorreu ao tentar salvar a imagem do feedback: ${err.message}`,
-                    ),
-                  );
+                    );
+                  });
               });
           }
         })
@@ -214,8 +215,8 @@ const Feedback = props => {
               <Row>
                 <Col>
                   <FilePicker
-                    onPicked={file => {
-                      setFile(file);
+                    onPicked={pickedFile => {
+                      setFile(pickedFile);
                     }}
                     accept=",.jpg"
                     isPictureUpload
@@ -257,7 +258,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setUserLiked,
+      setUserLiked: setUserLikedAction,
     },
     dispatch,
   );
