@@ -34,12 +34,13 @@ const Logout = props => {
           .then(logId => {
             toastr.error('Error logged', `Log ID: ${logId}`);
           })
-          .catch(err =>
+          .catch(logErr => {
+            console.error(logErr);
             toastr.error(
               'LOG ERROR',
               'Não foi possível criar o log de ERRO. Erro ao tentar fazer LOGOUT em Logout',
-            ),
-          );
+            );
+          });
       });
   }, []);
 

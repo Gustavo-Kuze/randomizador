@@ -9,18 +9,15 @@ import { connect } from 'react-redux';
 import If from '../utils/If';
 import Template from '../Template';
 import firebase from '../../services/firebase';
-import { setAuthResult } from '../../redux/core/actions/loginActions';
+import { setAuthResult as setAuthResultAction } from '../../redux/core/actions/loginActions';
 import { log } from '../../services/logger';
-import { setUserChanged } from '../../redux/core/actions/feedbacksActions';
+import { setUserChanged as setUserChangedAction } from '../../redux/core/actions/feedbacksActions';
 
-const Login = props => {
+const Login = ({ setAuthResult, setUserChanged, uid, login, redirectURL }) => {
   const [isLoadingUi, setIsLoadingUi] = useState(true);
   const [isSigningInDone, setSigningAsDone] = useState(false);
 
-  useEffect(() => {
-    initializeFirebaseUi();
-  }, []);
-
+  // eslint-disable-next-line no-unused-vars
   function signInSuccessful(authResult, resirectUrl) {
     if (!authResult.user.emailVerified) {
       firebase
@@ -33,27 +30,28 @@ const Login = props => {
           );
         });
     }
-    props.setAuthResult(authResult);
+    setAuthResult(authResult);
     setSigningAsDone(true);
-    props.setUserChanged();
+    setUserChanged();
     return false;
   }
 
   function signInFailure(err) {
     log(
       `[ERRO] ao tentar fazer LOGIN em Login index: ${err.message}`,
-      props.uid,
-      props.login,
+      uid,
+      login,
     )
       .then(logId => {
         toastr.error('Error logged', `Log ID: ${logId}`);
       })
-      .catch(err =>
+      .catch(logErr => {
+        console.error(logErr);
         toastr.error(
           'LOG ERROR',
           'Não foi possível criar o logde ERRO. Erro ao tentar fazer LOGIN em Login index',
-        ),
-      );
+        );
+      });
   }
 
   const initializeFirebaseUi = () => {
@@ -85,10 +83,14 @@ const Login = props => {
     ui.start('#firebaseui-auth-container', uiConfig);
   };
 
+  useEffect(() => {
+    initializeFirebaseUi();
+  }, []);
+
   return (
     <>
       <If c={isSigningInDone}>
-        <Redirect to={props.redirectURL || '/'} />
+        <Redirect to={redirectURL || '/'} />
       </If>
       <If c={!isSigningInDone}>
         <Template>
@@ -135,8 +137,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setAuthResult,
-      setUserChanged,
+      setAuthResult: setAuthResultAction,
+      setUserChanged: setUserChangedAction,
     },
     dispatch,
   );
