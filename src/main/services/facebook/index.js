@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 const apiAsync = (FB, path, params, method = 'get') => {
   return new Promise((res, rej) => {
     try {
