@@ -7,13 +7,13 @@ const likesRef = firebase
   .collection('positiveFeedbacks')
   .doc('counter');
 
-const _getFeedbackssCount = async () => {
+const getFeedbackssCount = async () => {
   const snap = await feedbacksRef.get();
   return snap.size;
 };
 
 const saveFeedback = async drawResults => {
-  const currentCount = await _getFeedbackssCount();
+  const currentCount = await getFeedbackssCount();
   await feedbacksRef.doc(`${currentCount + 1}`).set(drawResults);
   return currentCount + 1;
 };
@@ -21,11 +21,11 @@ const saveFeedback = async drawResults => {
 const saveFeedbackImage = (id, imgFile) => {
   return new Promise((res, rej) => {
     try {
-      const feedbacksRef = firebase
+      const childFeedbacksRef = firebase
         .storage()
         .ref()
         .child(`feedbacks/${id}`);
-      feedbacksRef
+      childFeedbacksRef
         .put(imgFile)
         .then(snapshot => {
           res(snapshot);
@@ -44,7 +44,7 @@ const getLikesCount = async () => {
 
 const like = async () => {
   const likes = await getLikesCount();
-  return await likesRef.set({
+  return likesRef.set({
     likes: likes + 1,
   });
 };
