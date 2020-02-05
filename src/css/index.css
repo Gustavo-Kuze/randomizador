@@ -68,3 +68,17 @@ code {
     box-shadow: 0 0 0 0 rgba(246, 166, 18, 0), 0 0 0 20px rgba(246, 166, 18, 0);
   }
 }
+
+
+div.modal-dialog div.modal-content {
+  border-radius: -5rem;
+  border: none;
+}
+
+.modal-content{
+  border-radius: 0.51rem !important;
+}
+
+.close {
+  text-shadow: none;
+}
