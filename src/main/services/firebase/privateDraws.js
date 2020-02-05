@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 import Chance from 'chance';
 import firebase from './index';
 import constants from '../../components/draw/drawUtils/constants';

@@ -1,8 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import firebase from '../firebase';
 
 const logsRef = firebase.firestore().collection('logs');
 
-const _prepareAuthResultForLog = authResult => {
+const prepareAuthResultForLog = authResult => {
   return {
     user: {
       uid: authResult.uid || '',
@@ -33,7 +34,7 @@ const _prepareAuthResultForLog = authResult => {
   };
 };
 
-const _getLogsCount = async () => {
+const getLogsCount = async () => {
   const span = await logsRef.get();
   return span.size;
 };
@@ -42,7 +43,7 @@ const log = async (msg, userId, authResult) => {
   try {
     const date = new Date();
     const preparedAuthResult = authResult
-      ? _prepareAuthResultForLog(authResult)
+      ? prepareAuthResultForLog(authResult)
       : {};
     const logObject = {
       msg,
@@ -62,7 +63,7 @@ const log = async (msg, userId, authResult) => {
       authResult: preparedAuthResult,
     };
 
-    const logId = ((await _getLogsCount()) || 0) + 1;
+    const logId = ((await getLogsCount()) || 0) + 1;
     await logsRef.doc(`${logId}`).set(logObject);
     return logId;
   } catch (err) {
