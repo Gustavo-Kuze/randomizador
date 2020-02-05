@@ -1,20 +1,24 @@
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 import React, { useState, useEffect } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import randomizadorIconSvg from '../../../img/randomizador_icon_1024.svg';
 import '../../../css/components/Home/Home.css';
 import Template from '../Template';
 import ToolsSection from './ToolsSection';
 import CheckResultsSection from './CheckResultsSection';
 import { getLikesCount } from '../../services/firebase/feedback';
+import { setIsMenuOpen as setIsMenuOpenAction } from '../../redux/core/actions/globalActions';
 
-const Home = () => {
+const Home = ({ setIsMenuOpen }) => {
   const [likesCount, setLikesCount] = useState(0);
 
   useEffect(() => {
     getLikesCount().then(count => {
       setLikesCount(count);
     });
+    setIsMenuOpen(false);
   }, []);
 
   return (
@@ -96,4 +100,12 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setIsMenuOpen: setIsMenuOpenAction,
+    },
+    dispatch,
+  );
+
+export default connect(null, mapDispatchToProps)(Home);

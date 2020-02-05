@@ -10,12 +10,18 @@ import {
   Row,
   Button,
 } from 'reactstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Menu from './Menu';
+import { setIsMenuOpen as setIsMenuOpenAction } from '../../../redux/core/actions/globalActions';
 
-const Header = () => {
+const Header = ({ setIsMenuOpen }) => {
   const [openMenu, toggleMenu] = useState(false);
 
-  const callToggleMenu = () => toggleMenu(!openMenu);
+  const callToggleMenu = () => {
+    toggleMenu(!openMenu);
+    setIsMenuOpen(!openMenu);
+  };
 
   return (
     <>
@@ -48,7 +54,7 @@ const Header = () => {
       <Modal isOpen={openMenu} toggle={callToggleMenu} centered size="sm">
         <ModalHeader
           className="bg-warning text-center text-light"
-          toggle={() => toggleMenu(false)}
+          toggle={() => callToggleMenu(false)}
         >
           Menu
         </ModalHeader>
@@ -60,4 +66,12 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setIsMenuOpen: setIsMenuOpenAction,
+    },
+    dispatch,
+  );
+
+export default connect(null, mapDispatchToProps)(Header);
