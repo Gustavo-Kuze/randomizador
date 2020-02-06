@@ -239,7 +239,7 @@ const MyLists = ({ setLists, addList, uid, lists }) => {
               onPicked={loadListFromFile}
               text="Carregar arquivo"
               tooltip="Criar uma lista a partir de um arquivo. Os itens precisam estar separados por quebras de linha (enter)"
-              labelClassName="btn-block"
+              labelClassName="btn btn-outline-primary btn-lg btn-block pointer"
             />
           </Col>
           <Col xs={{ size: 1 }} className="d-none d-lg-block">
