@@ -5,7 +5,6 @@
   width: 145px;
   height: 60px;
   background-color: rgb(255, 152, 0);
-  border: 1px solid #fafafa;
   transition: all 120ms linear;
 }
 
@@ -16,7 +15,6 @@
   width: 145px;
   height: 60px;
   background-color: rgb(255, 152, 0);
-  border: 1px solid #fafafa;
   transition: all 100ms linear;
 }
 
@@ -32,9 +30,17 @@
 
 .feedback-label {
   z-index: 99999;
-  left: 10px;
+  left: 0px;
   position: fixed;
   text-shadow: 3px 3px 10px #aaa;
+  padding: 15px;
+  background-color: white;
+}
+
+.feedback-label,
+.feedback-open-container,
+.feedback-closed-container {
+  box-shadow: 3px 3px 8px .3px #22222266;
 }
 
 @media only screen and (max-width: 552px) {
