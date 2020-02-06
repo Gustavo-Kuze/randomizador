@@ -1,7 +1,15 @@
 .check-result-input {
-    color: #FAFAFA !important;
+  color: #fafafa !important;
+  font-size: 1.2rem !important;
+}
+
+@media (max-width: 576px) {
+  .check-result-input {
+    color: #fafafa !important;
+    font-size: .9rem !important;
+  }
 }
 
 .check-result-input::placeholder {
-    color: #FAFAFA !important;
+  color: #fafafa !important;
 }

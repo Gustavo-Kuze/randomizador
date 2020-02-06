@@ -25,7 +25,9 @@ const CheckResultsSection = () => {
         <Container>
           <Row>
             <Col xs={{ size: 10, offset: 1 }} className="text-center">
-              <h1>Quer verificar o resultado de um sorteio?</h1>
+              <h2 className="check-result-title">
+                Quer verificar o resultado de um sorteio?
+              </h2>
               <Row>
                 <Col
                   xs={{ size: 10, offset: 1 }}
