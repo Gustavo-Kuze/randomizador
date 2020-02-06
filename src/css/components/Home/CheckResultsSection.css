@@ -1,0 +1,7 @@
+.check-result-input {
+    color: #FAFAFA !important;
+}
+
+.check-result-input::placeholder {
+    color: #FAFAFA !important;
+}

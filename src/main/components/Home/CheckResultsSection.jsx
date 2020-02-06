@@ -1,3 +1,4 @@
+import '../../../css/components/Home/CheckResultsSection.css';
 import React, { useState } from 'react';
 import { Input, Container, Row, Col } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
@@ -39,6 +40,7 @@ const CheckResultsSection = () => {
                     placeholder="Informe o número do sorteio aqui"
                     style={{ fontSize: '1.4em' }}
                     min="1"
+                    className="check-result-input"
                   />
                 </Col>
               </Row>
