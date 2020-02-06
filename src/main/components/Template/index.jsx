@@ -1,9 +1,18 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
+import { withRouter } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Header from './Header';
 import Footer from './Footer';
 import Feedback from './Feedback';
+import { setIsMenuOpen as setIsMenuOpenAction } from '../../redux/core/actions/globalActions';
 
-const Template = ({ children }) => {
+const Template = ({ children, setIsMenuOpen, history }) => {
+  history.listen(() => {
+    setIsMenuOpen(false);
+  });
+
   return (
     <>
       <Header />
@@ -14,4 +23,12 @@ const Template = ({ children }) => {
   );
 };
 
-export default Template;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setIsMenuOpen: setIsMenuOpenAction,
+    },
+    dispatch,
+  );
+
+export default connect(null, mapDispatchToProps)(withRouter(Template));
