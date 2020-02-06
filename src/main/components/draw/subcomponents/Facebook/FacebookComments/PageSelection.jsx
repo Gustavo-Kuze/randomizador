@@ -1,16 +1,23 @@
 import React from 'react';
-import { Collapse } from 'reactstrap';
-import { setAuthResponse } from '../../../../../redux/core/actions/facebookLoginActions';
+import { Collapse, Card } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setSelectedPage } from '../../../../../redux/core/actions/facebookCommentsActions';
+import { setSelectedPage as setSelectedPageAction } from '../../../../../redux/core/actions/facebookCommentsActions';
 import If from '../../../../utils/If';
-import { Card } from 'reactstrap';
 
-const PageSelection = props => {
+const PageSelection = ({
+  setSelectedPage,
+  onPageSelected,
+  selectedPage,
+  isInstagram,
+  enabled,
+  isOpen,
+  userPages,
+  setIsOpen,
+}) => {
   const setPageAndCallback = page => {
-    props.setSelectedPage(page);
-    props.onPageSelected(page);
+    setSelectedPage(page);
+    onPageSelected(page);
   };
 
   const renderPageRadio = page => (
@@ -19,10 +26,8 @@ const PageSelection = props => {
         type="radio"
         id={`page-radio-${page.name}`}
         className="custom-control-input"
-        checked={
-          props.selectedPage ? props.selectedPage.name === page.name : false
-        }
-        onChange={e => setPageAndCallback(page)}
+        checked={selectedPage ? selectedPage.name === page.name : false}
+        onChange={() => setPageAndCallback(page)}
       />
       <label
         className="custom-control-label"
@@ -37,23 +42,24 @@ const PageSelection = props => {
     <>
       <button
         className={`btn btn-outline-${
-          props.isInstagram ? 'info' : 'primary'
-        } btn-block text-left mt-3 ${props.enabled ? '' : 'disabled'}`}
-        disabled={!props.enabled}
-        onClick={() => props.setIsOpen(props.enabled && !props.isOpen)}
+          isInstagram ? 'info' : 'primary'
+        } btn-block text-left mt-3 ${enabled ? '' : 'disabled'}`}
+        disabled={!enabled}
+        onClick={() => setIsOpen(enabled && !isOpen)}
+        type="button"
       >
         1- Escolher sua página
       </button>
-      <Collapse isOpen={props.enabled && props.isOpen}>
+      <Collapse isOpen={enabled && isOpen}>
         <Card className="p-5 my-3">
-          {props.userPages ? (
+          {userPages ? (
             <>
-              <If c={props.userPages.length > 0}>
+              <If c={userPages.length > 0}>
                 <p className="lead text-center">
                   Escolha a página que contém o post para sortear!
                 </p>
-                {props.userPages
-                  ? props.userPages.map((p, i) => (
+                {userPages
+                  ? userPages.map((p, i) => (
                       <div
                         key={`page-radio-key--${i}`}
                         className="custom-control custom-radio"
@@ -63,7 +69,7 @@ const PageSelection = props => {
                     ))
                   : ''}
               </If>
-              <If c={!props.userPages.length > 0}>
+              <If c={!userPages.length > 0}>
                 Você não tem nenhuma página ou ainda não deu as permissões para
                 o App
               </If>
@@ -88,8 +94,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setAuthResponse,
-      setSelectedPage,
+      setSelectedPage: setSelectedPageAction,
     },
     dispatch,
   );

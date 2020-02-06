@@ -1,7 +1,7 @@
 import React from 'react';
+import { Container, Row, Col, Card, CardBody } from 'reactstrap';
 import Shuffle from '../subcomponents/Shuffle';
 import Template from '../../Template';
-import { Container, Row, Col, Card, CardBody } from 'reactstrap';
 
 const ShuffleDraw = () => {
   return (

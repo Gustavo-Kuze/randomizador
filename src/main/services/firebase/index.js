@@ -3,7 +3,7 @@ import 'firebase/auth';
 import 'firebase/firebase-firestore';
 import 'firebase/firebase-storage';
 
-var config = {
+const config = {
   apiKey: 'AIzaSyDB0PSBo2CR2mhRRvDFMkUCSLUTuL16WP0',
   authDomain: 'randomizador-ea6d3.firebaseapp.com',
   databaseURL: 'https://randomizador-ea6d3.firebaseio.com',

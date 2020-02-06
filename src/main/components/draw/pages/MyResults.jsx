@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Template from '../../Template/';
 import { Redirect } from 'react-router-dom';
-import {
-  getPrivateResults,
-  getNextPrivateResults,
-  deletePrivateResult,
-  deleteAllPrivateResults,
-} from '../../../services/firebase/privateDraws';
-import drawTypes from '../drawUtils/drawTypes';
-import { setPrivateResultOnState } from '../../../redux/core/actions/privateResults';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import firebase from '../../../services/firebase/';
-import If from '../../utils/If';
 import { toastr } from 'react-redux-toastr';
-import { log } from '../../../services/logger/';
 import {
   Container,
   Row,
@@ -24,25 +12,29 @@ import {
   ListGroup,
   ListGroupItem,
 } from 'reactstrap';
+import Template from '../../Template';
+import {
+  getPrivateResults,
+  getNextPrivateResults,
+  deletePrivateResult,
+  deleteAllPrivateResults,
+} from '../../../services/firebase/privateDraws';
+import drawTypes from '../drawUtils/drawTypes';
+import { setPrivateResultOnState } from '../../../redux/core/actions/privateResults';
+import firebase from '../../../services/firebase';
+import If from '../../utils/If';
+import { log } from '../../../services/logger';
 import constants from '../drawUtils/constants';
 
 const MyResults = props => {
-  let [results, setResults] = useState([]);
-  let [shouldRedirect, setShouldRedirect] = useState(false);
+  const [results, setResults] = useState([]);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  let [lastResult, setLastResult] = useState();
-  let [hideLoadMore, setHideLoadMore] = useState(false);
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        loadResults();
-      }
-    });
-  }, []);
+  const [lastResult, setLastResult] = useState();
+  const [hideLoadMore, setHideLoadMore] = useState(false);
 
   const prepareSnapAndSetOnState = (snap, loadMore = false) => {
-    let resultsFromFirestore = [];
+    const resultsFromFirestore = [];
     if (snap) {
       snap.forEach(doc => {
         resultsFromFirestore.push({ id: doc.id, ...doc.data() });
@@ -78,12 +70,13 @@ const MyResults = props => {
             .then(logId => {
               toastr.error('Error logged', `Log ID: ${logId}`);
             })
-            .catch(err =>
+            .catch(err => {
+              console.error(err);
               toastr.error(
                 'LOG ERROR',
                 'Não foi possível criar o log. OBTER os resultados privados em MyResults',
-              ),
-            );
+              );
+            });
         });
     } else {
       getPrivateResults()
@@ -99,15 +92,24 @@ const MyResults = props => {
             .then(logId => {
               toastr.error('Error logged', `Log ID: ${logId}`);
             })
-            .catch(err =>
+            .catch(err => {
+              console.error(err);
               toastr.error(
                 'LOG ERROR',
                 'Não foi possível criar o log. OBTER os resultados privados em MyResults',
-              ),
-            );
+              );
+            });
         });
     }
   };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        loadResults();
+      }
+    });
+  }, []);
 
   const DrawType = ({ type }) => {
     switch (type) {
@@ -138,7 +140,7 @@ const MyResults = props => {
       onCancel: () => {},
       onOk: () =>
         deletePrivateResult(result.id)
-          .then(sucess => {
+          .then(() => {
             toastr.success('Sucesso!', 'O resultado foi excluído.');
             window.location.reload();
           })
@@ -155,12 +157,13 @@ const MyResults = props => {
               .then(logId => {
                 toastr.error('Error logged', `Log ID: ${logId}`);
               })
-              .catch(err =>
+              .catch(err => {
+                console.error(err);
                 toastr.error(
                   'LOG ERROR',
                   'Não foi possível criar o log de ERRO. EXCLUIR UM resultado privado em MyResults',
-                ),
-              );
+                );
+              });
           }),
     };
     toastr.confirm(
@@ -186,12 +189,13 @@ const MyResults = props => {
               .then(logId => {
                 toastr.error('Error logged', `Log ID: ${logId}`);
               })
-              .catch(err =>
+              .catch(err => {
+                console.error(err);
                 toastr.error(
                   'LOG ERROR',
                   'Não foi possível criar o log de ERRO. EXCLUIR TODOS os resultados privados em MyResults',
-                ),
-              );
+                );
+              });
           });
       },
     };
@@ -244,7 +248,7 @@ const MyResults = props => {
                                   className="text-decoration-none float-right pop-hover"
                                   onClick={() => deleteResult(result)}
                                 >
-                                  <i className="fa fa-trash text-danger"></i>
+                                  <i className="fa fa-trash text-danger" />
                                 </Button>
                               </Col>
                             </Row>

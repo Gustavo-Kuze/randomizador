@@ -1,26 +1,37 @@
 import React, { useState } from 'react';
-import { Tooltip } from 'reactstrap';
-import { savePublicResult } from '../../../services/firebase/publicDraws';
-import { savePrivateResult } from '../../../services/firebase/privateDraws';
-import If from '../../utils/If';
-import { Input } from 'reactstrap';
+import { Tooltip, Input, Row, Col, Button } from 'reactstrap';
 import { toastr } from 'react-redux-toastr';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { log } from '../../../services/logger/';
-import { Row, Col, Button } from 'reactstrap';
+import { savePublicResult } from '../../../services/firebase/publicDraws';
+import { savePrivateResult } from '../../../services/firebase/privateDraws';
+import If from '../../utils/If';
 
-const DrawResults = props => {
-  let [shouldRedirect, setRedirect] = useState(false);
+import { log } from '../../../services/logger';
+
+const DrawResults = ({
+  drawType,
+  date,
+  result,
+  uid,
+  authResult,
+  emailVerified,
+  colClasses,
+  titleClasses,
+  title,
+  children,
+  viewMode,
+}) => {
+  const [shouldRedirect, setRedirect] = useState(false);
   const [isTooltipOpen, toggleTooltip] = useState();
-  let [drawDescription, setDrawDescription] = useState('');
+  const [drawDescription, setDrawDescription] = useState('');
 
   const savePublicly = () => {
     savePublicResult({
       description: drawDescription,
-      drawType: props.drawType,
-      date: props.date,
-      result: props.result,
+      drawType,
+      date,
+      result,
     })
       .then(number => {
         const toastrConfirmOptions = {
@@ -35,30 +46,31 @@ const DrawResults = props => {
       .catch(error => {
         log(
           `[ERRO] ao tentar SALVAR um resultado público em DrawResults: ${error.message}`,
-          props.uid,
-          props.authResult,
+          uid,
+          authResult,
         )
           .then(logId => {
             toastr.error('Error logged', `Log ID: ${logId}`);
           })
-          .catch(err =>
+          .catch(err => {
+            console.error(err);
             toastr.error(
               'LOG ERROR',
               'Não foi possível criar o log de ERRO. SALVAR um resultado público em DrawResults',
-            ),
-          );
+            );
+          });
       });
   };
 
   const savePrivately = () => {
-    if (props.emailVerified) {
+    if (emailVerified) {
       savePrivateResult({
         description: drawDescription,
-        drawType: props.drawType,
-        date: props.date,
-        result: props.result,
+        drawType,
+        date,
+        result,
       })
-        .then(id => {
+        .then(() => {
           const toastrConfirmOptions = {
             disableCancel: true,
             onOk: () => setRedirect(true),
@@ -75,18 +87,19 @@ const DrawResults = props => {
           );
           log(
             `[ERRO] ao tentar SALVAR resultado privado em DrawResults: ${err.message}`,
-            props.uid,
-            props.authResult,
+            uid,
+            authResult,
           )
             .then(logId => {
               toastr.error('Error logged', `Log ID: ${logId}`);
             })
-            .catch(err =>
+            .catch(logError => {
+              console.error(logError);
               toastr.error(
                 'LOG ERROR',
                 'Não foi possível criar o log de ERRO. SALVAR um resultado privado em DrawResults',
-              ),
-            );
+              );
+            });
         });
     } else {
       toastr.error(
@@ -103,26 +116,25 @@ const DrawResults = props => {
       ) : (
         <>
           <Row className="mt-5">
-            <div className={props.colClasses || 'col-12'}>
-              <h1 className={props.titleClasses || 'text-center lobster my-3'}>
-                {props.title || 'Confira os resultados'}
+            <div className={colClasses || 'col-12'}>
+              <h1 className={titleClasses || 'text-center lobster my-3'}>
+                {title || 'Confira os resultados'}
               </h1>
             </div>
           </Row>
           <Row>
-            <div className={props.colClasses || 'col-12'}>{props.children}</div>
+            <div className={colClasses || 'col-12'}>{children}</div>
           </Row>
           <Row className="mt-5">
-            <div className={props.colClasses || 'col-12'}>
+            <div className={colClasses || 'col-12'}>
               <h4 className="text-center sofia">
-                Sorteio realizado em:{' '}
-                {props.date || new Date().toLocaleString()}
+                Sorteio realizado em: {date || new Date().toLocaleString()}
               </h4>
             </div>
           </Row>
-          <If c={!props.viewMode}>
+          <If c={!viewMode}>
             <Row className="mt-5">
-              <div className={props.colClasses || 'col-10 offset-1'}>
+              <div className={colClasses || 'col-10 offset-1'}>
                 <Row>
                   <Col>
                     <Input

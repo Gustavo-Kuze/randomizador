@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import If from '../../utils/If';
-import { Input } from 'reactstrap';
+import { Input, Container, Row, Col, Button } from 'reactstrap';
 import { toastr } from 'react-redux-toastr';
-import { drawIntegers as draw } from '../../draw/drawUtils/';
+import If from '../../utils/If';
+import { drawIntegers as draw } from '../drawUtils';
 import drawTypes from '../drawUtils/drawTypes';
-import DrawResults from '../subcomponents/DrawResults';
+import DrawResults from './DrawResults';
 import keycodes from '../../utils/keycodes';
 import NumbersDrawResult from './CommonViewStructures/NumbersDrawResult';
-import { Container, Row, Col, Button } from 'reactstrap';
 
 const Numbers = () => {
   const [quantity, setQuantity] = useState();
@@ -83,7 +82,7 @@ const Numbers = () => {
   };
 
   const setTouchedAndDrawOnEnter = e => {
-    let code = e.keyCode || e.which;
+    const code = e.keyCode || e.which;
     if (code === keycodes.ENTER) {
       drawNow();
     }
@@ -107,7 +106,7 @@ const Numbers = () => {
                 placeholder="quantidade"
                 invalid={areInputsTouched && !isQuantityInputValid}
                 valid={areInputsTouched && isQuantityInputValid}
-                onChange={e => setQuantity(parseInt(e.target.value))}
+                onChange={e => setQuantity(parseInt(e.target.value, 10))}
                 onKeyUp={setTouchedAndDrawOnEnter}
               />
             </Col>
@@ -118,7 +117,7 @@ const Numbers = () => {
                 placeholder="entre este valor"
                 invalid={areInputsTouched && !isRandMinInputValid}
                 valid={areInputsTouched && isRandMinInputValid}
-                onChange={e => setRandMin(parseInt(e.target.value))}
+                onChange={e => setRandMin(parseInt(e.target.value, 10))}
                 onKeyUp={setTouchedAndDrawOnEnter}
               />
             </Col>
@@ -132,7 +131,7 @@ const Numbers = () => {
                 placeholder="este outro valor"
                 invalid={areInputsTouched && !isRandMaxInputValid}
                 valid={areInputsTouched && isRandMaxInputValid}
-                onChange={e => setRandMax(parseInt(e.target.value))}
+                onChange={e => setRandMax(parseInt(e.target.value, 10))}
                 onKeyUp={setTouchedAndDrawOnEnter}
               />
             </Col>

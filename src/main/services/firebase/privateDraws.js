@@ -1,8 +1,9 @@
+/* eslint-disable no-return-await */
+import Chance from 'chance';
 import firebase from './index';
 import constants from '../../components/draw/drawUtils/constants';
 
-import Chance from 'chance';
-let chance = new Chance();
+const chance = new Chance();
 
 let drawsRef = null;
 
@@ -69,7 +70,7 @@ const deletePrivateResult = async id => {
 
 const deleteAllPrivateResults = async () => {
   if (drawsRef) {
-    let results = await getPrivateResults();
+    const results = await getPrivateResults();
     return await Promise.all(
       results.docs.map(async doc => {
         return await doc.ref.delete();

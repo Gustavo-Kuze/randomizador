@@ -1,11 +1,11 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col, CardBody, CardDeck } from 'reactstrap';
 import drawCoinSvg from '../../../img/draw_coin.svg';
 import drawMixSvg from '../../../img/draw_mix.svg';
 import drawNumbersSvg from '../../../img/draw_numbers.svg';
 import '../../../css/components/Home/ToolsSection.css';
-import React from 'react';
-import { Link } from 'react-router-dom';
 import If from '../utils/If';
-import { Container, Row, Col, CardBody, CardDeck } from 'reactstrap';
 
 const Card = cardProps => {
   return (
@@ -34,7 +34,7 @@ const Card = cardProps => {
           >
             <CardBody className="d-flex justify-content-center align-items-center flex-column">
               <p>
-                <i className={cardProps.icon}></i>
+                <i className={cardProps.icon} />
               </p>
               <h3>{cardProps.description}</h3>
             </CardBody>
@@ -56,7 +56,7 @@ const ToolsSection = () => {
           <p className="h3 text-center mt-2 lead">
             Você precisa entrar com sua conta do Facebook{' '}
             <span>
-              <i className="text-primary fas fa-sign-in-alt fa-lg"></i>
+              <i className="text-primary fas fa-sign-in-alt fa-lg" />
             </span>
           </p>
         </Col>

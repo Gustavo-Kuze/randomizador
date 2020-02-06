@@ -1,15 +1,15 @@
+import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
 import randomizadorIconSvg from '../../../img/randomizador_icon_1024.svg';
 import '../../../css/components/Home/Home.css';
-import React, { useState, useEffect } from 'react';
-import Template from '../Template/';
-import { Link } from 'react-router-dom';
+import Template from '../Template';
 import ToolsSection from './ToolsSection';
 import CheckResultsSection from './CheckResultsSection';
-import { Container, Row, Col } from 'reactstrap';
 import { getLikesCount } from '../../services/firebase/feedback';
 
 const Home = () => {
-  let [likesCount, setLikesCount] = useState(0);
+  const [likesCount, setLikesCount] = useState(0);
 
   useEffect(() => {
     getLikesCount().then(count => {

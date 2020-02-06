@@ -32,7 +32,7 @@
 
 .feedback-label {
   z-index: 99999;
-  left: 0px;
+  left: 10px;
   position: fixed;
   text-shadow: 3px 3px 10px #aaa;
 }

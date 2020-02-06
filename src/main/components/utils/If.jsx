@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 
 const setVisibilityOnC = (
@@ -5,11 +6,11 @@ const setVisibilityOnC = (
   condition,
   hideElementClassName = false,
 ) => {
-  let elem =
+  const elem =
     React.Children.count(children) > 1
       ? React.Children.only(children[0])
       : React.Children.only(children);
-  let elemProps = {
+  const elemProps = {
     ...elem.props,
     className: `${
       hideElementClassName && !condition ? '' : elem.props.className
@@ -18,7 +19,7 @@ const setVisibilityOnC = (
       ? elem.props.style
       : { height: '0px !important', width: '0px !important' },
   };
-  let elemClone = React.cloneElement(elem, elemProps);
+  const elemClone = React.cloneElement(elem, elemProps);
   return elemClone;
 };
 

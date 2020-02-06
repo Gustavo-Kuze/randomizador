@@ -1,64 +1,73 @@
 import '../../../../css/components/draw/pages/MyLists.css';
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Input,
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  Button,
+} from 'reactstrap';
+import Chance from 'chance';
+import { toastr } from 'react-redux-toastr';
 import {
   realtimeUpdateLists,
   stopListsRealtimeListener,
   createItemFromText,
 } from '../../../services/firebase/lists';
 import Template from '../../Template';
-import List from '../subcomponents/Lists/';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { addList, setLists } from '../../../redux/core/actions/listsActions';
+import List from '../subcomponents/Lists';
 import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap';
-import { Input } from 'reactstrap';
+  addList as addListAction,
+  setLists as setListsAction,
+} from '../../../redux/core/actions/listsActions';
+
 import If from '../../utils/If';
 import MyListsControlsSub from '../subcomponents/Lists/MyListsControlsSub';
 import ListItemsCounters from '../subcomponents/Lists/ListItemsCounters';
-import Chance from 'chance';
-import { toastr } from 'react-redux-toastr';
 import FilePicker from '../../utils/FilePicker';
 import DrawResults from '../subcomponents/DrawResults';
 import drawTypes from '../drawUtils/drawTypes';
 import keyCodes from '../../utils/keycodes';
 import ListsDrawResult from '../subcomponents/CommonViewStructures/ListsDrawResult';
-import { Container, Row, Col, Card, CardBody, Button } from 'reactstrap';
 
-let chance = new Chance();
+const chance = new Chance();
 
-const MyLists = props => {
-  let [colsSize, setColsSize] = useState(6);
-  let [isDropdownOpen, toggleDropDown] = useState(false);
+const MyLists = ({ setLists, addList, uid, lists }) => {
+  const [colsSize, setColsSize] = useState(6);
+  const [isDropdownOpen, toggleDropDown] = useState(false);
 
-  let [quantity, setQuantity] = useState();
-  let [isQuantityInputTouched, setIsQuantityInputTouched] = useState(false);
-  let [isQuantityInputValid, setIsQuantityInputValid] = useState(false);
+  const [quantity, setQuantity] = useState();
+  const [isQuantityInputTouched, setIsQuantityInputTouched] = useState(false);
+  const [isQuantityInputValid, setIsQuantityInputValid] = useState(false);
 
-  let [drawnItems, setDrawnItems] = useState([]);
+  const [drawnItems, setDrawnItems] = useState([]);
+
+  const startListsObserver = () => {
+    realtimeUpdateLists(uid, newLists => {
+      setLists(newLists);
+    });
+  };
 
   useEffect(() => {
     startListsObserver();
-    return () => stopListsRealtimeListener(props.uid);
+    return () => stopListsRealtimeListener(uid);
   }, []);
 
   useEffect(() => setIsQuantityInputValid(quantity > 0));
 
-  const startListsObserver = () => {
-    realtimeUpdateLists(props.uid, lists => {
-      props.setLists(lists);
-    });
-  };
-
   const draw = () => {
     if (quantity > 0) {
-      if (props.lists.length > 0) {
+      if (lists.length > 0) {
         let allItems = [];
-        props.lists.forEach(l => {
+        lists.forEach(l => {
           try {
             if (l.items) {
               let listItem = [];
@@ -77,7 +86,9 @@ const MyLists = props => {
                   .filter(text => text),
               ];
             }
-          } catch (error) {}
+          } catch (error) {
+            console.error(error);
+          }
         });
         if (allItems.length > 0) {
           setDrawnItems(chance.pickset(chance.shuffle(allItems), quantity));
@@ -104,28 +115,28 @@ const MyLists = props => {
   };
 
   const loadListFromFile = content => {
-    let lines = content.split('\n').filter(p => p !== '');
+    const lines = content.split('\n').filter(p => p !== '');
     if (lines.length > 0) {
-      props.addList({ name: '', items: lines.map(i => createItemFromText(i)) });
+      addList({ name: '', items: lines.map(i => createItemFromText(i)) });
     }
   };
 
   const addEmptyListIfNotExists = () => {
     let canCreateList = true;
 
-    props.lists.forEach(l => {
+    lists.forEach(l => {
       if (l.items.length <= 0) canCreateList = false;
     });
 
     if (canCreateList) {
-      props.addList();
+      addList();
     } else {
       toastr.warning('Atenção', 'Você já possui uma lista vazia');
     }
   };
 
   const setInputTouchedAndDrawOnEnter = e => {
-    let code = e.keyCode || e.which;
+    const code = e.keyCode || e.which;
     if (code === keyCodes.ENTER) {
       draw();
     }
@@ -158,7 +169,9 @@ const MyLists = props => {
                             isQuantityInputTouched && !isQuantityInputValid
                           }
                           valid={isQuantityInputTouched && isQuantityInputValid}
-                          onChange={e => setQuantity(parseInt(e.target.value))}
+                          onChange={e =>
+                            setQuantity(parseInt(e.target.value, 10))
+                          }
                           onKeyUp={setInputTouchedAndDrawOnEnter}
                         />
                       </Col>
@@ -206,7 +219,7 @@ const MyLists = props => {
         </Row>
         <Row className="my-5">
           <Col xs={{ size: 12 }} md={{ size: 10 }}>
-            <ListItemsCounters lists={props.lists} />
+            <ListItemsCounters lists={lists} />
           </Col>
         </Row>
         <Row className="mt-3">
@@ -247,7 +260,7 @@ const MyLists = props => {
           </Col>
         </Row>
         <Row>
-          {props.lists.map((l, i) => (
+          {lists.map((l, i) => (
             <div
               key={`list-div-${l.id}--${i}`}
               className={`col-md-${colsSize}`}
@@ -269,8 +282,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      addList,
-      setLists,
+      addList: addListAction,
+      setLists: setListsAction,
     },
     dispatch,
   );

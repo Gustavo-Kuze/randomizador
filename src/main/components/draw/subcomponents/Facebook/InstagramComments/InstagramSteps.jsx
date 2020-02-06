@@ -2,50 +2,84 @@ import React, { useState, useEffect } from 'react';
 import { toastr } from 'react-redux-toastr';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Spinner } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 import {
-  setBusinessId,
-  setComments,
-  setMedias,
-  setSelectedMedia,
+  setBusinessId as setBusinessIdAction,
+  setComments as setCommentsAction,
+  setMedias as setMediasAction,
+  setSelectedMedia as setSelectedMediaAction,
 } from '../../../../../redux/core/actions/instagramCommentsActions';
 import {
   getUserPages,
   getPaginationResult,
   getAllComments,
-} from '../../../../../services/facebook/';
+} from '../../../../../services/facebook';
 import {
   getBusinessAccountId,
   getMedia,
 } from '../../../../../services/facebook/instagram';
-import { setUserPages } from '../../../../../redux/core/actions/facebookCommentsActions';
-import firebase from '../../../../../services/firebase/';
+import { setUserPages as setUserPagesAction } from '../../../../../redux/core/actions/facebookCommentsActions';
+import firebase from '../../../../../services/firebase';
 import PageSelection from '../FacebookComments/PageSelection';
 import InstaCommentsDraw from './InstaCommentsDraw';
 import MediaSelection from './MediaSelection';
-import { Spinner } from 'reactstrap';
 import If from '../../../../utils/If';
-import { Redirect } from 'react-router-dom';
-import { log } from '../../../../../services/logger/';
+import { log } from '../../../../../services/logger';
 
 const InstagramSteps = props => {
-  let [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  let [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  let [isPickPageStepOpen, setPickPageStepOpen] = useState(true);
-  let [isPickPostStepOpen, setPickPostStepOpen] = useState(false);
-  let [isDrawStepOpen, setDrawStepOpen] = useState(false);
+  const [isPickPageStepOpen, setPickPageStepOpen] = useState(true);
+  const [isPickPostStepOpen, setPickPostStepOpen] = useState(false);
+  const [isDrawStepOpen, setDrawStepOpen] = useState(false);
 
-  let [isPickPageEnabled, setPickPageEnabled] = useState(true);
-  let [isPickPostEnabled, setPickPostEnabled] = useState(false);
-  let [isDrawStepEnabled, setDrawStepEnabled] = useState(false);
+  const [isPickPageEnabled, setPickPageEnabled] = useState(true);
+  const [isPickPostEnabled, setPickPostEnabled] = useState(false);
+  const [isDrawStepEnabled, setDrawStepEnabled] = useState(false);
 
-  let [isDrawOver, setDrawOver] = useState(false);
+  const [isDrawOver, setDrawOver] = useState(false);
 
-  let [nextMediasHref, setNextPostsHref] = useState();
-  let [prevMediasHref, setPrevPostsHref] = useState();
+  const [nextMediasHref, setNextPostsHref] = useState();
+  const [prevMediasHref, setPrevPostsHref] = useState();
 
-  let [isFulfilled, setIsFulfilled] = useState(false);
+  const [isFulfilled, setIsFulfilled] = useState(false);
+
+  const fulfillUserPages = (userID, accessToken) => {
+    setIsLoading(true);
+    getUserPages(props.FB, userID, accessToken)
+      .then(pagesResponse => {
+        props.setUserPages(pagesResponse.data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        log(
+          `[ERRO] ao tentar OBTER as páginas do usuário em InstagramSteps: ${err.message}`,
+          props.uid,
+          props.login,
+        )
+          .then(logId => {
+            toastr.error('Error logged', `Log ID: ${logId}`);
+          })
+          .catch(logErr => {
+            console.error(logErr);
+            toastr.error(
+              'LOG ERROR',
+              'Não foi possível criar o log. OBTER as páginas do usuário em InstagramSteps',
+            );
+          });
+      });
+  };
+
+  const warnAndRedirect = () => {
+    setShouldRedirect(true);
+    toastr.warning(
+      'Atenção!',
+      'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!',
+    );
+  };
 
   useEffect(() => {
     if (props.login.additionalUserInfo.profile) {
@@ -93,12 +127,28 @@ const InstagramSteps = props => {
     }
   });
 
-  const warnAndRedirect = () => {
-    setShouldRedirect(true);
-    toastr.warning(
-      'Atenção!',
-      'Você precisa fazer login com sua conta do Facebook para este tipo de sorteio!',
-    );
+  const preparePagePosts = response => {
+    if (response.paging) {
+      if (response.paging.next) setNextPostsHref(response.paging.next);
+      if (response.paging.previous) setPrevPostsHref(response.paging.previous);
+    }
+    props.setMedias(response.data);
+    if (!response.data)
+      log(
+        `[WARNING] ao tentar OBTER os posts do usuário em InstagramSteps`,
+        props.uid,
+        props.login,
+      )
+        .then(logId => {
+          toastr.error('Error logged', `Log ID: ${logId}`);
+        })
+        .catch(logErr => {
+          console.error(logErr);
+          toastr.error(
+            'LOG ERROR',
+            'Não foi possível criar o log de WARNING. OBTER os posts do usuário em InstagramSteps',
+          );
+        });
   };
 
   const paginateTo = href => {
@@ -118,61 +168,14 @@ const InstagramSteps = props => {
           .then(logId => {
             toastr.error('Error logged', `Log ID: ${logId}`);
           })
-          .catch(err =>
+          .catch(logErr => {
+            console.error(logErr);
             toastr.error(
               'LOG ERROR',
               'Não foi possível criar o log. OBTER o resultado da paginação em InstagramSteps',
-            ),
-          );
+            );
+          });
         toastr.error('Erro', err);
-      });
-  };
-
-  const preparePagePosts = response => {
-    if (response.paging) {
-      if (response.paging.next) setNextPostsHref(response.paging.next);
-      if (response.paging.previous) setPrevPostsHref(response.paging.previous);
-    }
-    props.setMedias(response.data);
-    if (!response.data)
-      log(
-        `[WARNING] ao tentar OBTER os posts do usuário em InstagramSteps`,
-        props.uid,
-        props.login,
-      )
-        .then(logId => {
-          toastr.error('Error logged', `Log ID: ${logId}`);
-        })
-        .catch(err =>
-          toastr.error(
-            'LOG ERROR',
-            'Não foi possível criar o log de WARNING. OBTER os posts do usuário em InstagramSteps',
-          ),
-        );
-  };
-
-  const fulfillUserPages = (userID, accessToken) => {
-    setIsLoading(true);
-    getUserPages(props.FB, userID, accessToken)
-      .then(pagesResponse => {
-        props.setUserPages(pagesResponse.data);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        log(
-          `[ERRO] ao tentar OBTER as páginas do usuário em InstagramSteps: ${err.message}`,
-          props.uid,
-          props.login,
-        )
-          .then(logId => {
-            toastr.error('Error logged', `Log ID: ${logId}`);
-          })
-          .catch(err =>
-            toastr.error(
-              'LOG ERROR',
-              'Não foi possível criar o log. OBTER as páginas do usuário em InstagramSteps',
-            ),
-          );
       });
   };
 
@@ -192,12 +195,13 @@ const InstagramSteps = props => {
           .then(logId => {
             toastr.error('Error logged', `Log ID: ${logId}`);
           })
-          .catch(err =>
+          .catch(logErr => {
+            console.error(logErr);
             toastr.error(
               'LOG ERROR',
               'Não foi possível criar o log. OBTER os posts do Instagram em InstagramSteps',
-            ),
-          );
+            );
+          });
         toastr.error('Erro', err);
         setIsLoading(false);
       });
@@ -233,12 +237,13 @@ const InstagramSteps = props => {
           .then(logId => {
             toastr.error('Error logged', `Log ID: ${logId}`);
           })
-          .catch(err =>
+          .catch(logErr => {
+            console.error(logErr);
             toastr.error(
               'LOG ERROR',
               '[ERRO] Não foi possível criar o log de ERRO. OBTER o business ID em InstagramSteps',
-            ),
-          );
+            );
+          });
       });
     setPickPageStepOpen(false);
     setPickPostStepOpen(true);
@@ -267,12 +272,13 @@ const InstagramSteps = props => {
           .then(logId => {
             toastr.error('Error logged', `Log ID: ${logId}`);
           })
-          .catch(err =>
+          .catch(logErr => {
+            console.error(logErr);
             toastr.error(
               'LOG ERROR',
               'Não foi possível criar o log. OBTER os comentários em InstagramSteps',
-            ),
-          );
+            );
+          });
         console.log(err);
         setIsLoading(false);
       });
@@ -305,7 +311,7 @@ const InstagramSteps = props => {
             enabled={isPickPageEnabled}
             isOpen={isPickPageStepOpen}
             setIsOpen={setPickPageStepOpen}
-            isInstagram={true}
+            isInstagram
           />
           <MediaSelection
             paginateTo={paginateTo}
@@ -340,11 +346,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setBusinessId,
-      setComments,
-      setMedias,
-      setSelectedMedia,
-      setUserPages,
+      setBusinessId: setBusinessIdAction,
+      setComments: setCommentsAction,
+      setMedias: setMediasAction,
+      setSelectedMedia: setSelectedMediaAction,
+      setUserPages: setUserPagesAction,
     },
     dispatch,
   );

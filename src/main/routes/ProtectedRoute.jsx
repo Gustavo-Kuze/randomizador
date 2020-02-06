@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -19,21 +20,19 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
                 }}
               />
             );
-          } else {
-            return <Component {...props} />;
           }
-        } else {
-          return (
-            <Redirect
-              to={{
-                pathname: '/login',
-                state: {
-                  from: props.location,
-                },
-              }}
-            />
-          );
+          return <Component {...props} />;
         }
+        return (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: {
+                from: props.location,
+              },
+            }}
+          />
+        );
       }}
     />
   );

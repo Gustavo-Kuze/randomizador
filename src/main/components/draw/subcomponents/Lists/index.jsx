@@ -1,40 +1,38 @@
 import '../../../../../css/components/draw/subcomponents/Lists/List.css';
 import React from 'react';
-import Item from './Item';
-import ListTitle from './ListTitle';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  addItem,
-  editListName,
-  removeList,
-  removeItem,
-} from '../../../../redux/core/actions/listsActions';
 import { Button, Card, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
 import { Droppable } from 'react-drag-and-drop';
+import {
+  addItem as addItemAction,
+  removeItem as removeItemAction,
+} from '../../../../redux/core/actions/listsActions';
+import ListTitle from './ListTitle';
+import Item from './Item';
 
-const List = props => {
+const List = ({ list, items, removeItem, addItem }) => {
   const onDrop = data => {
-    let listitem = JSON.parse(data.listitem);
+    const listitem = JSON.parse(data.listitem);
     if (listitem.item.text) {
-      props.removeItem(listitem.item, listitem.list);
-      props.addItem(props.list, listitem.item.text);
+      removeItem(listitem.item, listitem.list);
+      addItem(list, listitem.item.text);
     }
   };
 
   return (
-    <Droppable types={['listitem']} onDrop={onDrop.bind(this)}>
+    <Droppable types={['listitem']} onDrop={onDrop}>
       <Card className="mt-5">
-        <ListTitle list={props.list} />
+        <ListTitle list={list} />
         <CardBody>
           <ListGroup>
-            {props.items
-              ? props.items.map((item, i) => (
+            {items
+              ? items.map((item, i) => (
                   <Item
-                    key={`${item.text}--${props.list.id}--${i}`}
+                    key={`${item.text}--${list.id}--${i}`}
                     item={item}
-                    list={props.list}
-                    listId={props.list.id}
+                    list={list}
+                    listId={list.id}
                   />
                 ))
               : ''}
@@ -43,9 +41,9 @@ const List = props => {
                 outline
                 block
                 color="success"
-                onClick={() => props.addItem(props.list)}
+                onClick={() => addItem(list)}
               >
-                <i className="fa fa-plus fa-lg"></i>
+                <i className="fa fa-plus fa-lg" />
               </Button>
             </ListGroupItem>
           </ListGroup>
@@ -58,10 +56,8 @@ const List = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      addItem,
-      editListName,
-      removeList,
-      removeItem,
+      addItem: addItemAction,
+      removeItem: removeItemAction,
     },
     dispatch,
   );

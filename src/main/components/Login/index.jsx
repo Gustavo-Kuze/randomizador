@@ -1,26 +1,23 @@
 import 'firebaseui/dist/firebaseui.css';
 import React, { useEffect, useState } from 'react';
-import firebase from '../../services/firebase/';
 import * as firebaseui from 'firebaseui';
-import Template from '../../components/Template/';
-import If from '../utils/If';
 import { Redirect } from 'react-router-dom';
 import { Spinner, Container, Row, Col } from 'reactstrap';
 import { toastr } from 'react-redux-toastr';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setAuthResult } from '../../redux/core/actions/loginActions';
-import { log } from '../../services/logger/';
-import { setUserChanged } from '../../redux/core/actions/feedbacksActions';
+import If from '../utils/If';
+import Template from '../Template';
+import firebase from '../../services/firebase';
+import { setAuthResult as setAuthResultAction } from '../../redux/core/actions/loginActions';
+import { log } from '../../services/logger';
+import { setUserChanged as setUserChangedAction } from '../../redux/core/actions/feedbacksActions';
 
-const Login = props => {
+const Login = ({ setAuthResult, setUserChanged, uid, login, redirectURL }) => {
   const [isLoadingUi, setIsLoadingUi] = useState(true);
   const [isSigningInDone, setSigningAsDone] = useState(false);
 
-  useEffect(() => {
-    initializeFirebaseUi();
-  }, []);
-
+  // eslint-disable-next-line no-unused-vars
   function signInSuccessful(authResult, resirectUrl) {
     if (!authResult.user.emailVerified) {
       firebase
@@ -33,34 +30,35 @@ const Login = props => {
           );
         });
     }
-    props.setAuthResult(authResult);
+    setAuthResult(authResult);
     setSigningAsDone(true);
-    props.setUserChanged();
+    setUserChanged();
     return false;
   }
 
   function signInFailure(err) {
     log(
       `[ERRO] ao tentar fazer LOGIN em Login index: ${err.message}`,
-      props.uid,
-      props.login,
+      uid,
+      login,
     )
       .then(logId => {
         toastr.error('Error logged', `Log ID: ${logId}`);
       })
-      .catch(err =>
+      .catch(logErr => {
+        console.error(logErr);
         toastr.error(
           'LOG ERROR',
           'Não foi possível criar o logde ERRO. Erro ao tentar fazer LOGIN em Login index',
-        ),
-      );
+        );
+      });
   }
 
   const initializeFirebaseUi = () => {
-    var ui =
+    const ui =
       firebaseui.auth.AuthUI.getInstance() ||
       new firebaseui.auth.AuthUI(firebase.auth());
-    var uiConfig = {
+    const uiConfig = {
       signInSuccessUrl: '/',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -78,17 +76,21 @@ const Login = props => {
       callbacks: {
         uiShown: () => setIsLoadingUi(false),
         signInSuccessWithAuthResult: signInSuccessful,
-        signInFailure: signInFailure,
+        signInFailure,
       },
     };
 
     ui.start('#firebaseui-auth-container', uiConfig);
   };
 
+  useEffect(() => {
+    initializeFirebaseUi();
+  }, []);
+
   return (
     <>
       <If c={isSigningInDone}>
-        <Redirect to={props.redirectURL || '/'} />
+        <Redirect to={redirectURL || '/'} />
       </If>
       <If c={!isSigningInDone}>
         <Template>
@@ -98,7 +100,7 @@ const Login = props => {
           <div
             id="firebaseui-auth-container"
             className={isLoadingUi ? 'invisible' : ''}
-          ></div>
+          />
           <If c={isLoadingUi}>
             <div className="row">
               <div className="col-8 offset-2 d-flex justify-content-center align-items-center">
@@ -135,8 +137,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setAuthResult,
-      setUserChanged,
+      setAuthResult: setAuthResultAction,
+      setUserChanged: setUserChangedAction,
     },
     dispatch,
   );

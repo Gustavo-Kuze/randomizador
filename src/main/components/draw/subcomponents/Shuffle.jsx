@@ -1,14 +1,13 @@
 import '../../../../css/components/draw/pages/ShuffleDraw.css';
 import React, { useState } from 'react';
-import { Input } from 'reactstrap';
+import { Input, Container, Row, Col, Button } from 'reactstrap';
+import Chance from 'chance';
 import FilePicker from '../../utils/FilePicker';
 import If from '../../utils/If';
-import DrawResults from '../subcomponents/DrawResults';
+import DrawResults from './DrawResults';
 import drawTypes from '../drawUtils/drawTypes';
-import { Container, Row, Col, Button } from 'reactstrap';
 
-import Chance from 'chance';
-let chance = new Chance();
+const chance = new Chance();
 
 const Shuffle = () => {
   const [phrases, setPhrases] = useState('');
@@ -29,11 +28,13 @@ const Shuffle = () => {
   const onFilePicked = fileContent => {
     try {
       setPhrases(fileContent);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const copyResult = () => {
-    let input = document.getElementById('input-resultado');
+    const input = document.getElementById('input-resultado');
     input.select();
     document.execCommand('copy');
     setResultCopied(true);
@@ -83,7 +84,7 @@ const Shuffle = () => {
           </Button>
         </Col>
       </Row>
-      <If c={shuffledPhrases.length > 0} cssHide={true}>
+      <If c={shuffledPhrases.length > 0} cssHide>
         <div>
           <hr />
           <DrawResults
@@ -113,7 +114,7 @@ const Shuffle = () => {
                   className={`${
                     resultCopied ? 'fas fa-clipboard-check' : 'far fa-clipboard'
                   } fa-lg`}
-                ></i>
+                />
               </Button>
             </div>
           </DrawResults>

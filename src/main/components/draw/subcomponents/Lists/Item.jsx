@@ -1,25 +1,32 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
-import If from '../../../utils/If';
-import keycodes from '../../../utils/keycodes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  editItemText,
-  removeItem,
-  setItemEnabledState,
-} from '../../../../redux/core/actions/listsActions';
 import { toastr } from 'react-redux-toastr';
 import { Container, Col, Row, Button, ListGroupItem } from 'reactstrap';
 import { Draggable } from 'react-drag-and-drop';
+import {
+  editItemText as editItemTextAction,
+  removeItem as removeItemAction,
+  setItemEnabledState as setItemEnabledStateAction,
+} from '../../../../redux/core/actions/listsActions';
+import keycodes from '../../../utils/keycodes';
+import If from '../../../utils/If';
 
-const Item = props => {
-  let [editMode, setEditMode] = useState(!props.item.text);
+const Item = ({
+  item,
+  list,
+  removeItem,
+  editItemText,
+  setItemEnabledState,
+}) => {
+  const [editMode, setEditMode] = useState(!item.text);
 
   const setEditModeAndPrepareInput = fillText => {
     setEditMode(true);
     setTimeout(() => {
       const inputEditItem = document.getElementById(
-        `input-edit-item-${props.item.id}`,
+        `input-edit-item-${item.id}`,
       );
       if (inputEditItem) {
         if (fillText) inputEditItem.value = fillText;
@@ -29,13 +36,13 @@ const Item = props => {
   };
 
   const setEditModeIfNoText = () => {
-    if (!props.item.text) setEditModeAndPrepareInput('');
+    if (!item.text) setEditModeAndPrepareInput('');
   };
 
   const saveOnEnterCancelOnEsc = e => {
-    let code = e.keyCode || e.which;
+    const code = e.keyCode || e.which;
     if (code === keycodes.ENTER) {
-      props.editItemText({ ...props.item, text: e.target.value }, props.list);
+      editItemText({ ...item, text: e.target.value }, list);
       setEditMode(false);
     } else if (code === keycodes.ESCAPE) {
       setEditMode(false);
@@ -43,22 +50,19 @@ const Item = props => {
   };
 
   const setEnabledState = () => {
-    let toggledEnabled = !props.item.enabled;
-    props.setItemEnabledState(
-      { ...props.item, enabled: toggledEnabled },
-      props.list,
-    );
+    const toggledEnabled = !item.enabled;
+    setItemEnabledState({ ...item, enabled: toggledEnabled }, list);
   };
 
   const saveOnBlur = e => {
-    props.editItemText({ ...props.item, text: e.target.value }, props.list);
+    editItemText({ ...item, text: e.target.value }, list);
     setEditMode(false);
   };
 
   const confirmItemDeletion = () => {
-    if (props.item.text) {
+    if (item.text) {
       const toastrConfirmOptions = {
-        onOk: () => props.removeItem(props.item, props.list),
+        onOk: () => removeItem(item, list),
         onCancel: () => {},
       };
       toastr.confirm(
@@ -66,27 +70,24 @@ const Item = props => {
         toastrConfirmOptions,
       );
     } else {
-      props.removeItem(props.item, props.list);
+      removeItem(item, list);
     }
   };
 
   return (
-    <Draggable
-      type="listitem"
-      data={JSON.stringify({ item: props.item, list: props.list })}
-    >
+    <Draggable type="listitem" data={JSON.stringify({ item, list })}>
       <ListGroupItem
         className="d-flex align-items-center"
         onClick={setEditModeIfNoText}
-        onDoubleClick={() => setEditModeAndPrepareInput(props.item.text)}
+        onDoubleClick={() => setEditModeAndPrepareInput(item.text)}
       >
         <Container>
           <Row>
             <Col xs={{ size: 8 }}>
               <If c={editMode}>
                 <input
-                  autoFocus={true}
-                  id={`input-edit-item-${props.item.id}`}
+                  autoFocus
+                  id={`input-edit-item-${item.id}`}
                   onBlur={saveOnBlur}
                   className="form-control"
                   type="text"
@@ -94,9 +95,9 @@ const Item = props => {
                 />
               </If>
               <p className="lead">
-                <If c={props.item.enabled}>{props.item.text}</If>
-                <If c={!props.item.enabled}>
-                  <del>{props.item.text}</del>
+                <If c={item.enabled}>{item.text}</If>
+                <If c={!item.enabled}>
+                  <del>{item.text}</del>
                 </If>
               </p>
             </Col>
@@ -108,18 +109,16 @@ const Item = props => {
               >
                 <i
                   className={`fas fa-${
-                    !props.item.enabled
-                      ? 'ban text-warning'
-                      : 'check text-success'
+                    !item.enabled ? 'ban text-warning' : 'check text-success'
                   }`}
-                ></i>
+                />
               </Button>
               <Button
                 color="link"
                 className="text-decoration-none float-right pop-hover"
                 onClick={() => confirmItemDeletion()}
               >
-                <i className="fa fa-trash text-danger"></i>
+                <i className="fa fa-trash text-danger" />
               </Button>
             </Col>
           </Row>
@@ -132,9 +131,9 @@ const Item = props => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      editItemText,
-      removeItem,
-      setItemEnabledState,
+      editItemText: editItemTextAction,
+      removeItem: removeItemAction,
+      setItemEnabledState: setItemEnabledStateAction,
     },
     dispatch,
   );
