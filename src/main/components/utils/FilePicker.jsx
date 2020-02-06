@@ -33,7 +33,9 @@ const FilePicker = ({
     <>
       <label
         id={`${id || 'file-upload'}-label`}
-        className={`custom-file-label btn btn-outline-primary px-5 ${labelClassName}`}
+        className={
+          labelClassName || 'custom-file-label btn btn-outline-primary px-5'
+        }
         htmlFor={id || 'file-upload'}
       >
         {text || 'Escolher arquivo'}

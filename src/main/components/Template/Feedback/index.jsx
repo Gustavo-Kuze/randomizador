@@ -177,7 +177,10 @@ const Feedback = ({
             <If c={isFeedbackOpen}>
               <Row>
                 <Col>
-                  <p className="feedback-label h3">
+                  <p
+                    className="feedback-label h3"
+                    onTouchStart={() => setIsFeedbackOpen(false)}
+                  >
                     O que você achou do Randomizador?
                   </p>
                 </Col>

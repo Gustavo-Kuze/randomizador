@@ -69,16 +69,19 @@ code {
   }
 }
 
-
 div.modal-dialog div.modal-content {
   border-radius: -5rem;
   border: none;
 }
 
-.modal-content{
+.modal-content {
   border-radius: 0.51rem !important;
 }
 
 .close {
   text-shadow: none;
+}
+
+.pointer {
+  cursor: pointer;
 }

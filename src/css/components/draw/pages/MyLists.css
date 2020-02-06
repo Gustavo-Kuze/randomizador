@@ -8,3 +8,10 @@
 .jumbotron-padding-25 {
   padding: 25px !important;
 }
+
+.dropdown button {
+  height: 40px;
+  font-size: 1rem;
+  color: #2196F3;
+  padding-top: 9px;
+}
