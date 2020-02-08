@@ -1,3 +1,4 @@
+import '../../../../css/components/draw/pages/CpfDraw.css';
 import React, { useState } from 'react';
 import {
   Container,
@@ -73,12 +74,11 @@ const CpfDraw = () => {
                     <Col xs={{ size: 12 }} md={{ size: 9 }}>
                       <Input
                         type="text"
-                        className="mb-md-3 text-center"
+                        className="mb-md-3 text-center input-cpf"
                         rows="3"
                         value={cpf}
                         onChange={e => setCpf(e.target.value)}
                         placeholder="Clique no botão abaixo para gerar um CPF"
-                        style={{ fontSize: '1.8em' }}
                         id="input-resultado"
                       />
                     </Col>
