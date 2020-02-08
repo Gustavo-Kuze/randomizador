@@ -85,3 +85,24 @@ div.modal-dialog div.modal-content {
 .pointer {
   cursor: pointer;
 }
+
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after,
+.custom-switch .custom-control-input ~ .custom-control-label::after {
+  top: 4px;
+}
+
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before,
+.custom-switch .custom-control-input ~ .custom-control-label::before {
+  margin-top: 4px;
+}
+
+.custom-control-label {
+  font-size: 1.1rem;
+  color: #888;
+}
+
+@media only screen and (min-width: 345px) {
+  .custom-control-label {
+    text-indent: -15px;
+  }
+}

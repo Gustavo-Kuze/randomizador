@@ -1,21 +1,33 @@
+import '../../../../css/components/draw/pages/CpfDraw.css';
 import React, { useState } from 'react';
-import { Container, Row, Col, Card, CardBody, Input, Button } from 'reactstrap';
-
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  Input,
+  Button,
+  CustomInput,
+} from 'reactstrap';
 import Chance from 'chance';
+import { maskCpf, unmaskCpf } from '../../utils/masks';
+
 import Template from '../../Template';
 
 const chance = new Chance();
 
 const CpfDraw = () => {
   const [cpf, setCpf] = useState();
-  const [shouldGeneratePulse, setShouleGeneratePulse] = useState(true);
-  const [shouldCopyPulse, setShouleCopyPulse] = useState(false);
+  const [shouldGeneratePulse, setShouldGeneratePulse] = useState(true);
+  const [shouldCopyPulse, setShouldCopyPulse] = useState(false);
   const [resultCopied, setResultCopied] = useState(false);
+  const [removeMask, setRemoveMask] = useState(false);
 
   const generateCpf = () => {
-    setCpf(chance.cpf());
-    setShouleGeneratePulse(false);
-    setShouleCopyPulse(true);
+    setCpf(removeMask ? unmaskCpf(chance.cpf()) : chance.cpf());
+    setShouldGeneratePulse(false);
+    setShouldCopyPulse(true);
   };
 
   const copyResult = () => {
@@ -23,7 +35,13 @@ const CpfDraw = () => {
     input.select();
     document.execCommand('copy');
     setResultCopied(true);
-    setShouleCopyPulse(false);
+    setShouldCopyPulse(false);
+  };
+
+  const onChkChange = () => {
+    const isChecked = !removeMask;
+    setRemoveMask(isChecked);
+    if (cpf) setCpf(isChecked ? unmaskCpf(cpf) : maskCpf(cpf));
   };
 
   return (
@@ -42,15 +60,25 @@ const CpfDraw = () => {
               <CardBody>
                 <Container>
                   <Row>
+                    <Col>
+                      <CustomInput
+                        type="switch"
+                        label="Remover máscara"
+                        checked={removeMask}
+                        onChange={onChkChange}
+                        id="chk-remove-cpf-mask"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
                     <Col xs={{ size: 12 }} md={{ size: 9 }}>
                       <Input
                         type="text"
-                        className="mb-md-3 text-center"
+                        className="mb-md-3 text-center input-cpf"
                         rows="3"
                         value={cpf}
                         onChange={e => setCpf(e.target.value)}
                         placeholder="Clique no botão abaixo para gerar um CPF"
-                        style={{ fontSize: '1.8em' }}
                         id="input-resultado"
                       />
                     </Col>
