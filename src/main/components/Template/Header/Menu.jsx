@@ -41,9 +41,6 @@ const Menu = () => {
         <Link to="/facebook" className="list-group-item list-group-item-action">
           Comentários do Facebook
         </Link>
-        <Link to="/cpf" className="list-group-item list-group-item-action">
-          Gerador de CPF
-        </Link>
         <p className="text-secondary mt-3">Resultados de sorteio</p>
         <Link
           to="/myresults"
@@ -51,6 +48,14 @@ const Menu = () => {
         >
           Meus sorteios
         </Link>
+        <p className="text-secondary mt-3">Geradores de dados</p>
+        <Link to="/cpf" className="list-group-item list-group-item-action">
+          Gerador de CPF
+        </Link>
+        <Link to="/cnpj" className="list-group-item list-group-item-action">
+          Gerador de CNPJ
+        </Link>
+
         <hr />
         <Link to="/about" className="list-group-item list-group-item-action">
           Sobre
