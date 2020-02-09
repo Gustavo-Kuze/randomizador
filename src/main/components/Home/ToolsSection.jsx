@@ -113,11 +113,22 @@ const ToolsSection = () => {
             <Card
               link="user/lists"
               icon="fas fa-list-ol fa-5x"
-              alt="Listas de sorteio"
-              description="Listas de sorteio"
+              alt="Sorteio de listas"
+              description="Sorteio de listas"
               style={{ height: '190px' }}
               className="d-flex justify-content-center align-items-center"
             />
+          </CardDeck>
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col>
+          <p className="h3 text-center mt-5">Geradores de dados</p>
+        </Col>
+      </Row>
+      <Row className="mt-5">
+        <Col>
+          <CardDeck>
             <Card
               link="cpf"
               icon="fas fa-id-card fa-5x"
@@ -125,6 +136,14 @@ const ToolsSection = () => {
               description="Gerador de CPF"
               style={{ height: '190px' }}
               className="d-flex justify-content-center align-items-center"
+            />
+            <Card
+              link="cnpj"
+              icon="fas fa-briefcase fa-5x text-warning"
+              alt="Gerador de CNPJ"
+              description="Gerador de CNPJ"
+              style={{ height: '190px' }}
+              className="d-flex justify-content-center align-items-center text-warning"
             />
           </CardDeck>
         </Col>
