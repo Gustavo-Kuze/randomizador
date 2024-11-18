@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "chance": "1.0.18",
-    "firebase": "5.9.4",
+    "firebase": "10.9.0",
     "firebaseui": "3.5.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
